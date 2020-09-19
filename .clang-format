@@ -2,7 +2,7 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 Language: Cpp
 TabWidth: 4
-SortIncludes: false
+SortIncludes: false 
 CompactNamespaces: true
 NamespaceIndentation: All
 AllowAllConstructorInitializersOnNextLine: true

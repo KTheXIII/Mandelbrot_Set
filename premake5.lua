@@ -12,9 +12,11 @@ workspace "Mandelbrot"
 outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
 indirs["GLFW"] = "Mandelbrot/vendor/GLFW/include/"
+indirs["Glad"] = "Mandelbrot/vendor/Glad/include"
 
 group "Denpendencies"
   include "Mandelbrot/vendor/premake5.glfw.lua"
+  include "Mandelbrot/vendor/Glad"
 group ""
 
 project "Mandelbrot"
@@ -37,11 +39,13 @@ project "Mandelbrot"
   includedirs {
     "%{prj.name}/src",
     "%{prj.name}/vendor",
-    "%{indirs.GLFW}"
+    "%{indirs.GLFW}",
+    "%{indirs.Glad}",
   }
 
   links {
-    "GLFW"
+    "GLFW",
+    "Glad"
   }
   
   filter "system:macosx"
