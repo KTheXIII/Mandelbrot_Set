@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-namespace MSET {
+namespace EN {
 
     Window::Window(std::string title, unsigned int width, unsigned int height) {
         prop.title = title;
@@ -23,6 +23,8 @@ namespace MSET {
             throw "Failed to create GLFW window";
         }
 
+        SetVSync(true);
+
         glfwMakeContextCurrent(window);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -36,4 +38,11 @@ namespace MSET {
 
     GLFWwindow* Window::GetWindow() { return window; }
 
-}  // namespace MSET
+    void Window::SetVSync(bool enable) {
+        glfwSwapInterval(enable ? 1 : 0);
+        m_VSync = enable;
+    }
+
+    bool Window::IsVSync() { return m_VSync; }
+
+}  // namespace EN

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MSET {
+namespace EN {
 
     class VertexBuffer {
        public:
@@ -44,4 +44,4 @@ namespace MSET {
         unsigned int m_BufferID;  // Index Buffer Object
     };
 
-}  // namespace MSET
+}  // namespace EN

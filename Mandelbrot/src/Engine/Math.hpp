@@ -1,7 +1,7 @@
 #pragma once
 #include <type_traits>
 
-namespace MSET {
+namespace EN {
 
     template <typename T, typename = typename std::enable_if<
                               std::is_arithmetic<T>::value, T>::type>
@@ -15,4 +15,4 @@ namespace MSET {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
-}  // namespace MSET
+}  // namespace EN

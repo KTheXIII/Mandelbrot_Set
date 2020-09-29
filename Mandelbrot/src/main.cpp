@@ -7,8 +7,7 @@
 
 #include "stb/stb_image_write.h"
 
-#include "Engine/Window.hpp"
-#include "Engine/Math.hpp"
+#include "Engine/Engine.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -37,36 +36,8 @@ std::string load_shader_source(const std::string& file_path) {
     return ss.str();
 }
 
-unsigned int compile_shader(unsigned int shader_type,
-                            const std::string& source) {
-    unsigned int id = glCreateShader(shader_type);
-    const char* src = source.c_str();
-    glShaderSource(id, 1, &src, nullptr);
-    glCompileShader(id);
-
-    int results;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &results);
-    if (results == GL_FALSE) {
-        int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)alloca(length * sizeof(char));
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "\u001b[31mFailed to compile "
-                  << (shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment")
-                  << " shader\u001b[0m" << std::endl;
-        std::cout << message << std::endl;
-        glDeleteShader(id);
-
-        return 0;
-    }
-
-    return id;
-};
-
 int main(int argc, char const* argv[]) {
-    unsigned int width = 720, height = 480;
-
-    MSET::Window app("Mandelbrot set", width, height);
+    EN::Window app("Mandelbrot set");
 
     const std::string vertex_shader_source =
         load_shader_source("Mandelbrot/asset/basic.vert");
@@ -74,17 +45,8 @@ int main(int argc, char const* argv[]) {
     const std::string fragment_shader_source =
         load_shader_source("Mandelbrot/asset/basic.frag");
 
-    unsigned int sp = glCreateProgram();
-    unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertex_shader_source);
-    unsigned int fs =
-        compile_shader(GL_FRAGMENT_SHADER, fragment_shader_source);
-
-    glAttachShader(sp, vs);
-    glAttachShader(sp, fs);
-    glLinkProgram(sp);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    EN::Shader s("Mandelbrot/asset/basic.vert", "Mandelbrot/asset/basic.frag");
+    s.Bind();
 
     float positions[] = {
         -0.5f, -0.5f, 0.0f,  // Left
@@ -115,7 +77,7 @@ int main(int argc, char const* argv[]) {
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(sp);
+        s.Bind();
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -125,7 +87,6 @@ int main(int argc, char const* argv[]) {
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
-    glDeleteProgram(sp);
 
     return 0;
 }
