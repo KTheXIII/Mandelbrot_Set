@@ -4,6 +4,8 @@
 #include <chrono>
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string.h>
 #include <vector>
 
@@ -65,8 +67,23 @@ void process_input(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
 }
 
-static unsigned int compile_shader(unsigned int type,
-                                   const std::string& source) {
+std::string load_shader_source(const std::string& path) {
+    std::ifstream stream(path);
+
+    std::string line;
+    std::stringstream ss;
+
+    if (stream.is_open()) {
+        while (getline(stream, line)) {
+            ss << line << '\n';
+        }
+        stream.close();
+    }
+
+    return ss.str();
+}
+
+unsigned int compile_shader(unsigned int type, const std::string& source) {
     unsigned int id = glCreateShader(type);
     const char* src = source.c_str();
     glShaderSource(id, 1, &src, nullptr);
@@ -126,20 +143,10 @@ int main(int argc, char const* argv[]) {
     }
 
     const std::string vertex_shader_source =
-        "#version 410 core\n"
-        "#extension GL_ARB_separate_shader_objects : enable\n"
-        "layout(location = 0) in vec4 position;\n"
-        "void main() {\n"
-        "    gl_Position = position;\n"
-        "\n}";
+        load_shader_source("Mandelbrot/asset/basic.vert");
 
     const std::string fragment_shader_source =
-        "#version 410 core\n"
-        "#extension GL_ARB_separate_shader_objects : enable\n"
-        "layout(location = 0) out vec4 color;\n"
-        "void main() {\n"
-        "    color = vec4(.1, .86, .99, 1.0);"
-        "\n}";
+        load_shader_source("Mandelbrot/asset/basic.frag");
 
     unsigned int sp = glCreateProgram();
     unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertex_shader_source);
@@ -172,6 +179,8 @@ int main(int argc, char const* argv[]) {
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     while (!glfwWindowShouldClose(window)) {
         // inputs

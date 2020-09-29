@@ -47,7 +47,11 @@ project "Mandelbrot"
     "GLFW",
     "Glad"
   }
-  
+
+  -- postbuildcommands {
+  --    ("{COPY} %{prj.name}/asset/* %{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/")
+  -- }
+
   filter "system:macosx"
     systemversion "latest"
     system "macosx"
