@@ -1,6 +1,3 @@
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
 #include <chrono>
 #include <cmath>
 #include <iostream>
@@ -10,6 +7,8 @@
 #include <vector>
 
 #include "stb/stb_image_write.h"
+
+#include "Window.hpp"
 
 constexpr float default_scale = 1.5f;
 constexpr float default_radius = 2.f;
@@ -109,38 +108,9 @@ unsigned int compile_shader(unsigned int type, const std::string& source) {
 };
 
 int main(int argc, char const* argv[]) {
-    GLFWwindow* window;
-    int width = 800, height = 600;
+    unsigned int width = 720, height = 480;
 
-    if (!glfwInit())
-        return -1;
-
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // Disable window resize
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    window = glfwCreateWindow(width, height, "Mandelbrot set", NULL, NULL);
-
-    if (!window) {
-        std::cout << "\u001b[38;5;1mFailed to create GLFW window\u001b[0m"
-                  << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(
-        window,
-        framebuffer_size_callback); // register the callback for window reszie
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "\u001b[38;5;1mFailed to initialize GLAD\u001b[0m"
-                  << std::endl;
-        return -1;
-    }
+    MSET::Window instance("Mandelbrot set", width, height);
 
     const std::string vertex_shader_source =
         load_shader_source("Mandelbrot/asset/basic.vert");
@@ -182,9 +152,9 @@ int main(int argc, char const* argv[]) {
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(instance.GetWindow())) {
         // inputs
-        process_input(window);
+        process_input(instance.GetWindow());
 
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
@@ -193,15 +163,13 @@ int main(int argc, char const* argv[]) {
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(instance.GetWindow());
         glfwPollEvents();
     }
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
     glDeleteProgram(sp);
-
-    glfwTerminate();
 
     return 0;
 }

@@ -31,6 +31,7 @@ project "Mandelbrot"
 
   files {
     "%{prj.name}/src/**.h",
+    "%{prj.name}/src/**.hpp",
     "%{prj.name}/src/**.cpp",
     "%{prj.name}/vendor/stb/**.h",
     "%{prj.name}/vendor/stb/**.cpp"
