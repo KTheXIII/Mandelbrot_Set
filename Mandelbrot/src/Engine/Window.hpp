@@ -16,16 +16,16 @@ namespace MSET {
     };
 
     class Window {
-      public:
+       public:
         Window(std::string title, unsigned int width, unsigned int height);
 
         ~Window();
 
         GLFWwindow* GetWindow();
 
-      private:
+       private:
         GLFWwindow* window;
 
         WindowProp prop;
     };
-} // namespace MSET
+}  // namespace MSET

@@ -1,7 +1,8 @@
-BasedOnStyle: LLVM
+BasedOnStyle: Google 
 IndentWidth: 4
-Language: Cpp
 TabWidth: 4
+ContinuationIndentWidth: 4
+Language: Cpp
 SortIncludes: false 
 CompactNamespaces: true
 NamespaceIndentation: All
@@ -9,3 +10,4 @@ AllowAllConstructorInitializersOnNextLine: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 PointerAlignment: Left
+SpaceBeforeInheritanceColon: true

@@ -7,8 +7,8 @@
 
 #include "stb/stb_image_write.h"
 
-#include "Window.hpp"
-#include "Math.hpp"
+#include "Engine/Window.hpp"
+#include "Engine/Math.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -19,24 +19,27 @@ void process_input(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
 }
 
-std::string load_shader_source(const std::string& path) {
-    std::ifstream stream(path);
-
-    std::string line;
+std::string load_shader_source(const std::string& file_path) {
+    std::ifstream stream(file_path);
     std::stringstream ss;
 
+    if (stream.fail()) {
+        std::cout << "Error reading file" << std::endl;
+        stream.close();
+        return "ERROR";
+    }
+
     if (stream.is_open()) {
-        while (getline(stream, line)) {
-            ss << line << '\n';
-        }
+        ss << stream.rdbuf();
         stream.close();
     }
 
     return ss.str();
 }
 
-unsigned int compile_shader(unsigned int type, const std::string& source) {
-    unsigned int id = glCreateShader(type);
+unsigned int compile_shader(unsigned int shader_type,
+                            const std::string& source) {
+    unsigned int id = glCreateShader(shader_type);
     const char* src = source.c_str();
     glShaderSource(id, 1, &src, nullptr);
     glCompileShader(id);
@@ -48,9 +51,9 @@ unsigned int compile_shader(unsigned int type, const std::string& source) {
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         char* message = (char*)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "Failed to compiled "
-                  << (type == GL_VERTEX_SHADER ? "Vertex" : "Fragment")
-                  << " shader!" << std::endl;
+        std::cout << "\u001b[31mFailed to compile "
+                  << (shader_type == GL_VERTEX_SHADER ? "Vertex" : "Fragment")
+                  << " shader\u001b[0m" << std::endl;
         std::cout << message << std::endl;
         glDeleteShader(id);
 
@@ -63,9 +66,7 @@ unsigned int compile_shader(unsigned int type, const std::string& source) {
 int main(int argc, char const* argv[]) {
     unsigned int width = 720, height = 480;
 
-    MSET::Window instance("Mandelbrot set", width, height);
-
-    std::cout << MSET::clamp(3, 1, 5) << std::endl;
+    MSET::Window app("Mandelbrot set", width, height);
 
     const std::string vertex_shader_source =
         load_shader_source("Mandelbrot/asset/basic.vert");
@@ -86,9 +87,9 @@ int main(int argc, char const* argv[]) {
     glDeleteShader(fs);
 
     float positions[] = {
-        -0.5f, -0.5f, 0.0f, // Left
-        0.0f,  0.5f,  0.0f, // Top
-        0.5f,  -0.5f, 0.0f  // Right
+        -0.5f, -0.5f, 0.0f,  // Left
+        0.0f,  0.5f,  0.0f,  // Top
+        0.5f,  -0.5f, 0.0f   // Right
     };
 
     unsigned int vbo, vao;
@@ -107,9 +108,9 @@ int main(int argc, char const* argv[]) {
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    while (!glfwWindowShouldClose(instance.GetWindow())) {
+    while (!glfwWindowShouldClose(app.GetWindow())) {
         // inputs
-        process_input(instance.GetWindow());
+        process_input(app.GetWindow());
 
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
@@ -118,7 +119,7 @@ int main(int argc, char const* argv[]) {
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glfwSwapBuffers(instance.GetWindow());
+        glfwSwapBuffers(app.GetWindow());
         glfwPollEvents();
     }
 

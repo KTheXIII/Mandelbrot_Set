@@ -23,12 +23,11 @@ namespace MSET {
             z_real = z_real_tmp;
 
             // dot product instead of sqrt
-            if (z_real * z_real + z_imaginary * z_imaginary > r2)
-                break;
+            if (z_real * z_real + z_imaginary * z_imaginary > r2) break;
 
             iterations++;
         }
 
         return iterations;
     }
-} // namespace MSET
+}  // namespace MSET

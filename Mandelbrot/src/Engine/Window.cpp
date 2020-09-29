@@ -7,11 +7,8 @@ namespace MSET {
         prop.width = width;
         prop.height = height;
 
-        if (!glfwInit())
-            throw "GLFW not initialized";
+        if (!glfwInit()) throw "GLFW not initialized";
 
-        glfwWindowHint(GLFW_RESIZABLE,
-                       GLFW_TRUE); // Disable window resize
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -38,4 +35,5 @@ namespace MSET {
     Window::~Window() { glfwDestroyWindow(window); }
 
     GLFWwindow* Window::GetWindow() { return window; }
-} // namespace MSET
+
+}  // namespace MSET
