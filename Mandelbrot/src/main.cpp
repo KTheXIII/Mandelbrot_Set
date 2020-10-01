@@ -18,32 +18,8 @@ void process_input(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
 }
 
-std::string load_shader_source(const std::string& file_path) {
-    std::ifstream stream(file_path);
-    std::stringstream ss;
-
-    if (stream.fail()) {
-        std::cout << "Error reading file" << std::endl;
-        stream.close();
-        return "ERROR";
-    }
-
-    if (stream.is_open()) {
-        ss << stream.rdbuf();
-        stream.close();
-    }
-
-    return ss.str();
-}
-
 int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
-
-    const std::string vertex_shader_source =
-        load_shader_source("Mandelbrot/asset/basic.vert");
-
-    const std::string fragment_shader_source =
-        load_shader_source("Mandelbrot/asset/basic.frag");
 
     EN::Shader s("Mandelbrot/asset/basic.vert", "Mandelbrot/asset/basic.frag");
     s.Bind();
@@ -54,21 +30,13 @@ int main(int argc, char const* argv[]) {
         0.5f,  -0.5f, 0.0f   // Right
     };
 
-    unsigned int vbo, vao;
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
+    EN::VertexBuffer vb(positions, sizeof(positions));
+    EN::ArrayBuffer ab(3);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+    vb.UnBind();
+    ab.UnBind();
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glfwSetFramebufferSizeCallback(app.GetWindow(), framebuffer_size_callback);
 
     while (!glfwWindowShouldClose(app.GetWindow())) {
         // inputs
@@ -78,15 +46,12 @@ int main(int argc, char const* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         s.Bind();
-        glBindVertexArray(vao);
+        ab.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(app.GetWindow());
         glfwPollEvents();
     }
-
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &vbo);
 
     return 0;
 }

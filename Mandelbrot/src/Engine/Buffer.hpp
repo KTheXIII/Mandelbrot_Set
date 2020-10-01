@@ -1,10 +1,12 @@
 #pragma once
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 namespace EN {
 
     class VertexBuffer {
        public:
-        VertexBuffer();
+        VertexBuffer(const void* data, unsigned int size);
 
         ~VertexBuffer();
 
@@ -16,9 +18,9 @@ namespace EN {
         unsigned int m_BufferID;  // Vertex Buffer Object
     };
 
-    class ArrayBuffer {
+    class ArrayBuffer {  // TODO: Fix array buffer
        public:
-        ArrayBuffer();
+        ArrayBuffer(unsigned int size);
 
         ~ArrayBuffer();
 

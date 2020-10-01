@@ -1,7 +1,7 @@
 #include "Shader.hpp"
 
 namespace EN {
-    Shader::Shader() {}
+    Shader::Shader() { m_ProgramID = CreateShader(basic_vs, basic_fs); }
 
     Shader::Shader(const std::string& file_path) {}
 
@@ -10,6 +10,14 @@ namespace EN {
         : m_ProgramID(0) {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
+
+        if (source.vertex.compare("ERROR") == 0) {
+            source.vertex = basic_vs;
+        }
+
+        if (source.fragment.compare("ERROR") == 0) {
+            source.fragment = basic_fs;
+        }
 
         m_ProgramID = CreateShader(source.vertex, source.fragment);
     }
@@ -70,7 +78,7 @@ namespace EN {
         std::stringstream ss;
 
         if (stream.fail()) {
-            std::cout << "Error reading file" << std::endl;
+            std::cout << "Error reading shader file" << std::endl;
             stream.close();
             return "ERROR";
         }

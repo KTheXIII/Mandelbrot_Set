@@ -30,7 +30,7 @@ namespace EN {
         void UnBind() const;
 
        private:
-        unsigned int m_ProgramID;  // Shader Program Object
+        unsigned int m_ProgramID;  // Shader Program
 
         unsigned int CreateShader(const std::string& vertex_source,
                                   const std::string& fragment_source);
@@ -40,5 +40,21 @@ namespace EN {
 
         std::string LoadShaderFile(const std::string& file_path);
     };
+
+    static std::string basic_vs =
+        "#version 410 core\n"
+        "#extension GL_ARB_separate_shader_objects : enable\n"
+        "layout(location = 0) in vec4 position;\n"
+        "void main() {"
+        "gl_Position = position;"
+        "}";
+
+    static std::string basic_fs =
+        "#version 410 core\n"
+        "#extension GL_ARB_separate_shader_objects : enable\n"
+        "layout(location = 0) out vec4 color;"
+        "void main() {"
+        "    color = vec4(1.0, 0.0, 1.0, 1.0);"
+        "}";
 
 }  // namespace EN
