@@ -6,24 +6,26 @@
 #include "GLFW/glfw3.h"
 
 namespace EN {
-    constexpr unsigned int DEFAULT_WIDTH = 720, DEFAULT_HEIGHT = 480;
+    constexpr uint32_t DEFAULT_WIDTH = 720, DEFAULT_HEIGHT = 480;
 
     struct WindowProp {
         std::string title;
-        unsigned int width, height;
+        uint32_t width, height;
 
         WindowProp(const std::string& title = "Default",
-                   unsigned int width = DEFAULT_WIDTH,
-                   unsigned int height = DEFAULT_HEIGHT)
+                   uint32_t width = DEFAULT_WIDTH,
+                   uint32_t height = DEFAULT_HEIGHT)
             : title(title), width(width), height(height) {}
     };
 
     class Window {
        public:
-        Window(std::string title, unsigned int width = DEFAULT_WIDTH,
-               unsigned int height = DEFAULT_HEIGHT);
+        Window(std::string title, uint32_t width = DEFAULT_WIDTH,
+               uint32_t height = DEFAULT_HEIGHT);
 
         ~Window();
+
+        void OnUpdate();
 
         GLFWwindow* GetWindow();
 
@@ -33,8 +35,8 @@ namespace EN {
 
        private:
         bool m_VSync;
-        GLFWwindow* window;
+        GLFWwindow* m_Window;
 
-        WindowProp prop;
+        WindowProp m_WindowData;
     };
 }  // namespace EN

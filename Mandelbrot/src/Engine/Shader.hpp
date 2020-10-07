@@ -29,32 +29,42 @@ namespace EN {
 
         void UnBind() const;
 
+        uint32_t GetID() const;
+
        private:
-        unsigned int m_ProgramID;  // Shader Program
+        uint32_t m_ProgramID;  // Shader Program
 
-        unsigned int CreateShader(const std::string& vertex_source,
-                                  const std::string& fragment_source);
+        uint32_t CreateShader(const std::string& vertex_source,
+                              const std::string& fragment_source);
 
-        unsigned int CompileShader(unsigned int shader_type,
-                                   const std::string& source);
+        uint32_t CompileShader(uint32_t shader_type, const std::string& source);
 
         std::string LoadShaderFile(const std::string& file_path);
     };
 
     static std::string basic_vs =
         "#version 410 core\n"
-        "#extension GL_ARB_separate_shader_objects : enable\n"
-        "layout(location = 0) in vec4 position;\n"
+        "layout(location = 0) in vec3 a_position;"
+        "layout(location = 1) in vec3 a_color;"
+        "layout(location = 2) in vec2 a_uv;"
+        "out vec4 io_color;"
+        "out vec2 io_uv;"
+        "uniform mat4 u_transform;"
         "void main() {"
-        "gl_Position = position;"
+        "io_color = vec4(a_color, 1.0);"
+        "io_uv = a_uv;"
+        "gl_Position =vec4(a_position, 1.0f);"
         "}";
 
     static std::string basic_fs =
         "#version 410 core\n"
-        "#extension GL_ARB_separate_shader_objects : enable\n"
         "layout(location = 0) out vec4 color;"
+        "in vec4 io_color;"
+        "in vec2 io_uv;"
+        "uniform vec4 u_color;"
+        "uniform sampler2D u_texture;"
         "void main() {"
-        "    color = vec4(1.0, 0.0, 1.0, 1.0);"
+        "color = vec4(1.0f, 0.0f, 1.0f, 1.0f);"
         "}";
 
 }  // namespace EN

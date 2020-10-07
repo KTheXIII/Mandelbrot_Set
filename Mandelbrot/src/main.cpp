@@ -1,9 +1,5 @@
 #include <chrono>
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string.h>
-#include <vector>
 
 #include "stb/stb_image_write.h"
 
@@ -21,14 +17,14 @@ void process_input(GLFWwindow* window) {
 int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
 
-    EN::Shader s("Mandelbrot/asset/basic.vert", "Mandelbrot/asset/basic.frag");
-    s.Bind();
-
     float positions[] = {
         -0.5f, -0.5f, 0.0f,  // Left
         0.0f,  0.5f,  0.0f,  // Top
         0.5f,  -0.5f, 0.0f   // Right
     };
+
+    EN::Shader s("Mandelbrot/asset/basic.vert", "Mandelbrot/asset/basic.frag");
+    s.Bind();
 
     EN::VertexBuffer vb(positions, sizeof(positions));
     EN::ArrayBuffer ab(3);
@@ -49,8 +45,7 @@ int main(int argc, char const* argv[]) {
         ab.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glfwSwapBuffers(app.GetWindow());
-        glfwPollEvents();
+        app.OnUpdate();
     }
 
     return 0;

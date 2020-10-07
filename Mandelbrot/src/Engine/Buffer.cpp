@@ -1,7 +1,10 @@
 #include "Buffer.hpp"
 
 namespace EN {
-    VertexBuffer::VertexBuffer(const void* data, unsigned int size) {
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    VertexBuffer::VertexBuffer(const void* data, uint32_t size) {
         glGenBuffers(1, &m_BufferID);
         glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
@@ -9,11 +12,15 @@ namespace EN {
 
     VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &m_BufferID); }
 
-    void VertexBuffer::Bind() { glBindBuffer(GL_ARRAY_BUFFER, m_BufferID); }
+    void VertexBuffer::Bind() const {
+        glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
+    }
 
-    void VertexBuffer::UnBind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
+    void VertexBuffer::UnBind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
-    ArrayBuffer::ArrayBuffer(unsigned int size) {
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+    ArrayBuffer::ArrayBuffer(uint32_t size) {
         glGenVertexArrays(1, &m_BufferID);
         glBindVertexArray(m_BufferID);
         glEnableVertexAttribArray(0);
@@ -22,15 +29,18 @@ namespace EN {
 
     ArrayBuffer::~ArrayBuffer() { glDeleteVertexArrays(1, &m_BufferID); }
 
-    void ArrayBuffer::Bind() { glBindVertexArray(m_BufferID); }
+    void ArrayBuffer::Bind() const { glBindVertexArray(m_BufferID); }
 
-    void ArrayBuffer::UnBind() { glBindVertexArray(0); }
+    void ArrayBuffer::UnBind() const { glBindVertexArray(0); }
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     IndexBuffer::IndexBuffer() {}
 
     IndexBuffer::~IndexBuffer() {}
 
-    void IndexBuffer::Bind() {}
+    void IndexBuffer::Bind() const {}
 
-    void IndexBuffer::UnBind() {}
+    void IndexBuffer::UnBind() const {}
+
 }  // namespace EN

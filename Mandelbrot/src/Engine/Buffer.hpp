@@ -6,30 +6,30 @@ namespace EN {
 
     class VertexBuffer {
        public:
-        VertexBuffer(const void* data, unsigned int size);
+        VertexBuffer(const void* data, uint32_t size);
 
         ~VertexBuffer();
 
-        void Bind();
+        void Bind() const;
 
-        void UnBind();
+        void UnBind() const;
 
        private:
-        unsigned int m_BufferID;  // Vertex Buffer Object
+        uint32_t m_BufferID;  // Vertex Buffer Object
     };
 
     class ArrayBuffer {  // TODO: Fix array buffer
        public:
-        ArrayBuffer(unsigned int size);
+        ArrayBuffer(uint32_t size);
 
         ~ArrayBuffer();
 
-        void Bind();
+        void Bind() const;
 
-        void UnBind();
+        void UnBind() const;
 
        private:
-        unsigned int m_BufferID;  // Vertex Array Buffer Object
+        uint32_t m_BufferID;  // Vertex Array Buffer Object
     };
 
     class IndexBuffer {
@@ -38,12 +38,12 @@ namespace EN {
 
         ~IndexBuffer();
 
-        void Bind();
+        void Bind() const;
 
-        void UnBind();
+        void UnBind() const;
 
        private:
-        unsigned int m_BufferID;  // Index Buffer Object
+        uint32_t m_BufferID;  // Index Buffer Object
     };
 
 }  // namespace EN

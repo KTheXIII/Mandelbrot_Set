@@ -28,12 +28,14 @@ namespace EN {
 
     void Shader::UnBind() const { glUseProgram(0); }
 
-    unsigned int Shader::CreateShader(const std::string& vertex_source,
-                                      const std::string& fragment_source) {
-        unsigned int program = glCreateProgram();
+    uint32_t Shader::GetID() const { return m_ProgramID; }
 
-        unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertex_source);
-        unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragment_source);
+    uint32_t Shader::CreateShader(const std::string& vertex_source,
+                                  const std::string& fragment_source) {
+        uint32_t program = glCreateProgram();
+
+        uint32_t vs = CompileShader(GL_VERTEX_SHADER, vertex_source);
+        uint32_t fs = CompileShader(GL_FRAGMENT_SHADER, fragment_source);
 
         glAttachShader(program, vs);
         glAttachShader(program, fs);
@@ -46,9 +48,9 @@ namespace EN {
         return program;
     }
 
-    unsigned int Shader::CompileShader(unsigned int shader_type,
-                                       const std::string& source) {
-        unsigned int id = glCreateShader(shader_type);
+    uint32_t Shader::CompileShader(uint32_t shader_type,
+                                   const std::string& source) {
+        uint32_t id = glCreateShader(shader_type);
         const char* src = source.c_str();
         glShaderSource(id, 1, &src, nullptr);
         glCompileShader(id);
