@@ -1,27 +1,29 @@
 #pragma once
+
 #include <string>
 #include <iostream>
+
+#include "Core.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace EN {
-    constexpr uint32_t DEFAULT_WIDTH = 720, DEFAULT_HEIGHT = 480;
+    constexpr u32 DEFAULT_WIDTH = 720, DEFAULT_HEIGHT = 480;
 
     struct WindowProp {
         std::string title;
-        uint32_t width, height;
+        u32 width, height;
 
-        WindowProp(const std::string& title = "Default",
-                   uint32_t width = DEFAULT_WIDTH,
-                   uint32_t height = DEFAULT_HEIGHT)
+        WindowProp(const char* title = "Default", u32 width = DEFAULT_WIDTH,
+                   u32 height = DEFAULT_HEIGHT)
             : title(title), width(width), height(height) {}
     };
 
     class Window {
        public:
-        Window(std::string title, uint32_t width = DEFAULT_WIDTH,
-               uint32_t height = DEFAULT_HEIGHT);
+        Window(const char* title, u32 width = DEFAULT_WIDTH,
+               u32 height = DEFAULT_HEIGHT);
 
         ~Window();
 

@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "Core.hpp"
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
@@ -18,28 +20,36 @@ namespace EN {
        public:
         Shader();
 
-        Shader(const std::string& file_path);
+        /**
+         * NOT IMPLEMENTED
+         */
+        Shader(const char *file_path);
 
-        Shader(const std::string& vertex_file_path,
-               const std::string& fragment_file_path);
+        /**
+         * Create shader form shader program
+         *
+         * @param vertex_file_path Vertex shader file path
+         * @param fragment_file_path Fragment shader file path
+         */
+        Shader(const char *vertex_file_path, const char *fragment_file_path);
 
         ~Shader();
 
         void Bind() const;
 
-        void UnBind() const;
+        void Unbind() const;
 
         uint32_t GetID() const;
 
        private:
         uint32_t m_ProgramID;  // Shader Program
 
-        uint32_t CreateShader(const std::string& vertex_source,
-                              const std::string& fragment_source);
+        uint32_t CreateShader(const std::string &vertex_source,
+                              const std::string &fragment_source);
 
-        uint32_t CompileShader(uint32_t shader_type, const std::string& source);
+        uint32_t CompileShader(uint32_t shader_type, const std::string &source);
 
-        std::string LoadShaderFile(const std::string& file_path);
+        std::string LoadShaderFile(const std::string &file_path);
     };
 
     static std::string basic_vs =

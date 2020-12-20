@@ -9,5 +9,6 @@ NamespaceIndentation: All
 AllowAllConstructorInitializersOnNextLine: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
-PointerAlignment: Left
+DerivePointerAlignment: false
+PointerAlignment: Right
 SpaceBeforeInheritanceColon: true

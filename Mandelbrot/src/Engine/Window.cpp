@@ -2,7 +2,7 @@
 
 namespace EN {
 
-    Window::Window(std::string title, uint32_t width, uint32_t height) {
+    Window::Window(const char* title, uint32_t width, uint32_t height) {
         m_WindowData.title = title;
         m_WindowData.width = width;
         m_WindowData.height = height;

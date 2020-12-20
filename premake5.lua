@@ -9,6 +9,9 @@ workspace "Mandelbrot"
     "Dist"
   }
 
+  configuration "**.gl.*"
+   buildaction "Copy"
+
 outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
 indirs["GLFW"] = "Mandelbrot/vendor/GLFW/include/"
@@ -34,10 +37,12 @@ project "Mandelbrot"
     "%{prj.name}/src/**.hpp",
     "%{prj.name}/src/**.cpp",
     "%{prj.name}/vendor/stb/**.h",
-    "%{prj.name}/vendor/stb/**.cpp"
+    "%{prj.name}/vendor/stb/**.cpp",
+    -- "%{prj.name}/asset/**.gl.*",
   }
 
   includedirs {
+    "%{prj.name}/asset",
     "%{prj.name}/src",
     "%{prj.name}/vendor",
     "%{indirs.GLFW}",
