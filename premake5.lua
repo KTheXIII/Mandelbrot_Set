@@ -16,6 +16,7 @@ outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
 indirs["GLFW"] = "Mandelbrot/vendor/GLFW/include/"
 indirs["Glad"] = "Mandelbrot/vendor/Glad/include"
+indirs["glm"] = "Mandelbrot/vendor/glm"
 
 group "Denpendencies"
   include "Mandelbrot/vendor/premake5.glfw.lua"
@@ -38,7 +39,7 @@ project "Mandelbrot"
     "%{prj.name}/src/**.cpp",
     "%{prj.name}/vendor/stb/**.h",
     "%{prj.name}/vendor/stb/**.cpp",
-    -- "%{prj.name}/asset/**.gl.*",
+    "%{prj.name}/asset/**.gl.*",
   }
 
   includedirs {
@@ -48,6 +49,7 @@ project "Mandelbrot"
     "%{prj.name}/vendor",
     "%{indirs.GLFW}",
     "%{indirs.Glad}",
+    "%{indirs.glm}",
   }
 
   links {

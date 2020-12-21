@@ -1,3 +1,6 @@
 [submodule "Mandelbrot/vendor/GLFW"]
   path = Mandelbrot/vendor/GLFW
   url = https://github.com/glfw/glfw.git
+[submodule "Mandelbrot/vendor/glm"]
+	path = Mandelbrot/vendor/glm
+	url = https://github.com/g-truc/glm.git

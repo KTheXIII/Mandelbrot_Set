@@ -39,7 +39,7 @@ namespace EN {
                u32 height = DEFAULT_HEIGHT);
 
         ~Window();
-        
+
         /**
          * Needs to be called every loop
          *
@@ -67,14 +67,14 @@ namespace EN {
          * @return VSync status
          */
         bool IsVSync();
-        
+
         /**
          * Get window title
          *
          * @return Window title
          */
         std::string GetTitle() const;
-        
+
         /**
          * Set the window title
          *
@@ -82,12 +82,15 @@ namespace EN {
          */
         void SetTitle(const std::string title);
 
+        u32 GetWidth() const;
+
+        u32 GetHeight() const;
+
        private:
         bool m_VSync;
 
-        GLFWwindow* m_Window; // GLFW Window context
+        GLFWwindow* m_Window;  // GLFW Window context
 
         WindowProp m_WindowData;
-
     };
 }  // namespace EN

@@ -59,4 +59,8 @@ namespace EN {
         glfwSetWindowTitle(m_Window, m_WindowData.title.c_str());
     }
 
+    u32 Window::GetWidth() const { return m_WindowData.width; }
+
+    u32 Window::GetHeight() const { return m_WindowData.height; }
+
 }  // namespace EN

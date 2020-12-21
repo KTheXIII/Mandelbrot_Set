@@ -13,5 +13,6 @@ void main() {
     io_color = a_color;
     io_uv = a_uv;
 
-    gl_Position = vec4(a_position, 1.0f);
+    // gl_Position = vec4(a_position, 1.0f);
+    gl_Position = u_transform * vec4(a_position, 1.0f);
 }

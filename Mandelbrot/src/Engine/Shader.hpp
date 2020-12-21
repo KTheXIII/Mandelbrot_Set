@@ -49,6 +49,28 @@ namespace EN {
 
         uint32_t GetID() const;
 
+        void SetUniform1f(const char* name, const f32& value);
+
+        void SetUniform2f(const char* name, const f32& v0, const f32& v1);
+
+        void SetUniform3f(const char* name, const f32& v0, const f32& v1,
+                          const f32& v3);
+
+        void SetUniform4f(const char* name, const f32& v0, const f32& v1,
+                          const f32& v3, const f32& v4);
+
+        /**
+         * Set the mat4 uniform
+         *
+         * @param[in] name The name of the uniform
+         * @param[in] value The value pointer
+         * @param[in] count Default = 1, useful if the uniform is an array
+         * @param[in] transpose Default = false, Specifies whether to transpose
+         * the matrix
+         */
+        void SetUniform4fv(const char* name, const f32* value,
+                           const u32& count = 1, const bool& transpose = false);
+
        private:
         uint32_t m_ProgramID;  // Shader Program
 
@@ -78,9 +100,12 @@ namespace EN {
          * @return File contents if it exist else it'll return `ERROR` text.
          */
         std::string LoadShaderFile(const char* file_path);
+
+        u32 GetUniformLocation(const char* name);
     };
 
-    static std::string basic_vs =
+    // Basic Vertex Shader program
+    const static std::string basic_vs =
         "#version 410 core\n"
         "layout(location = 0) in vec3 a_position;"
         "layout(location = 1) in vec4 a_color;"
@@ -94,7 +119,8 @@ namespace EN {
         "gl_Position = vec4(a_position, 1.0f);"
         "}";
 
-    static std::string basic_fs =
+    // Basic Fragment Shader program
+    const static std::string basic_fs =
         "#version 410 core\n"
         "#extension GL_ARB_separate_shader_objects : enable\n"
         "layout(location = 0) out vec4 color;"

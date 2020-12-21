@@ -10,6 +10,12 @@ Clone:
 git clone --recursive https://github.com/KTheXIII/Mandelbrot_set.git
 ```
 
+If you didn't pull with --recursive then you can do this command to pull the submodules
+
+```
+git submodule update --init --recursive
+```
+
 ## Requirements
 
   - [premake5](https://github.com/premake/premake-core)

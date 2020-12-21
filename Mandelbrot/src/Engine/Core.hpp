@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 namespace EN {
+    // Type defines for shorthand inside namespace
     typedef uint8_t u8;
     typedef uint16_t u16;
     typedef uint32_t u32;
@@ -15,4 +16,5 @@ namespace EN {
 
     typedef float f32;
     typedef double f64;
+
 }  // namespace EN

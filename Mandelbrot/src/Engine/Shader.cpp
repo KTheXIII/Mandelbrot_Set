@@ -28,6 +28,31 @@ namespace EN {
 
     u32 Shader::GetID() const { return m_ProgramID; }
 
+    void Shader::SetUniform1f(const char* name, const f32& value) {
+        glUniform1f(GetUniformLocation(name), value);
+    }
+
+    void Shader::SetUniform2f(const char* name, const f32& v0, const f32& v1) {
+        glUniform2f(GetUniformLocation(name), v0, v1);
+    }
+
+    void Shader::SetUniform3f(const char* name, const f32& v0, const f32& v1,
+                              const f32& v3) {
+        glUniform3f(GetUniformLocation(name), v0, v1, v3);
+    }
+
+    void Shader::SetUniform4f(const char* name, const f32& v0, const f32& v1,
+                              const f32& v3, const f32& v4) {
+        glUniform4f(GetUniformLocation(name), v0, v1, v3, v4);
+    }
+
+    void Shader::SetUniform4fv(const char* name, const f32* value,
+                               const u32& count,
+                               const bool& transpose) {
+        glUniformMatrix4fv(GetUniformLocation(name), count,
+                           (transpose ? GL_TRUE : GL_FALSE), value);
+    }
+
     u32 Shader::CreateShader(const char* vertex_source,
                              const char* fragment_source) {
         u32 program = glCreateProgram();
@@ -89,4 +114,9 @@ namespace EN {
 
         return ss.str();
     }
+
+    u32 Shader::GetUniformLocation(const char* name) {
+        return glGetUniformLocation(m_ProgramID, name);
+    }
+
 }  // namespace EN

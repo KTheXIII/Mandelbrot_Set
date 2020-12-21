@@ -1,9 +1,13 @@
 #include <chrono>
 #include <iostream>
 
+#include "Engine.hpp"
+
 #include "stb/stb_image_write.h"
 
-#include "Engine.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -53,6 +57,18 @@ int main(int argc, char const* argv[]) {
     while (!glfwWindowShouldClose(app.GetWindow())) {
         // inputs
         process_input(app.GetWindow());
+
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::scale(
+            trans,
+            glm::vec3(1.f * 2.f,
+                      ((float)app.GetWidth() / (float)app.GetHeight()) * 2.f,
+                      1.0f));
+        trans = glm::scale(trans, glm::vec3(0.5f));
+        trans = glm::rotate(trans, (float)glfwGetTime(),
+                            glm::vec3(0.0f, 0.0f, 1.0f));
+
+        shader.SetUniform4fv("u_transform", glm::value_ptr(trans));
 
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
