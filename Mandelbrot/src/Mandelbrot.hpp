@@ -18,6 +18,7 @@ namespace MSET {
      * @param scale_x Scale in X direction
      * @param scale_y Scale in Y direction
      * @param radius Escape radius
+     *
      * @return Number of iteration inside escape radius
      */
     int mandelbrot(const float& x, const float& y,

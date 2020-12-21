@@ -2,7 +2,7 @@
 
 namespace EN {
 
-    Window::Window(const char* title, uint32_t width, uint32_t height) {
+    Window::Window(const char* title, u32 width, u32 height) {
         m_WindowData.title = title;
         m_WindowData.width = width;
         m_WindowData.height = height;
@@ -17,8 +17,8 @@ namespace EN {
                                     "Mandelbrot set", NULL, NULL);
 
         if (!m_Window) {
-            std::cout << "\u001b[38;5;1mFailed to create GLFW Window\u001b[0m"
-                      << std::endl;
+            std::cout << "Failed to create GLFW Window" << std::endl;
+
             glfwTerminate();
             throw "Failed to create GLFW m_Window";
         }
@@ -30,6 +30,7 @@ namespace EN {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             std::cout << "\u001b[38;5;1mFailed to initialize GLAD\u001b[0m"
                       << std::endl;
+
             throw "Failed to initialize GLAD";
         }
     }
@@ -49,5 +50,13 @@ namespace EN {
     }
 
     bool Window::IsVSync() { return m_VSync; }
+
+    std::string Window::GetTitle() const { return m_WindowData.title; }
+
+    void Window::SetTitle(const std::string title) {
+        m_WindowData.title = title;
+
+        glfwSetWindowTitle(m_Window, m_WindowData.title.c_str());
+    }
 
 }  // namespace EN

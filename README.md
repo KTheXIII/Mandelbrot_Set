@@ -1,4 +1,4 @@
-# Mandelbrot Set in C++
+# Mandelbrot set in C++
 
 Basic image generation using [stb](https://github.com/nothings/stb) image loader/writer.
 
@@ -23,6 +23,22 @@ Example: Makefile
 ```
 premake5 gmake
 ```
+
+### Makefile
+
+Debug mode
+
+```
+make
+```
+
+Use for building different builds
+
+```
+make config=<mode>
+```
+
+`<mode>`: **Release**, **Debug**, **Dist**
 
 ## Math
 

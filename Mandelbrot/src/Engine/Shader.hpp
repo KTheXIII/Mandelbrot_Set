@@ -28,6 +28,8 @@ namespace EN {
 
         /**
          * NOT IMPLEMENTED
+         *
+         * TODO: Single file shader program
          */
         Shader(const char* file_path);
 
@@ -50,11 +52,31 @@ namespace EN {
        private:
         uint32_t m_ProgramID;  // Shader Program
 
+        /**
+         * Create shader
+         *
+         * @discussion Compile the given shader program
+         */
         uint32_t CreateShader(const char* vertex_source,
                               const char* fragment_source);
 
+        /**
+         * Compile the shader program
+         *
+         * @return Shader program
+         */
         uint32_t CompileShader(uint32_t shader_type, const char* source);
 
+        /**
+         * Load shader file.
+         *
+         * @discussion
+         *
+         * This attempts to read the file if it exist and return the
+         * file content
+         *
+         * @return File contents if it exist else it'll return `ERROR` text.
+         */
         std::string LoadShaderFile(const char* file_path);
     };
 

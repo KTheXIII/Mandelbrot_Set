@@ -60,8 +60,8 @@ project "Mandelbrot"
   -- }
 
   filter "system:macosx"
-    systemversion "latest"
     system "macosx"
+    systemversion "latest"
 
     defines {
       "GL_SILENCE_DEPRECATION"
@@ -96,6 +96,7 @@ project "Mandelbrot"
 
   filter "configurations:Debug"
     symbols "On"
+    debugdir "%{prj.name}"
 
   filter "configurations:Release"
     optimize "On"

@@ -12,13 +12,9 @@ namespace EN {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
 
-        if (source.vertex.compare("ERROR") == 0) {
-            source.vertex = basic_vs;
-        }
+        if (source.vertex.compare("ERROR") == 0) source.vertex = basic_vs;
 
-        if (source.fragment.compare("ERROR") == 0) {
-            source.fragment = basic_fs;
-        }
+        if (source.fragment.compare("ERROR") == 0) source.fragment = basic_fs;
 
         m_ProgramID =
             CreateShader(source.vertex.c_str(), source.fragment.c_str());
