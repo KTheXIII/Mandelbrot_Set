@@ -2,6 +2,10 @@
 
 Basic image generation using [stb](https://github.com/nothings/stb) image loader/writer.
 
+You need to use `--recursive` flag when cloning this repo.
+
+Clone:
+
 ```
 git clone --recursive https://github.com/KTheXIII/Mandelbrot_set.git
 ```
@@ -9,6 +13,16 @@ git clone --recursive https://github.com/KTheXIII/Mandelbrot_set.git
 ## Requirements
 
   - [premake5](https://github.com/premake/premake-core)
+
+## How to run
+
+Create project file using Premake.
+
+Example: Makefile
+
+```
+premake5 gmake
+```
 
 ## Math
 

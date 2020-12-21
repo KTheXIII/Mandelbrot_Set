@@ -28,7 +28,7 @@ namespace EN {
          *
          * @return Size in byte
          */
-        static u32 GetSizeOfType(u32 type) {
+        inline static u32 GetSizeOfType(u32 type) {
             switch (type) {
                 case GL_FLOAT:
                 case GL_UNSIGNED_INT:

@@ -10,7 +10,6 @@ out vec2 io_uv;
 uniform mat4 u_transform;
 
 void main() {
-    // io_color = vec4(a_color, 1.0);
     io_color = a_color;
     io_uv = a_uv;
 

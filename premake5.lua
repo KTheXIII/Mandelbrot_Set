@@ -44,6 +44,7 @@ project "Mandelbrot"
   includedirs {
     "%{prj.name}/asset",
     "%{prj.name}/src",
+    "%{prj.name}/src/Engine",
     "%{prj.name}/vendor",
     "%{indirs.GLFW}",
     "%{indirs.Glad}",

@@ -18,6 +18,12 @@ namespace EN {
 
     class Shader {
        public:
+        /**
+         * Create a shader using Basic shader program.
+         *
+         * The program require position data (XYZ), color data (RBGA) and uv
+         * data.
+         */
         Shader();
 
         /**
@@ -55,26 +61,27 @@ namespace EN {
     static std::string basic_vs =
         "#version 410 core\n"
         "layout(location = 0) in vec3 a_position;"
-        "layout(location = 1) in vec3 a_color;"
+        "layout(location = 1) in vec4 a_color;"
         "layout(location = 2) in vec2 a_uv;"
         "out vec4 io_color;"
         "out vec2 io_uv;"
         "uniform mat4 u_transform;"
         "void main() {"
-        "io_color = vec4(a_color, 1.0);"
+        "io_color = a_color;"
         "io_uv = a_uv;"
-        "gl_Position =vec4(a_position, 1.0f);"
+        "gl_Position = vec4(a_position, 1.0f);"
         "}";
 
     static std::string basic_fs =
         "#version 410 core\n"
+        "#extension GL_ARB_separate_shader_objects : enable\n"
         "layout(location = 0) out vec4 color;"
         "in vec4 io_color;"
         "in vec2 io_uv;"
         "uniform vec4 u_color;"
         "uniform sampler2D u_texture;"
         "void main() {"
-        "color = vec4(1.0f, 0.0f, 1.0f, 1.0f);"
+        "color = io_color;"
         "}";
 
 }  // namespace EN
