@@ -3,17 +3,18 @@
 namespace EN {
 
     void BufferLayout::Push(u32 type, u32 count, bool normalized) {
-        m_Elements.push_back({type, count, normalized});
+        u8 nm = normalized ? GL_TRUE : GL_FALSE;
+        m_Elements.push_back({type, count, nm});
         m_Stride += count * BufferElement::GetSizeOfType(type);
     }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     */
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    VertexBuffer::VertexBuffer(const void *data, const u32 &size) {
+    VertexBuffer::VertexBuffer(const void* data, const u32& size) {
         glGenBuffers(1, &m_BufferID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
-        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        Bind();
+        glBufferData(GL_ARRAY_BUFFER, size, data,
+                     GL_STATIC_DRAW);  // Set the VBO buffer data
     }
 
     VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &m_BufferID); }
@@ -24,8 +25,7 @@ namespace EN {
 
     void VertexBuffer::Unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     */
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
     ArrayBuffer::ArrayBuffer() { glGenVertexArrays(1, &m_BufferID); }
 
@@ -35,31 +35,33 @@ namespace EN {
 
     void ArrayBuffer::Unbind() const { glBindVertexArray(0); }
 
-    void ArrayBuffer::AddBuffer(const VertexBuffer &vb,
-                                const BufferLayout &layout) {
+    void ArrayBuffer::AddBuffer(const VertexBuffer& vb,
+                                const BufferLayout& layout) {
         Bind();
         vb.Bind();
-        const auto &elements = layout.GetElements();
+        const auto& elements = layout.GetElements();
         u32 offset = 0;
         for (u32 i = 0; i < elements.size(); i++) {
-            const auto &element = elements[i];
+            const auto& element = elements[i];
 
-            glEnableVertexAttribArray(i);
+            glEnableVertexAttribArray(
+                i);  // Vertex Attribute mapped to the location
             glVertexAttribPointer(i, element.count, element.type,
                                   element.normalized, layout.GetStride(),
-                                  (const void *)offset);
+                                  (const void*)offset);
             offset +=
                 element.count * BufferElement::GetSizeOfType(element.type);
         }
     }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     */
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    ElementBuffer::ElementBuffer(const void *data, const u32 &size) {
+    ElementBuffer::ElementBuffer(const void* data, const u32& count)
+        : m_Count(count) {
         glGenBuffers(1, &m_BufferID);
         Bind();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(u32), data,
+                     GL_STATIC_DRAW);
     }
 
     ElementBuffer::~ElementBuffer() { glDeleteBuffers(1, &m_BufferID); }
@@ -71,5 +73,7 @@ namespace EN {
     void ElementBuffer::Unbind() const {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
+
+    u32 ElementBuffer::GetCount() const { return m_Count; }
 
 }  // namespace EN

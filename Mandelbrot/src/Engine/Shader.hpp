@@ -23,7 +23,7 @@ namespace EN {
         /**
          * NOT IMPLEMENTED
          */
-        Shader(const char *file_path);
+        Shader(const char* file_path);
 
         /**
          * Create shader form shader program
@@ -31,7 +31,7 @@ namespace EN {
          * @param vertex_file_path Vertex shader file path
          * @param fragment_file_path Fragment shader file path
          */
-        Shader(const char *vertex_file_path, const char *fragment_file_path);
+        Shader(const char* vertex_file_path, const char* fragment_file_path);
 
         ~Shader();
 
@@ -44,12 +44,12 @@ namespace EN {
        private:
         uint32_t m_ProgramID;  // Shader Program
 
-        uint32_t CreateShader(const std::string &vertex_source,
-                              const std::string &fragment_source);
+        uint32_t CreateShader(const char* vertex_source,
+                              const char* fragment_source);
 
-        uint32_t CompileShader(uint32_t shader_type, const std::string &source);
+        uint32_t CompileShader(uint32_t shader_type, const char* source);
 
-        std::string LoadShaderFile(const std::string &file_path);
+        std::string LoadShaderFile(const char* file_path);
     };
 
     static std::string basic_vs =

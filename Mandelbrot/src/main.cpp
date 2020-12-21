@@ -5,51 +5,48 @@
 
 #include "Engine/Engine.hpp"
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-void process_input(GLFWwindow *window) {
+void process_input(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
 
     // clang-format off
     float vertices[] = {
-        // positions,             colors,                 texture coordinates
-        -0.5f,  0.5f,  0.0f,      1.0f, 0.0f, 0.0f,       0.0f, 1.0f,
-         0.5f,  0.5f,  0.0f,      0.0f, 1.0f, 0.0f,       1.0f, 1.0f,
-         0.5f, -0.5f,  0.0f,      0.0f, 0.0f, 1.0f,       1.0f, 0.0f,
-        -0.5f, -0.5f,  0.0f,      1.0f, 0.0f, 1.0f,       0.0f, 0.0f,
+    //  positions: x,y,z        colors: r,g,b,a,           texture coordinates
+        -0.5f,  0.5f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
+         0.5f,  0.5f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
+         0.5f, -0.5f,  0.0f,    0.0f, 0.0f, 1.0f, 1.0f,    1.0f,  0.0f,
+        -0.5f, -0.5f,  0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    0.0f,  0.0f,
     };
 
-    u32 indices[] = {
+    uint32_t indices[] = {
         0, 1, 2,
         0, 2, 3,
     };
     // clang-format on
+
+    // Create the layout of the data given
     EN::BufferLayout layout;
-    layout.Push(GL_FLOAT, 3);  // Position
-    layout.Push(GL_FLOAT, 3);  // Color
-    layout.Push(GL_FLOAT, 2);  // Texture coordinate
+    layout.Push(GL_FLOAT, 3);
+    layout.Push(GL_FLOAT, 4);
+    layout.Push(GL_FLOAT, 2);
 
-    EN::Shader s("asset/basic.gl.vert", "asset/basic.gl.frag");
-    s.Bind();
+    EN::Shader shader("asset/basic.gl.vert", "asset/basic.gl.frag");
 
-    EN::VertexBuffer vb(vertices, sizeof(vertices));
-    EN::ElementBuffer eb(indices, sizeof(indices));
+    // Configure the data for the GPU
     EN::ArrayBuffer ab;
+    ab.Bind();
+    EN::VertexBuffer vb(vertices, sizeof(vertices));
+    EN::ElementBuffer eb(indices, 6);
+
     ab.AddBuffer(vb, layout);
-
-    // TODO: FIX ARRAY BUFFER
-    // TODO: FIX so that we can specify what data we want to send it
-
-    vb.Unbind();
-    eb.Unbind();
-    ab.Unbind();
 
     glfwSetFramebufferSizeCallback(app.GetWindow(), framebuffer_size_callback);
 
@@ -60,9 +57,11 @@ int main(int argc, char const *argv[]) {
         // Render
         glClear(GL_COLOR_BUFFER_BIT);
 
-        s.Bind();
-        ab.Bind();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        shader.Bind();
+        ab.Bind();  // Bind Array Buffer
+        eb.Bind();  // Bind Element/Index Buffer
+
+        glDrawElements(GL_TRIANGLES, eb.GetCount(), GL_UNSIGNED_INT, nullptr);
 
         app.OnUpdate();
     }

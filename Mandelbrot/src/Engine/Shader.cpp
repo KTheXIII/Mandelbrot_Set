@@ -1,11 +1,13 @@
 #include "Shader.hpp"
 
 namespace EN {
-    Shader::Shader() { m_ProgramID = CreateShader(basic_vs, basic_fs); }
+    Shader::Shader() {
+        m_ProgramID = CreateShader(basic_vs.c_str(), basic_fs.c_str());
+    }
 
-    Shader::Shader(const char *file_path) {}
+    Shader::Shader(const char* file_path) {}
 
-    Shader::Shader(const char *vertex_file_path, const char *fragment_file_path)
+    Shader::Shader(const char* vertex_file_path, const char* fragment_file_path)
         : m_ProgramID(0) {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
@@ -18,7 +20,8 @@ namespace EN {
             source.fragment = basic_fs;
         }
 
-        m_ProgramID = CreateShader(source.vertex, source.fragment);
+        m_ProgramID =
+            CreateShader(source.vertex.c_str(), source.fragment.c_str());
     }
 
     Shader::~Shader() { glDeleteProgram(m_ProgramID); }
@@ -29,8 +32,8 @@ namespace EN {
 
     u32 Shader::GetID() const { return m_ProgramID; }
 
-    u32 Shader::CreateShader(const std::string &vertex_source,
-                             const std::string &fragment_source) {
+    u32 Shader::CreateShader(const char* vertex_source,
+                             const char* fragment_source) {
         u32 program = glCreateProgram();
 
         u32 vs = CompileShader(GL_VERTEX_SHADER, vertex_source);
@@ -47,10 +50,10 @@ namespace EN {
         return program;
     }
 
-    u32 Shader::CompileShader(u32 shader_type, const std::string &source) {
+    u32 Shader::CompileShader(u32 shader_type, const char* source) {
         u32 id = glCreateShader(shader_type);
-        const char *src = source.c_str();
-        glShaderSource(id, 1, &src, nullptr);
+
+        glShaderSource(id, 1, &source, nullptr);
         glCompileShader(id);
 
         i32 results;
@@ -58,7 +61,7 @@ namespace EN {
         if (results == GL_FALSE) {
             i32 length;
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-            char *message = (char *)alloca(length * sizeof(char));
+            char* message = (char*)alloca(length * sizeof(char));
             glGetShaderInfoLog(id, length, &length, message);
             std::cout << "\n\u001b[31mFailed to compile "
                       << (shader_type == GL_VERTEX_SHADER ? "Vertex"
@@ -73,7 +76,7 @@ namespace EN {
         return id;
     };
 
-    std::string Shader::LoadShaderFile(const std::string &file_path) {
+    std::string Shader::LoadShaderFile(const char* file_path) {
         std::ifstream stream(file_path);
         std::stringstream ss;
 

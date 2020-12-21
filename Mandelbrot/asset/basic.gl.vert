@@ -1,7 +1,5 @@
 #version 410 core
-#extension GL_ARB_separate_shader_objects : enable
 
-// Attribute
 layout(location = 0) in vec3 a_position;
 layout(location = 1) in vec4 a_color;
 layout(location = 2) in vec2 a_uv;
@@ -12,6 +10,9 @@ out vec2 io_uv;
 uniform mat4 u_transform;
 
 void main() {
+    // io_color = vec4(a_color, 1.0);
     io_color = a_color;
+    io_uv = a_uv;
+
     gl_Position = vec4(a_position, 1.0f);
 }

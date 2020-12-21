@@ -10,5 +10,5 @@ AllowAllConstructorInitializersOnNextLine: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 DerivePointerAlignment: false
-PointerAlignment: Right
+PointerAlignment: Left
 SpaceBeforeInheritanceColon: true
