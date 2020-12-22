@@ -84,8 +84,6 @@ int main(int argc, char const* argv[]) {
     float half_width = (float)app.GetWidth() / 2.f;
     float half_height = (float)app.GetHeight() / 2.f;
 
-    float aspect_ratio = (float)app.GetWidth() / (float)app.GetHeight();
-
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
