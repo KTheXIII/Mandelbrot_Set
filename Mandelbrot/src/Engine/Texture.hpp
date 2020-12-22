@@ -9,6 +9,8 @@
 
 namespace EN {
 
+    // TODO: Texture filter
+
     /**
      * Texture
      *

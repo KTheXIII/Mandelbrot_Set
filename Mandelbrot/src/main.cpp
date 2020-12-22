@@ -63,7 +63,7 @@ int main(int argc, char const* argv[]) {
     glfwSetFramebufferSizeCallback(app.GetNativeWindow(),
                                    framebuffer_size_callback);
 
-    glm::mat4 model(1.f);
+    glm::mat4 model(1.f);  // Use this for transforms
 
     // Setup camera
     glm::mat4 view(1.f);        // camera/view
@@ -81,23 +81,25 @@ int main(int argc, char const* argv[]) {
     //    ((float)M_PI) / 4.f, (float)app.GetWidth() / (float)app.GetHeight(),
     //    0.1f, 100.f);
 
-    float aspect_ratio = (float)app.GetWidth() / (float)app.GetHeight();
-    projection =
-        glm::ortho(-10.f * aspect_ratio, 10.f * aspect_ratio,
-                   -10.f , 10.f, 0.1f, 100.f);
+    float half_width = (float)app.GetWidth() / 2.f;
+    float half_height = (float)app.GetHeight() / 2.f;
 
-    shader.Bind();
-    shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
-    shader.Unbind();
+    float aspect_ratio = (float)app.GetWidth() / (float)app.GetHeight();
 
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
 
+        half_width = (float)app.GetWidth() / 2.f;
+        half_height = (float)app.GetHeight() / 2.f;
+        projection = glm::ortho(-half_width, half_width, -half_height,
+                                half_height, 0.1f, 100.f);
+
         model = glm::mat4(1.0f);
-        model = glm::scale(model, glm::vec3(20.f));
-        //model = glm::rotate(model, (float)glfwGetTime(),
-        //                    glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::scale(
+            model, glm::vec3(200.f * (sin((float)glfwGetTime()) + 1.5f)));
+        model = glm::rotate(model, (float)glfwGetTime(),
+                            glm::vec3(0.0f, 0.0f, 1.0f));
 
         // Render
         glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -106,6 +108,7 @@ int main(int argc, char const* argv[]) {
         shader.Bind();
         shader.SetUniform4fv("u_model", glm::value_ptr(model));
         shader.SetUniform4fv("u_view", glm::value_ptr(view));
+        shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer

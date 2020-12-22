@@ -158,7 +158,10 @@ namespace EN {
          */
         void Unbind() const;
 
-        u32 GetCount() const;
+        /**
+        * Get vertices count
+        */
+        uint32_t GetCount() const;
 
        private:
         u32 m_BufferID;  // Element Array Buffer Object

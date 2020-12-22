@@ -75,6 +75,6 @@ namespace EN {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    u32 ElementBuffer::GetCount() const { return m_Count; }
+    uint32_t ElementBuffer::GetCount() const { return m_Count; }
 
 }  // namespace EN

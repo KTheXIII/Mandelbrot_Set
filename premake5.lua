@@ -32,6 +32,8 @@ project "Mandelbrot"
   staticruntime "on"
   cppdialect "C++17"
 
+  defines { }
+
   targetdir("bin/" ..outdir.. "/%{prj.name}")
   objdir("obj/" ..outdir.. "/%{prj.name}")
 
