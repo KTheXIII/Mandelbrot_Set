@@ -46,7 +46,7 @@ namespace EN {
         /**
          * Needs to be called every loop
          *
-         * This swap the buffers and poll the events.
+         * Swap the buffers and poll the IO events.
          */
         void OnUpdate();
 
@@ -69,7 +69,7 @@ namespace EN {
          *
          * @return VSync status
          */
-        bool IsVSync();
+        bool IsVSync() const;
 
         /**
          * Get window title
@@ -83,11 +83,21 @@ namespace EN {
          *
          * @param[in] title String
          */
-        void SetTitle(const std::string title);
+        void SetTitle(const std::string& title);
 
-        u32 GetWidth() const;
+        /**
+         * Get window width
+         *
+         * @return Window width
+         */
+        uint32_t GetWidth() const;
 
-        u32 GetHeight() const;
+        /**
+         * Get window height
+         *
+         * @return Window height
+         */
+        uint32_t GetHeight() const;
 
        private:
         GLFWwindow* m_NativeWindow;  // GLFW Window context

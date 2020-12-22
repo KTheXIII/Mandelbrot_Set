@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <chrono>
 #include <iostream>
 
@@ -42,7 +44,7 @@ int main(int argc, char const* argv[]) {
     layout.Push(GL_FLOAT, 4);
     layout.Push(GL_FLOAT, 2);
 
-    EN::Shader shader("asset/basic.gl.vert", "asset/basic.gl.frag");
+    EN::Shader shader("asset/410.basic.gl.vert", "asset/410.basic.gl.frag");
     EN::Texture texture("asset/basic.gl.png");
     texture.Bind();
 
@@ -61,28 +63,50 @@ int main(int argc, char const* argv[]) {
     glfwSetFramebufferSizeCallback(app.GetNativeWindow(),
                                    framebuffer_size_callback);
 
-    glm::mat4 trans;
+    glm::mat4 model(1.f);
+
+    // Setup camera
+    glm::mat4 view(1.f);        // camera/view
+    glm::mat4 projection(1.f);  // projection
+
+    // clang-format off
+    view = glm::lookAt(
+        glm::vec3(0.f, 0.f, -2.f), // Position
+        glm::vec3(0.f, 0.f, 0.f), // Target
+        glm::vec3(0.f, 1.f, 0.f)  // Up
+    );
+    // clang-format on
+
+    // projection = glm::perspective(
+    //    ((float)M_PI) / 4.f, (float)app.GetWidth() / (float)app.GetHeight(),
+    //    0.1f, 100.f);
+
+    float aspect_ratio = (float)app.GetWidth() / (float)app.GetHeight();
+    projection =
+        glm::ortho(-10.f * aspect_ratio, 10.f * aspect_ratio,
+                   -10.f , 10.f, 0.1f, 100.f);
+
+    shader.Bind();
+    shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
+    shader.Unbind();
 
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
 
-        trans = glm::mat4(1.0f);
-        trans = glm::scale(
-            trans,
-            glm::vec3(1.f * 2.f,
-                      ((float)app.GetWidth() / (float)app.GetHeight()) * 2.f,
-                      1.0f));
-        trans = glm::scale(trans, glm::vec3(0.5f));
-        trans = glm::rotate(trans, (float)glfwGetTime(),
-                            glm::vec3(0.0f, 0.0f, 1.0f));
-
-        shader.SetUniform4fv("u_transform", glm::value_ptr(trans));
+        model = glm::mat4(1.0f);
+        model = glm::scale(model, glm::vec3(20.f));
+        //model = glm::rotate(model, (float)glfwGetTime(),
+        //                    glm::vec3(0.0f, 0.0f, 1.0f));
 
         // Render
+        glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.Bind();
+        shader.SetUniform4fv("u_model", glm::value_ptr(model));
+        shader.SetUniform4fv("u_view", glm::value_ptr(view));
+
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer
 

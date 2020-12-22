@@ -10,6 +10,6 @@ uniform vec4 u_color;
 uniform sampler2D u_texture;
 
 void main() {
-    //color = io_color;
+    // color = io_color;
     color = texture(u_texture, io_uv);
 }

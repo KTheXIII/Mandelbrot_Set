@@ -18,7 +18,7 @@ namespace EN {
                                           m_Data.Title.c_str(), NULL, NULL);
 
         if (!m_NativeWindow) {
-            std::cout << "Failed to create GLFW Window" << std::endl;
+            std::cout << "Failed to create GLFW Window\n";
 
             glfwTerminate();
             throw "Failed to create GLFW m_Window";
@@ -27,8 +27,7 @@ namespace EN {
         glfwMakeContextCurrent(m_NativeWindow);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-            std::cout << "\u001b[38;5;1mFailed to initialize GLAD\u001b[0m"
-                      << std::endl;
+            std::cout << "Failed to initialize GLAD\n";
             throw "Failed to initialize GLAD";
         }
 
@@ -52,6 +51,8 @@ namespace EN {
     Window::~Window() { glfwDestroyWindow(m_NativeWindow); }
 
     void Window::OnUpdate() {
+        // Swap buffers and poll IO events (key pressed/released, mouse moved
+        // etc.)
         glfwPollEvents();
         glfwSwapBuffers(m_NativeWindow);
     }
@@ -63,11 +64,11 @@ namespace EN {
         m_Data.VSync = enable;
     }
 
-    bool Window::IsVSync() { return m_Data.VSync; }
+    bool Window::IsVSync() const { return m_Data.VSync; }
 
     std::string Window::GetTitle() const { return m_Data.Title; }
 
-    void Window::SetTitle(const std::string title) {
+    void Window::SetTitle(const std::string& title) {
         m_Data.Title = title;
 
         glfwSetWindowTitle(m_NativeWindow, m_Data.Title.c_str());

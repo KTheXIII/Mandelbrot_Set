@@ -7,12 +7,13 @@ layout(location = 2) in vec2 a_uv;
 out vec4 io_color;
 out vec2 io_uv;
 
-uniform mat4 u_transform;
+uniform mat4 u_model;
+uniform mat4 u_view;
+uniform mat4 u_projection;
 
 void main() {
     io_color = a_color;
     io_uv = a_uv;
 
-    // gl_Position = vec4(a_position, 1.0f);
-    gl_Position = u_transform * vec4(a_position, 1.0f);
+    gl_Position = u_projection * u_view * u_model * vec4(a_position, 1.0f);
 }
