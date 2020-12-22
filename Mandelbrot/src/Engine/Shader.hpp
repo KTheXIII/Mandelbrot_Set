@@ -12,8 +12,8 @@
 namespace EN {
 
     struct ShaderSource {
-        std::string vertex;
-        std::string fragment;
+        std::string VS;
+        std::string FS;
     };
 
     class Shader {
@@ -73,10 +73,9 @@ namespace EN {
          * @param[in] v0 First value
          * @param[in] v1 Second value
          * @param[in] v2 Third value
-         * @param[in] v3 Fourth value
          */
         void SetUniform3f(const char* name, const f32& v0, const f32& v1,
-                          const f32& v3);
+                          const f32& v2);
 
         /**
          * Set float uniform with 4 value
@@ -90,10 +89,9 @@ namespace EN {
          * @param[in] v1 Second value
          * @param[in] v2 Third value
          * @param[in] v3 Fourth value
-         * @param[in] v4 Fifth value
          */
         void SetUniform4f(const char* name, const f32& v0, const f32& v1,
-                          const f32& v3, const f32& v4);
+                          const f32& v2, const f32& v3);
 
         /**
          * Set the mat4 uniform
@@ -148,7 +146,7 @@ namespace EN {
     };
 
     // Basic Vertex Shader program
-    const static std::string basic_vs =
+    const static std::string BASIC_VS =
         "#version 410 core\n"
         "layout(location = 0) in vec3 a_position;"
         "layout(location = 1) in vec4 a_color;"
@@ -163,7 +161,7 @@ namespace EN {
         "}";
 
     // Basic Fragment Shader program
-    const static std::string basic_fs =
+    const static std::string BASIC_FS =
         "#version 410 core\n"
         "#extension GL_ARB_separate_shader_objects : enable\n"
         "layout(location = 0) out vec4 color;"

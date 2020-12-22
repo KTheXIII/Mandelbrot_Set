@@ -2,7 +2,7 @@
 
 namespace EN {
     Shader::Shader() {
-        m_ProgramID = CreateShader(basic_vs.c_str(), basic_fs.c_str());
+        m_ProgramID = CreateShader(BASIC_VS.c_str(), BASIC_FS.c_str());
     }
 
     Shader::Shader(const char* file_path) {}
@@ -12,12 +12,12 @@ namespace EN {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
 
-        if (source.vertex.compare("ERROR") == 0) source.vertex = basic_vs;
+        if (source.VS.compare("ERROR") == 0) source.VS = BASIC_VS;
 
-        if (source.fragment.compare("ERROR") == 0) source.fragment = basic_fs;
+        if (source.FS.compare("ERROR") == 0) source.FS = BASIC_FS;
 
         m_ProgramID =
-            CreateShader(source.vertex.c_str(), source.fragment.c_str());
+            CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
     Shader::~Shader() { glDeleteProgram(m_ProgramID); }
@@ -37,13 +37,13 @@ namespace EN {
     }
 
     void Shader::SetUniform3f(const char* name, const f32& v0, const f32& v1,
-                              const f32& v3) {
-        glUniform3f(GetUniformLocation(name), v0, v1, v3);
+                              const f32& v2) {
+        glUniform3f(GetUniformLocation(name), v0, v1, v2);
     }
 
     void Shader::SetUniform4f(const char* name, const f32& v0, const f32& v1,
-                              const f32& v3, const f32& v4) {
-        glUniform4f(GetUniformLocation(name), v0, v1, v3, v4);
+                              const f32& v2, const f32& v3) {
+        glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
     }
 
     void Shader::SetUniform4fv(const char* name, const f32* value,
