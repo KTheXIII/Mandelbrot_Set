@@ -17,10 +17,12 @@ indirs = {}
 indirs["GLFW"] = "Mandelbrot/vendor/GLFW/include/"
 indirs["Glad"] = "Mandelbrot/vendor/Glad/include"
 indirs["glm"] = "Mandelbrot/vendor/glm"
+indirs["ImGui"] = "Mandelbrot/vendor/imgui"
 
 group "Denpendencies"
   include "Mandelbrot/vendor/premake5.glfw.lua"
   include "Mandelbrot/vendor/Glad"
+  include "Mandelbrot/vendor/premake5.imgui.lua"
 group ""
 
 project "Mandelbrot"
@@ -50,11 +52,13 @@ project "Mandelbrot"
     "%{indirs.GLFW}",
     "%{indirs.Glad}",
     "%{indirs.glm}",
+    "%{indirs.ImGui}",
   }
 
   links {
     "GLFW",
-    "Glad"
+    "Glad",
+    "ImGui",
   }
 
   -- postbuildcommands {
