@@ -1,9 +1,4 @@
 #pragma once
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
 #include "Core.hpp"
 
 #include "glad/glad.h"

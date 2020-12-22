@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <iostream>
-
 #include "Core.hpp"
 
 #include "glad/glad.h"
@@ -13,7 +10,7 @@ namespace EN {
 
     /**
      * Window Properties
-     * 
+     *
      * Will be used later for creating window
      */
     struct WindowProps {
@@ -21,7 +18,7 @@ namespace EN {
         u32 width, height;
 
         WindowProps(const char* title = "Default", u32 width = DEFAULT_WIDTH,
-                   u32 height = DEFAULT_HEIGHT)
+                    u32 height = DEFAULT_HEIGHT)
             : title(title), width(width), height(height) {}
     };
 
@@ -32,9 +29,9 @@ namespace EN {
        public:
         /**
          * Create a Window object
-         * 
+         *
          * @discussion
-         * 
+         *
          * This will be change later to use WindowProps for the data properties.
          *
          * @param[in] title The window title
@@ -96,8 +93,8 @@ namespace EN {
         GLFWwindow* m_NativeWindow;  // GLFW Window context
 
         /**
-        * Window Data container
-        */
+         * Window Data container
+         */
         struct WindowData {
             std::string Title;
             u32 Width, Height;

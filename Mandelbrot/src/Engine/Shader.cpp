@@ -16,8 +16,7 @@ namespace EN {
 
         if (source.FS.compare("ERROR") == 0) source.FS = BASIC_FS;
 
-        m_ProgramID =
-            CreateShader(source.VS.c_str(), source.FS.c_str());
+        m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
     Shader::~Shader() { glDeleteProgram(m_ProgramID); }

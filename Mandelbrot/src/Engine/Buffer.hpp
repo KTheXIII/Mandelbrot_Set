@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <type_traits>
-
 #include "Core.hpp"
 
 #include "glad/glad.h"
@@ -86,8 +82,14 @@ namespace EN {
 
         ~VertexBuffer();
 
+        /**
+         * Bind the Vertex Buffer Object
+         */
         void Bind() const;
 
+        /**
+         * Unbind the Vertex Buffer Object
+         */
         void Unbind() const;
 
        private:

@@ -43,6 +43,8 @@ int main(int argc, char const* argv[]) {
     layout.Push(GL_FLOAT, 2);
 
     EN::Shader shader("asset/basic.gl.vert", "asset/basic.gl.frag");
+    EN::Texture texture("asset/basic.gl.png");
+    texture.Bind();
 
     // Configure the data for the GPU
     EN::ArrayBuffer ab;
@@ -56,15 +58,14 @@ int main(int argc, char const* argv[]) {
     vb.Unbind();
     eb.Unbind();
 
-    glfwSetFramebufferSizeCallback(app.GetNativeWindow(), framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(app.GetNativeWindow(),
+                                   framebuffer_size_callback);
 
     glm::mat4 trans;
 
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
-
-        app.SetTitle(std::to_string(glfwGetTime()));
 
         trans = glm::mat4(1.0f);
         trans = glm::scale(
