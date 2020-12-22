@@ -13,12 +13,14 @@ namespace EN {
 
     /**
      * Window Properties
+     * 
+     * Will be used later for creating window
      */
-    struct WindowProp {
+    struct WindowProps {
         std::string title;
         u32 width, height;
 
-        WindowProp(const char* title = "Default", u32 width = DEFAULT_WIDTH,
+        WindowProps(const char* title = "Default", u32 width = DEFAULT_WIDTH,
                    u32 height = DEFAULT_HEIGHT)
             : title(title), width(width), height(height) {}
     };
@@ -30,6 +32,10 @@ namespace EN {
        public:
         /**
          * Create a Window object
+         * 
+         * @discussion
+         * 
+         * This will be change later to use WindowProps for the data properties.
          *
          * @param[in] title The window title
          * @param[in] width Window width, defaults to DEFAULT_WIDTH
@@ -52,7 +58,7 @@ namespace EN {
          *
          * @return GLFWwindow context
          */
-        GLFWwindow* GetWindow();
+        GLFWwindow* GetNativeWindow();
 
         /**
          * Set VSync
@@ -87,10 +93,17 @@ namespace EN {
         u32 GetHeight() const;
 
        private:
-        bool m_VSync;
+        GLFWwindow* m_NativeWindow;  // GLFW Window context
 
-        GLFWwindow* m_Window;  // GLFW Window context
+        /**
+        * Window Data container
+        */
+        struct WindowData {
+            std::string Title;
+            u32 Width, Height;
+            bool VSync;
+        };
 
-        WindowProp m_WindowData;
+        WindowData m_Data;
     };
 }  // namespace EN

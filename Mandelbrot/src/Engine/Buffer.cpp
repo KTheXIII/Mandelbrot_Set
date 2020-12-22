@@ -35,17 +35,18 @@ namespace EN {
 
     void ArrayBuffer::Unbind() const { glBindVertexArray(0); }
 
-    void ArrayBuffer::AddBuffer(const VertexBuffer& vb,
+    void ArrayBuffer::AddBuffer(const VertexBuffer& vbuffer,
+
                                 const BufferLayout& layout) {
         Bind();
-        vb.Bind();
+        vbuffer.Bind();
         const auto& elements = layout.GetElements();
         u32 offset = 0;
         for (u32 i = 0; i < elements.size(); i++) {
             const auto& element = elements[i];
 
-            glEnableVertexAttribArray(
-                i);  // Vertex Attribute mapped to the location
+            // Vertex Attribute mapped to the location
+            glEnableVertexAttribArray(i);
             glVertexAttribPointer(i, element.count, element.type,
                                   element.normalized, layout.GetStride(),
                                   (const void*)offset);

@@ -49,13 +49,49 @@ namespace EN {
 
         uint32_t GetID() const;
 
+        /**
+         * Set float uniform with 1 value
+         *
+         * @param[in] name The name of the uniform
+         * @param[in] value Value passing in
+         */
         void SetUniform1f(const char* name, const f32& value);
 
+        /**
+         * Set float uniform with 2 value
+         *
+         * @param[in] name The name of the uniform
+         * @param[in] v0 First value
+         * @param[in] v1 Second value
+         */
         void SetUniform2f(const char* name, const f32& v0, const f32& v1);
 
+        /**
+         * Set float uniform with 3 value
+         *
+         * @param[in] name The name of the uniform
+         * @param[in] v0 First value
+         * @param[in] v1 Second value
+         * @param[in] v2 Third value
+         * @param[in] v3 Fourth value
+         */
         void SetUniform3f(const char* name, const f32& v0, const f32& v1,
                           const f32& v3);
 
+        /**
+         * Set float uniform with 4 value
+         *
+         * @discussion
+         *
+         * Example: vec4
+         *
+         * @param[in] name The name of the uniform
+         * @param[in] v0 First value
+         * @param[in] v1 Second value
+         * @param[in] v2 Third value
+         * @param[in] v3 Fourth value
+         * @param[in] v4 Fifth value
+         */
         void SetUniform4f(const char* name, const f32& v0, const f32& v1,
                           const f32& v3, const f32& v4);
 
@@ -72,7 +108,7 @@ namespace EN {
                            const u32& count = 1, const bool& transpose = false);
 
        private:
-        uint32_t m_ProgramID;  // Shader Program
+        u32 m_ProgramID;  // Shader Program
 
         /**
          * Create shader
@@ -101,6 +137,13 @@ namespace EN {
          */
         std::string LoadShaderFile(const char* file_path);
 
+        /**
+         * Get Uniform location
+         *
+         * @param[in] name The name of the uniform
+         *
+         * @return Uniform location
+         */
         u32 GetUniformLocation(const char* name);
     };
 

@@ -26,7 +26,7 @@ namespace EN {
 
     void Shader::Unbind() const { glUseProgram(0); }
 
-    u32 Shader::GetID() const { return m_ProgramID; }
+    uint32_t Shader::GetID() const { return m_ProgramID; }
 
     void Shader::SetUniform1f(const char* name, const f32& value) {
         glUniform1f(GetUniformLocation(name), value);
@@ -47,8 +47,7 @@ namespace EN {
     }
 
     void Shader::SetUniform4fv(const char* name, const f32* value,
-                               const u32& count,
-                               const bool& transpose) {
+                               const u32& count, const bool& transpose) {
         glUniformMatrix4fv(GetUniformLocation(name), count,
                            (transpose ? GL_TRUE : GL_FALSE), value);
     }
@@ -71,7 +70,7 @@ namespace EN {
         return program;
     }
 
-    u32 Shader::CompileShader(u32 shader_type, const char* source) {
+    uint32_t Shader::CompileShader(uint32_t shader_type, const char* source) {
         u32 id = glCreateShader(shader_type);
 
         glShaderSource(id, 1, &source, nullptr);
@@ -79,17 +78,24 @@ namespace EN {
 
         i32 results;
         glGetShaderiv(id, GL_COMPILE_STATUS, &results);
+
         if (results == GL_FALSE) {
             i32 length;
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-            char* message = (char*)alloca(length * sizeof(char));
+
+            // Allocate memory for message
+            char* message = (char*)malloc(length * sizeof(char));
             glGetShaderInfoLog(id, length, &length, message);
+
             std::cout << "\n\u001b[31mFailed to compile "
                       << (shader_type == GL_VERTEX_SHADER ? "Vertex"
                                                           : "Fragment")
-                      << " shader\u001b[0m" << std::endl;
-            std::cout << message << std::endl;
+                      << " shader\u001b[0m\n";
+            std::cout << message << "\n";
+
+            // Clean up
             glDeleteShader(id);
+            free(message);
 
             return 0;
         }

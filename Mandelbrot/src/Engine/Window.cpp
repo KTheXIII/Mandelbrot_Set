@@ -3,9 +3,10 @@
 namespace EN {
 
     Window::Window(const char* title, u32 width, u32 height) {
-        m_WindowData.title = title;
-        m_WindowData.width = width;
-        m_WindowData.height = height;
+        m_Data.Title = title;
+        m_Data.Width = width;
+        m_Data.Height = height;
+        m_Data.VSync = true;
 
         if (!glfwInit()) throw "GLFW not initialized";
 
@@ -13,54 +14,67 @@ namespace EN {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        m_Window = glfwCreateWindow(m_WindowData.width, m_WindowData.height,
-                                    "Mandelbrot set", NULL, NULL);
+        m_NativeWindow = glfwCreateWindow(m_Data.Width, m_Data.Height,
+                                          m_Data.Title.c_str(), NULL, NULL);
 
-        if (!m_Window) {
+        if (!m_NativeWindow) {
             std::cout << "Failed to create GLFW Window" << std::endl;
 
             glfwTerminate();
             throw "Failed to create GLFW m_Window";
         }
 
-        SetVSync(true);
-
-        glfwMakeContextCurrent(m_Window);
+        glfwMakeContextCurrent(m_NativeWindow);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             std::cout << "\u001b[38;5;1mFailed to initialize GLAD\u001b[0m"
                       << std::endl;
-
             throw "Failed to initialize GLAD";
         }
+
+        // Set the Window data reference in GLFW
+        // Used later for getting data from callback
+        glfwSetWindowUserPointer(m_NativeWindow, &m_Data);
+
+        SetVSync(m_Data.VSync);
+
+        // Set Window Resize callback
+        glfwSetWindowSizeCallback(m_NativeWindow, [](GLFWwindow* window,
+                                                     int width, int height) {
+            // Cast the stored pointer to WindowData
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            data.Width = width;
+            data.Height = height;
+        });
     }
 
-    Window::~Window() { glfwDestroyWindow(m_Window); }
+    Window::~Window() { glfwDestroyWindow(m_NativeWindow); }
 
     void Window::OnUpdate() {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        glfwSwapBuffers(m_NativeWindow);
     }
 
-    GLFWwindow* Window::GetWindow() { return m_Window; }
+    GLFWwindow* Window::GetNativeWindow() { return m_NativeWindow; }
 
     void Window::SetVSync(bool enable) {
         glfwSwapInterval(enable ? 1 : 0);
-        m_VSync = enable;
+        m_Data.VSync = enable;
     }
 
-    bool Window::IsVSync() { return m_VSync; }
+    bool Window::IsVSync() { return m_Data.VSync; }
 
-    std::string Window::GetTitle() const { return m_WindowData.title; }
+    std::string Window::GetTitle() const { return m_Data.Title; }
 
     void Window::SetTitle(const std::string title) {
-        m_WindowData.title = title;
+        m_Data.Title = title;
 
-        glfwSetWindowTitle(m_Window, m_WindowData.title.c_str());
+        glfwSetWindowTitle(m_NativeWindow, m_Data.Title.c_str());
     }
 
-    u32 Window::GetWidth() const { return m_WindowData.width; }
+    u32 Window::GetWidth() const { return m_Data.Width; }
 
-    u32 Window::GetHeight() const { return m_WindowData.height; }
+    u32 Window::GetHeight() const { return m_Data.Height; }
 
 }  // namespace EN

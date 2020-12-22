@@ -97,9 +97,9 @@ namespace EN {
     /**
      * Vertex Array Object Buffer.
      *
-     * This needs to be Bind before any other buffer.
+     * @discussion
      *
-     * Use AddBuffer to configure the buffer layout.
+     * The Array Buffer is used with Element Buffer to bind the data.
      */
     class ArrayBuffer {
        public:
@@ -110,11 +110,17 @@ namespace EN {
 
         ~ArrayBuffer();
 
+        /**
+         * Bind the Vertex Array Object
+         */
         void Bind() const;
 
+        /**
+         * Unbind the Vertex Array Object
+         */
         void Unbind() const;
 
-        void AddBuffer(const VertexBuffer& vb, const BufferLayout& layout);
+        void AddBuffer(const VertexBuffer& vbuffer, const BufferLayout& layout);
 
        private:
         u32 m_BufferID;  // Vertex Array Buffer Object
@@ -122,6 +128,11 @@ namespace EN {
 
     /**
      * Element Array Buffer also known as Index Buffer.
+     *
+     * @discussion
+     *
+     * The Element Buffer is used for getting the element count and binding the
+     * element. This is used with Array Buffer for drawing.
      */
     class ElementBuffer {
        public:
@@ -135,8 +146,14 @@ namespace EN {
 
         ~ElementBuffer();
 
+        /**
+         * Bind the Element Buffer Object
+         */
         void Bind() const;
 
+        /**
+         * Unbind the element Buffer Object
+         */
         void Unbind() const;
 
         u32 GetCount() const;

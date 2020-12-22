@@ -46,19 +46,27 @@ int main(int argc, char const* argv[]) {
 
     // Configure the data for the GPU
     EN::ArrayBuffer ab;
-    ab.Bind();
     EN::VertexBuffer vb(vertices, sizeof(vertices));
     EN::ElementBuffer eb(indices, 6);
 
     ab.AddBuffer(vb, layout);
 
-    glfwSetFramebufferSizeCallback(app.GetWindow(), framebuffer_size_callback);
+    // Clean up
+    ab.Unbind();
+    vb.Unbind();
+    eb.Unbind();
 
-    while (!glfwWindowShouldClose(app.GetWindow())) {
+    glfwSetFramebufferSizeCallback(app.GetNativeWindow(), framebuffer_size_callback);
+
+    glm::mat4 trans;
+
+    while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
-        process_input(app.GetWindow());
+        process_input(app.GetNativeWindow());
 
-        glm::mat4 trans = glm::mat4(1.0f);
+        app.SetTitle(std::to_string(glfwGetTime()));
+
+        trans = glm::mat4(1.0f);
         trans = glm::scale(
             trans,
             glm::vec3(1.f * 2.f,
