@@ -14,10 +14,10 @@ workspace "Mandelbrot"
 
 outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
-indirs["GLFW"] = "Mandelbrot/vendor/GLFW/include/"
-indirs["Glad"] = "Mandelbrot/vendor/Glad/include"
-indirs["glm"] = "Mandelbrot/vendor/glm"
-indirs["ImGui"] = "Mandelbrot/vendor/imgui"
+indirs["GLFW"] = "%{wks.location}/Mandelbrot/vendor/GLFW/include/"
+indirs["Glad"] = "%{wks.location}/Mandelbrot/vendor/Glad/include"
+indirs["glm"] = "%{wks.location}/Mandelbrot/vendor/glm"
+indirs["ImGui"] = "%{wks.location}/Mandelbrot/vendor/imgui"
 
 group "Denpendencies"
   include "Mandelbrot/vendor/premake5.glfw.lua"
@@ -32,7 +32,9 @@ project "Mandelbrot"
   staticruntime "on"
   cppdialect "C++17"
 
-  defines { }
+  defines {
+    "IMGUI_IMPL_OPENGL_LOADER_GLAD"
+  }
 
   targetdir("bin/" ..outdir.. "/%{prj.name}")
   objdir("obj/" ..outdir.. "/%{prj.name}")
@@ -44,6 +46,8 @@ project "Mandelbrot"
     "%{prj.name}/vendor/stb/**.h",
     "%{prj.name}/vendor/stb/**.cpp",
     "%{prj.name}/asset/**.gl.*",
+
+    imgui_files
   }
 
   includedirs {
@@ -55,12 +59,12 @@ project "Mandelbrot"
     "%{indirs.Glad}",
     "%{indirs.glm}",
     "%{indirs.ImGui}",
+    "%{indirs.ImGui}/backends",
   }
 
   links {
     "GLFW",
     "Glad",
-    "ImGui",
   }
 
   -- postbuildcommands {
