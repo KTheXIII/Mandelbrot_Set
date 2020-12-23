@@ -9,6 +9,10 @@ workspace "Mandelbrot"
     "Dist"
   }
 
+  flags {
+    "MultiProcessorCompile"
+  }
+
   configuration "**.gl.*"
    buildaction "Copy"
 

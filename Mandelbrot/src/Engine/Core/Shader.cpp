@@ -1,11 +1,11 @@
 #include "Shader.hpp"
 
 namespace EN {
-    Shader::Shader() {
+    Shader::Shader() : m_ProgramID(0) {
         m_ProgramID = CreateShader(BASIC_VS.c_str(), BASIC_FS.c_str());
     }
 
-    Shader::Shader(const char* file_path) {}
+    Shader::Shader(const char* file_path) : m_ProgramID(0) {}
 
     Shader::Shader(const char* vertex_file_path, const char* fragment_file_path)
         : m_ProgramID(0) {
@@ -69,7 +69,7 @@ namespace EN {
         return program;
     }
 
-    uint32_t Shader::CompileShader(uint32_t shader_type, const char* source) {
+    u32 Shader::CompileShader(uint32_t shader_type, const char* source) {
         u32 id = glCreateShader(shader_type);
 
         glShaderSource(id, 1, &source, nullptr);

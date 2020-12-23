@@ -46,6 +46,10 @@ namespace EN {
             data.Width = width;
             data.Height = height;
         });
+
+        // Getting the shader version
+        // std::string version = (char*)glGetString(GL_VERSION);
+        // std::cout << version << "\n";
     }
 
     Window::~Window() {
@@ -77,8 +81,8 @@ namespace EN {
         glfwSetWindowTitle(m_NativeWindow, m_Data.Title.c_str());
     }
 
-    u32 Window::GetWidth() const { return m_Data.Width; }
+    uint32_t Window::GetWidth() const { return m_Data.Width; }
 
-    u32 Window::GetHeight() const { return m_Data.Height; }
+    uint32_t Window::GetHeight() const { return m_Data.Height; }
 
 }  // namespace EN

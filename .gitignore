@@ -5,7 +5,10 @@
 # Generated Files
 mandelbrot.ppm
 mandelbrot.png
+
+# imgui files
 imgui.ini
+imgui_log.txt
 
 # Generated Workspaces
 

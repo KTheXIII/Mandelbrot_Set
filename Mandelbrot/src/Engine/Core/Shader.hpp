@@ -13,6 +13,8 @@ namespace EN {
 
     /**
      * Shader, compile shader program, bind and unbind.
+     *
+     * The shader needs to bind before use.
      */
     class Shader {
        public:
@@ -41,14 +43,27 @@ namespace EN {
 
         ~Shader();
 
+        /**
+         * Bind the shader
+         */
         void Bind() const;
 
+        /**
+         * Unbind the shader
+         */
         void Unbind() const;
 
+        /**
+         * Get shader program ID
+         */
         uint32_t GetID() const;
 
         /**
          * Set float uniform with 1 value
+         *
+         * @discussion
+         *
+         * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
          * @param[in] value Value passing in
@@ -58,6 +73,10 @@ namespace EN {
         /**
          * Set float uniform with 2 value
          *
+         * @discussion
+         *
+         * The shader needs to be bind before we can set the uniform
+         *
          * @param[in] name The name of the uniform
          * @param[in] v0 First value
          * @param[in] v1 Second value
@@ -66,6 +85,10 @@ namespace EN {
 
         /**
          * Set float uniform with 3 value
+         *
+         * @discussion
+         *
+         * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
          * @param[in] v0 First value
@@ -80,7 +103,7 @@ namespace EN {
          *
          * @discussion
          *
-         * Example: vec4
+         * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
          * @param[in] v0 First value
@@ -93,6 +116,10 @@ namespace EN {
 
         /**
          * Set the mat4 uniform
+         *
+         * @discussion
+         *
+         * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
          * @param[in] value The value pointer
@@ -111,7 +138,7 @@ namespace EN {
          *
          * @discussion Compile the given shader program
          */
-        uint32_t CreateShader(const char* vertex_source,
+        u32 CreateShader(const char* vertex_source,
                               const char* fragment_source);
 
         /**
@@ -119,7 +146,7 @@ namespace EN {
          *
          * @return Shader program
          */
-        uint32_t CompileShader(uint32_t shader_type, const char* source);
+        u32 CompileShader(uint32_t shader_type, const char* source);
 
         /**
          * Load shader file.

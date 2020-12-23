@@ -12,6 +12,7 @@
 
 namespace EN {
     // Type defines for internal use only
+    // Any external return needs to use the original typedef from stdint.h
     typedef uint8_t u8;
     typedef uint16_t u16;
     typedef uint32_t u32;
@@ -24,5 +25,6 @@ namespace EN {
 
     typedef float f32;
     typedef double f64;
+
 
 }  // namespace EN

@@ -122,6 +122,9 @@ namespace EN {
          */
         void Unbind() const;
 
+        /**
+        * This will configure the buffer using vertex buffer and buffer layout
+        */
         void AddBuffer(const VertexBuffer& vbuffer, const BufferLayout& layout);
 
        private:
@@ -159,8 +162,8 @@ namespace EN {
         void Unbind() const;
 
         /**
-        * Get vertices count
-        */
+         * Get vertices count
+         */
         uint32_t GetCount() const;
 
        private:
