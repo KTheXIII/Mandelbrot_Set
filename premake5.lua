@@ -15,13 +15,13 @@ workspace "Mandelbrot"
 outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
 indirs["GLFW"] = "%{wks.location}/Mandelbrot/vendor/GLFW/include/"
-indirs["Glad"] = "%{wks.location}/Mandelbrot/vendor/Glad/include"
+indirs["glad"] = "%{wks.location}/Mandelbrot/vendor/glad/include"
 indirs["glm"] = "%{wks.location}/Mandelbrot/vendor/glm"
 indirs["ImGui"] = "%{wks.location}/Mandelbrot/vendor/imgui"
 
 group "Denpendencies"
   include "Mandelbrot/vendor/premake5.glfw.lua"
-  include "Mandelbrot/vendor/Glad"
+  include "Mandelbrot/vendor/glad"
   include "Mandelbrot/vendor/premake5.imgui.lua"
 group ""
 
@@ -58,7 +58,7 @@ project "Mandelbrot"
     "%{prj.name}/src/Engine",
     "%{prj.name}/vendor",
     "%{indirs.GLFW}",
-    "%{indirs.Glad}",
+    "%{indirs.glad}",
     "%{indirs.glm}",
     "%{indirs.ImGui}",
     "%{indirs.ImGui}/backends",
@@ -66,7 +66,7 @@ project "Mandelbrot"
 
   links {
     "GLFW",
-    "Glad",
+    "glad",
   }
 
   -- postbuildcommands {
