@@ -48,7 +48,10 @@ namespace EN {
         });
     }
 
-    Window::~Window() { glfwDestroyWindow(m_NativeWindow); }
+    Window::~Window() {
+        glfwDestroyWindow(m_NativeWindow);
+        glfwTerminate();
+    }
 
     void Window::OnUpdate() {
         // Swap buffers and poll IO events (key pressed/released, mouse moved
