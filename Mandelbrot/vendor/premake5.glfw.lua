@@ -8,7 +8,7 @@ project "GLFW"
   files {
     "GLFW/include/GLFW/glfw3.h",
     "GLFW/include/GLFW/glfw3native.h",
-    "GLFW/src/glfw_config.h",
+    "GLFW/src/glfw_config.h.in",
     "GLFW/src/context.c",
     "GLFW/src/init.c",
     "GLFW/src/input.c",
@@ -22,7 +22,6 @@ project "GLFW"
     staticruntime "On"
 
     files {
-      "GLFW/src/cocoa_joystic.h",
       "GLFW/src/cocoa_platform.h",
       "GLFW/src/egl_context.h",
       "GLFW/src/internal.h",
