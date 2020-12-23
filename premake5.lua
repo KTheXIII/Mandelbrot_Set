@@ -9,6 +9,10 @@ workspace "Mandelbrot"
     "Dist"
   }
 
+  flags {
+    "MultiProcessorCompile"
+  }
+
   configuration "**.gl.*"
    buildaction "Copy"
 
@@ -32,7 +36,8 @@ project "Mandelbrot"
   staticruntime "on"
   cppdialect "C++17"
 
-  defines { }
+  defines {
+  }
 
   targetdir("bin/" ..outdir.. "/%{prj.name}")
   objdir("obj/" ..outdir.. "/%{prj.name}")
