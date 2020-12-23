@@ -201,5 +201,10 @@ int main(int argc, char const* argv[]) {
         app.OnUpdate();
     }
 
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     return 0;
 }
