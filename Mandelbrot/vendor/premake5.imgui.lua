@@ -12,8 +12,8 @@ imgui_files = {
   "%{wks.location}/Mandelbrot/vendor/imgui/imstb_textedit.h",
   "%{wks.location}/Mandelbrot/vendor/imgui/imstb_truetype.h",
 
-  "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_glfw.cpp",
-  "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_glfw.h",
-  "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_opengl3.cpp",
-  "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_opengl3.h",
+  -- "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_glfw.cpp",
+  -- "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_glfw.h",
+  -- "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_opengl3.cpp",
+  -- "%{wks.location}/Mandelbrot/vendor/imgui/backends/imgui_impl_opengl3.h",
 }

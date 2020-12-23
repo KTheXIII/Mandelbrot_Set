@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Window.hpp"
-#include "Buffer.hpp"
-#include "Shader.hpp"
-#include "Math.hpp"
-#include "Texture.hpp"
+#include "Core/Window.hpp"
+#include "Core/Buffer.hpp"
+#include "Core/Shader.hpp"
+#include "Core/Math.hpp"
+#include "Core/Texture.hpp"

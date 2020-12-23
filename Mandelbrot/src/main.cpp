@@ -3,11 +3,11 @@
 #include <chrono>
 #include <iostream>
 
+#include "Engine.hpp"
 
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-#include "Engine.hpp"
+#include "ImGui/imgui_impl_glfw.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 #include "stb/stb_image_write.h"
 
