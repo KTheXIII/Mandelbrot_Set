@@ -2,8 +2,8 @@ project "glad"
   kind "StaticLib"
   language "C"
 
-  targetdir ("bin/" .. outdir .. "/%{prj.name}")
-  objdir ("obj/" .. outdir .. "/%{prj.name}")
+  targetdir ("%{wks.location}/bin/" .. outdir .. "/%{prj.name}")
+  objdir ("%{wks.location}/obj/" .. outdir .. "/%{prj.name}")
 
   files {
     "include/glad/glad.h",
