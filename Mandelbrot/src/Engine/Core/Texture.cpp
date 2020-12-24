@@ -37,7 +37,7 @@ namespace EN {
 
     Texture::~Texture() { glDeleteTextures(1, &m_BufferID); }
 
-    void Texture::Bind(const u32& slot) const {
+    void Texture::Bind(const uint32_t& slot) const {
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_BufferID);
     }

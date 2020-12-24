@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core.hpp"
+#include "Renderer/RenderingContext.hpp"
+
+#include "OpenGL/OpenGLContext.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -104,6 +107,7 @@ namespace EN {
 
        private:
         GLFWwindow* m_NativeWindow;  // GLFW Window context
+        RenderingContext* m_Context;
 
         /**
          * Window Data container

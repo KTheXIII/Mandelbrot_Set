@@ -17,19 +17,8 @@ namespace EN {
         m_NativeWindow = glfwCreateWindow(m_Data.Width, m_Data.Height,
                                           m_Data.Title.c_str(), NULL, NULL);
 
-        if (!m_NativeWindow) {
-            std::cout << "Failed to create GLFW Window\n";
-
-            glfwTerminate();
-            throw "Failed to create GLFW m_Window";
-        }
-
-        glfwMakeContextCurrent(m_NativeWindow);
-
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-            std::cout << "Failed to initialize GLAD\n";
-            throw "Failed to initialize GLAD";
-        }
+        m_Context = new OpenGLContext(m_NativeWindow);
+        m_Context->Init();
 
         // Set the Window data reference in GLFW
         // Used later for getting data from callback
@@ -61,7 +50,7 @@ namespace EN {
         // Swap buffers and poll IO events (key pressed/released, mouse moved
         // etc.)
         glfwPollEvents();
-        glfwSwapBuffers(m_NativeWindow);
+        m_Context->SwapBuffers();
     }
 
     GLFWwindow* Window::GetNativeWindow() { return m_NativeWindow; }

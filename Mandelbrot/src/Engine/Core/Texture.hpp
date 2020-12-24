@@ -18,11 +18,16 @@ namespace EN {
      */
     class Texture {
        public:
+        /**
+         * Create a texture
+         *
+         * @param[in] path Image file path
+         */
         Texture(const char* path);
 
         ~Texture();
 
-        void Bind(const u32& slot = 0) const;
+        void Bind(const uint32_t& slot = 0) const;
 
         void Unbind() const;
 
