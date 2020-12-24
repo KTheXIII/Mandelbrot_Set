@@ -20,7 +20,7 @@ namespace EN {
         /**
          * Get type data size
          *
-         * @param type OpenGL data type
+         * @param[in] type OpenGL data type
          *
          * @return Size in byte
          */
@@ -50,9 +50,9 @@ namespace EN {
         /**
          * Config the buffer layout.
          *
-         * @param type Type of data
-         * @param count Data type count, vec3 is 3 and vec4 is 4 etc.
-         * @param normalized normalized data, default = false
+         * @param[in] type Type of data
+         * @param[in] count Data type count, vec3 is 3 and vec4 is 4 etc.
+         * @param[in] normalized normalized data, default = false
          */
         void Push(u32 type, u32 count, bool normalized = false);
 
@@ -75,8 +75,8 @@ namespace EN {
         /**
          * Create Vertex Buffer Object
          *
-         * @param data Vertices data
-         * @param size Size of the data
+         * @param[in] data Vertices data
+         * @param[in] size Size of the data
          */
         VertexBuffer(const void* data, const u32& size);
 
@@ -123,8 +123,11 @@ namespace EN {
         void Unbind() const;
 
         /**
-        * This will configure the buffer using vertex buffer and buffer layout
-        */
+         * This will configure the buffer using vertex buffer and buffer layout
+         *
+         * @param[in] vbuffer Vertex Buffer
+         * @param[in] layout Vertex Layout
+         */
         void AddBuffer(const VertexBuffer& vbuffer, const BufferLayout& layout);
 
        private:

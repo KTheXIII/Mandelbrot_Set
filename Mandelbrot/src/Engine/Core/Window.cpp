@@ -40,7 +40,7 @@ namespace EN {
         // Set Window Resize callback
         glfwSetWindowSizeCallback(m_NativeWindow, [](GLFWwindow* window,
                                                      int width, int height) {
-            // Cast the stored pointer to WindowData
+            // Get the WindowData pointer from GLFW
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
             data.Width = width;

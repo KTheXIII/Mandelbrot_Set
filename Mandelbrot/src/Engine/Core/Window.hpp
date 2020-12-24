@@ -8,7 +8,8 @@
 namespace EN {
     constexpr u32 DEFAULT_WIDTH = 960, DEFAULT_HEIGHT = 720;
 
-    const char SHADER_VERSION[] = "#version 410"; // Temporary fix for getting the GLSL version
+    // Temporary fix for getting the GLSL version
+    constexpr char SHADER_VERSION[] = "#version 410";
 
     /**
      * Window Properties
@@ -106,6 +107,8 @@ namespace EN {
 
         /**
          * Window Data container
+         *
+         * This will be the container for getting data from callbacks
          */
         struct WindowData {
             std::string Title;
@@ -113,6 +116,6 @@ namespace EN {
             bool VSync;
         };
 
-        WindowData m_Data;
+        WindowData m_Data;  // This is set in GLFW user pointer
     };
 }  // namespace EN

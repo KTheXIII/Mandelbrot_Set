@@ -30,10 +30,10 @@ int main(int argc, char const* argv[]) {
     // clang-format off
     float vertices[] = {
     //  positions: x,y,z        colors: r,g,b,a,           texture coordinates
-        -0.5f,  0.5f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
-         0.5f,  0.5f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
-         0.5f, -0.5f,  0.0f,    0.0f, 0.0f, 1.0f, 1.0f,    1.0f,  0.0f,
-        -0.5f, -0.5f,  0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    0.0f,  0.0f,
+        -1.0f,  1.0f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
+         1.0f,  1.0f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
+         1.0f, -1.0f,  0.0f,    0.0f, 0.0f, 1.0f, 1.0f,    1.0f,  0.0f,
+        -1.0f, -1.0f,  0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    0.0f,  0.0f,
     };
 
     uint32_t indices[] = {
@@ -119,9 +119,8 @@ int main(int argc, char const* argv[]) {
         double mx, my;
         glfwGetCursorPos(app.GetNativeWindow(), &mx, &my);
 
-        mx -= (double)app.GetWidth() / 2.;
+        mx = (double)app.GetWidth() / 2. - mx;
         my = (double)app.GetHeight() / 2 - my;
-        std::cout << "Mouse: " << mx << ", " << my << "\n";
 
         half_width = (float)app.GetWidth() / 2.f;
         half_height = (float)app.GetHeight() / 2.f;
@@ -129,10 +128,10 @@ int main(int argc, char const* argv[]) {
                                 half_height, 0.1f, 100.f);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3((float)-mx, (float)my, 0.f));
+        model = glm::translate(model, glm::vec3((float)mx, (float)my, 0.f));
 
         model = glm::scale(
-            model, glm::vec3(200.f * (sin((float)glfwGetTime()) + 1.5f)));
+            model, glm::vec3(100.f * (sin((float)glfwGetTime()) + 1.5f)));
         model = glm::rotate(model, (float)glfwGetTime(),
                             glm::vec3(0.0f, 0.0f, 1.0f));
 
