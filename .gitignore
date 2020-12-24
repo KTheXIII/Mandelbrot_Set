@@ -1,31 +1,35 @@
-# Binaries
+# Outputs
+###############################################################################
+
+## Binaries
 **/bin
 **/obj
 
-# Generated Files
+## Generated Files
 mandelbrot.ppm
 mandelbrot.png
 
-# imgui files
+## imgui files
 imgui.ini
 imgui_log.txt
 
 # Generated Workspaces
+###############################################################################
 
-# Xcode
+## Xcode
 *.xcworkspace
 *.xcodeproj
 
-# Visual Studio
+## Visual Studio
 *.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 .vs
 
-# Makefile
+## Makefile
 Makefile
 *.make
 
-# Visual Studio Code
+## Visual Studio Code
 .vscode

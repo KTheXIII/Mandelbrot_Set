@@ -27,7 +27,7 @@ Create project file using Premake.
 Example: Makefile
 
 ```
-premake5 gmake
+premake5 gmake2
 ```
 
 ### Makefile
