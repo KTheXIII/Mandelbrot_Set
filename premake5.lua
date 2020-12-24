@@ -18,16 +18,14 @@ workspace "Mandelbrot"
 
 outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 indirs = {}
-indirs["GLFW"] = "%{wks.location}/Mandelbrot/vendor/GLFW/include/"
-indirs["glad"] = "%{wks.location}/Mandelbrot/vendor/glad/include"
-indirs["glm"] = "%{wks.location}/Mandelbrot/vendor/glm"
-indirs["ImGui"] = "%{wks.location}/Mandelbrot/vendor/imgui"
+indirs["GLFW"] = "%{wks.location}/Engine/vendor/GLFW/include"
+indirs["glad"] = "%{wks.location}/Engine/vendor/glad/include"
+indirs["glm"] = "%{wks.location}/Engine/vendor/glm"
+indirs["ImGui"] = "%{wks.location}/Engine/vendor/imgui"
+indirs["vendor"] = "%{wks.location}/Engine/vendor"
+indirs["Engine"] = "%{wks.location}/Engine/src"
 
-group "Denpendencies"
-  include "Mandelbrot/vendor/premake5.glfw.lua"
-  include "Mandelbrot/vendor/glad"
-  include "Mandelbrot/vendor/premake5.imgui.lua"
-group ""
+include "Engine"
 
 project "Mandelbrot"
   location "Mandelbrot"
@@ -47,10 +45,6 @@ project "Mandelbrot"
     "%{prj.name}/src/**.h",
     "%{prj.name}/src/**.hpp",
     "%{prj.name}/src/**.cpp",
-    "%{prj.name}/vendor/stb/**.h",
-    "%{prj.name}/vendor/stb/**.cpp",
-    "%{prj.name}/vendor/glm/glm/**.hpp",
-    "%{prj.name}/vendor/glm/glm/**.inl",
     "%{prj.name}/asset/**.gl.*",
 
     imgui_files
@@ -59,8 +53,8 @@ project "Mandelbrot"
   includedirs {
     "%{prj.name}/asset",
     "%{prj.name}/src",
-    "%{prj.name}/src/Engine",
-    "%{prj.name}/vendor",
+    "%{indirs.Engine}",
+    "%{indirs.vendor}",
     "%{indirs.GLFW}",
     "%{indirs.glad}",
     "%{indirs.glm}",
@@ -69,8 +63,7 @@ project "Mandelbrot"
   }
 
   links {
-    "GLFW",
-    "glad",
+    "Engine"
   }
 
   -- postbuildcommands {
@@ -81,36 +74,13 @@ project "Mandelbrot"
     system "macosx"
     systemversion "latest"
 
-    defines {
-      "GL_SILENCE_DEPRECATION"
-    }
-
-    links {
-      "Cocoa.framework",
-      "IOKit.framework",
-      "CoreVideo.framework",
-      "OpenGL.framework"
-    }
-  
   filter "system:linux"
     system "linux"
     systemversion "latest"
 
-    links {
-      "pthread",
-      "dl",
-      "m",
-      "GL",
-      "X11"
-    }
-  
   filter "system:Windows"
     system "Windows"
     systemversion "latest"
-
-    links {
-      "OpenGL32.lib",
-    }
 
   filter "configurations:Debug"
     symbols "On"

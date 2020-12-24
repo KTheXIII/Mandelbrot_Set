@@ -1,9 +1,9 @@
 [submodule "Mandelbrot/vendor/GLFW"]
-	path = Mandelbrot/vendor/GLFW
+	path = Engine/vendor/GLFW
 	url = https://github.com/glfw/glfw.git
 [submodule "Mandelbrot/vendor/glm"]
-	path = Mandelbrot/vendor/glm
+	path = Engine/vendor/glm
 	url = https://github.com/g-truc/glm.git
 [submodule "Mandelbrot/vendor/imgui"]
-	path = Mandelbrot/vendor/imgui
+	path = Engine/vendor/imgui
 	url = https://github.com/ocornut/imgui.git

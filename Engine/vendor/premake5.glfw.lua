@@ -2,8 +2,8 @@ project "GLFW"
   kind "StaticLib"
   language "C"
 
-  targetdir ("bin/" .. outdir .. "/%{prj.name}")
-  objdir ("obj/" .. outdir .. "/%{prj.name}")
+  targetdir ("bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+  objdir ("obj/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
 
   files {
     "GLFW/include/GLFW/glfw3.h",
@@ -112,9 +112,9 @@ project "GLFW"
     }
 
   filter "configurations:Debug"
-  runtime "Debug"
-  symbols "on"
+    runtime "Debug"
+    symbols "on"
 
   filter "configurations:Release"
-  runtime "Release"
-  optimize "on"
+    runtime "Release"
+    optimize "on"
