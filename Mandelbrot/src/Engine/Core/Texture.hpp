@@ -9,7 +9,7 @@
 
 namespace EN {
 
-    // TODO: Texture filter
+    // TODO: Texture filter, have the ability to select different filter.
 
     /**
      * Texture

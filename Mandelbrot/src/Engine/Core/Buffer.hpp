@@ -10,7 +10,8 @@ namespace EN {
     /**
      * BufferElement
      *
-     * Description on what element in the buffer is
+     * @discussion
+     * Used for describing what is in one vertex data.
      */
     struct BufferElement {
         u32 type;       // Type of data
@@ -39,6 +40,7 @@ namespace EN {
     /**
      * BufferLayout or Vertex Buffer Layout
      *
+     * @discussion
      * Define how the buffer look like. Used in ArrayBuffer.
      */
     class BufferLayout {
@@ -69,6 +71,10 @@ namespace EN {
 
     /**
      * Vertex buffer
+     *
+     * @discussion
+     * The vertex buffer stores the vertex data. A vertex data can contain position,
+     * color, uv coordinate, etc.
      */
     class VertexBuffer {
        public:
@@ -100,7 +106,6 @@ namespace EN {
      * Vertex Array Object Buffer.
      *
      * @discussion
-     *
      * The Array Buffer is used with Element Buffer to bind the data.
      */
     class ArrayBuffer {
@@ -138,7 +143,6 @@ namespace EN {
      * Element Array Buffer also known as Index Buffer.
      *
      * @discussion
-     *
      * The Element Buffer is used for getting the element count and binding the
      * element. This is used with Array Buffer for drawing.
      */

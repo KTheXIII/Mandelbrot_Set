@@ -75,15 +75,15 @@ int main(int argc, char const* argv[]) {
 
     // clang-format off
     view = glm::lookAt(
-        glm::vec3(0.f, 0.f, -2.f), // Position
+        glm::vec3(0.f, 0.f, -10.f), // Position
         glm::vec3(0.f, 0.f, 0.f), // Target
         glm::vec3(0.f, 1.f, 0.f)  // Up
     );
     // clang-format on
 
     // projection = glm::perspective(
-    //    ((float)M_PI) / 4.f, (float)app.GetWidth() / (float)app.GetHeight(),
-    //    0.1f, 100.f);
+    //   ((float)M_PI) / 4.f, (float)app.GetWidth() / (float)app.GetHeight(),
+    //   0.1f, 1000.f);
 
     float half_width = (float)app.GetWidth() / 2.f;
     float half_height = (float)app.GetHeight() / 2.f;
@@ -108,9 +108,9 @@ int main(int argc, char const* argv[]) {
     ImGui_ImplOpenGL3_Init(EN::SHADER_VERSION);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    bool check_box = false;
+    float scale = .9f;
 
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
@@ -119,7 +119,7 @@ int main(int argc, char const* argv[]) {
         double mx, my;
         glfwGetCursorPos(app.GetNativeWindow(), &mx, &my);
 
-        mx = (double)app.GetWidth() / 2. - mx;
+        mx = (double)app.GetWidth() / 2 - mx;
         my = (double)app.GetHeight() / 2 - my;
 
         half_width = (float)app.GetWidth() / 2.f;
@@ -130,8 +130,9 @@ int main(int argc, char const* argv[]) {
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3((float)mx, (float)my, 0.f));
 
-        model = glm::scale(
-            model, glm::vec3(100.f * (sin((float)glfwGetTime()) + 1.5f)));
+        // model = glm::scale(
+        //    model, glm::vec3(100.f * (sin((float)glfwGetTime()) + 1.5f)));
+        model = glm::scale(model, glm::vec3(100.f * scale));
         model = glm::rotate(model, (float)glfwGetTime(),
                             glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -144,57 +145,19 @@ int main(int argc, char const* argv[]) {
         // ImGui::ShowDemoWindow()! You can browse its code to learn more about
         // Dear ImGui!).
 
-        if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
+        // if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
         // 2. Show a simple window that we create ourselves. We use a
         // Begin/End pair to created a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
 
-            ImGui::Begin("Hello, world!");  // Create a window called "Hello,
-                                            // world!" and append into it.
+        ImGui::Begin("Settings");  // Create a window called "Hello,
+                                   // world!" and append into it.
 
-            ImGui::Text(
-                "This is some useful text.");  // Display some text (you can use
-                                               // a format strings too)
-            ImGui::Checkbox("Demo Window",
-                            &show_demo_window);  // Edit bools storing our
-                                                 // window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat(
-                "float", &f, 0.0f,
-                1.0f);  // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3(
-                "clear color",
-                (float*)&clear_color);  // Edit 3 floats representing a color
-
-            if (ImGui::Button(
-                    "Button"))  // Buttons return true when clicked (most
-                                // widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-                        1000.0f / ImGui::GetIO().Framerate,
-                        ImGui::GetIO().Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window) {
-            ImGui::Begin(
-                "Another Window",
-                &show_another_window);  // Pass a pointer to our bool variable
-                                        // (the window will have a closing
-                                        // button that will clear the bool when
-                                        // clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me")) show_another_window = false;
-            ImGui::End();
-        }
+        ImGui::SliderFloat("Scale", &scale, 0.f, 1.f);
+        ImGui::Text("Frametime: %.3f ms/frame (%.1f FPS)",
+                    1000.0f / ImGui::GetIO().Framerate,
+                    ImGui::GetIO().Framerate);
+        ImGui::End();
 
         // Render
         glClearColor(0.f, 0.f, 0.f, 1.f);

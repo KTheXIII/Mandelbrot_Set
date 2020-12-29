@@ -27,26 +27,28 @@ namespace EN {
 
     uint32_t Shader::GetID() const { return m_ProgramID; }
 
-    void Shader::SetUniform1f(const char* name, const f32& value) {
+    void Shader::SetUniform1f(const char* name, const float& value) {
         glUniform1f(GetUniformLocation(name), value);
     }
 
-    void Shader::SetUniform2f(const char* name, const f32& v0, const f32& v1) {
+    void Shader::SetUniform2f(const char* name, const float& v0,
+                              const float& v1) {
         glUniform2f(GetUniformLocation(name), v0, v1);
     }
 
-    void Shader::SetUniform3f(const char* name, const f32& v0, const f32& v1,
-                              const f32& v2) {
+    void Shader::SetUniform3f(const char* name, const float& v0,
+                              const float& v1, const float& v2) {
         glUniform3f(GetUniformLocation(name), v0, v1, v2);
     }
 
-    void Shader::SetUniform4f(const char* name, const f32& v0, const f32& v1,
-                              const f32& v2, const f32& v3) {
+    void Shader::SetUniform4f(const char* name, const float& v0,
+                              const float& v1, const float& v2,
+                              const float& v3) {
         glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
     }
 
-    void Shader::SetUniform4fv(const char* name, const f32* value,
-                               const u32& count, const bool& transpose) {
+    void Shader::SetUniform4fv(const char* name, const float* value,
+                               const uint32_t& count, const bool& transpose) {
         glUniformMatrix4fv(GetUniformLocation(name), count,
                            (transpose ? GL_TRUE : GL_FALSE), value);
     }
@@ -83,18 +85,18 @@ namespace EN {
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 
             // Allocate memory for message
-            char* message = (char*)malloc(length * sizeof(char));
+            char* message = new char[length];
             glGetShaderInfoLog(id, length, &length, message);
 
-            std::cout << "\n\u001b[31mFailed to compile "
+            std::cout << "\nFailed to compile "
                       << (shader_type == GL_VERTEX_SHADER ? "Vertex"
                                                           : "Fragment")
-                      << " shader\u001b[0m\n";
+                      << " shader\n";
             std::cout << message << "\n";
 
             // Clean up
             glDeleteShader(id);
-            free(message);
+            delete[] message;
 
             return 0;
         }

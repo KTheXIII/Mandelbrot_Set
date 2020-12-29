@@ -23,8 +23,9 @@ namespace EN {
         std::string title;
         u32 width, height;
 
-        WindowProps(const char* title = "Default", u32 width = DEFAULT_WIDTH,
-                    u32 height = DEFAULT_HEIGHT)
+        WindowProps(const char* title = "Default",
+                    const uint32_t& width = DEFAULT_WIDTH,
+                    const uint32_t& height = DEFAULT_HEIGHT)
             : title(title), width(width), height(height) {}
     };
 
@@ -44,8 +45,8 @@ namespace EN {
          * @param[in] width Window width, defaults to DEFAULT_WIDTH
          * @param[in] height Window height, defaults to DEFAULT_HEIGHT
          */
-        Window(const char* title, u32 width = DEFAULT_WIDTH,
-               u32 height = DEFAULT_HEIGHT);
+        Window(const char* title, const uint32_t& width = DEFAULT_WIDTH,
+               const uint32_t& height = DEFAULT_HEIGHT);
 
         ~Window();
 
@@ -71,7 +72,7 @@ namespace EN {
         void SetVSync(bool enable);
 
         /**
-         * Get If VSync is on
+         * Get VSync setting
          *
          * @return VSync status
          */

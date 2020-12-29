@@ -2,7 +2,8 @@
 
 namespace EN {
 
-    Window::Window(const char* title, u32 width, u32 height) {
+    Window::Window(const char* title, const uint32_t& width,
+                   const uint32_t& height) {
         m_Data.Title = title;
         m_Data.Width = width;
         m_Data.Height = height;

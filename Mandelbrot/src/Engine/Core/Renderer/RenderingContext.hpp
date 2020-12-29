@@ -4,6 +4,9 @@
 
 namespace EN {
 
+    // TODO: The renderer is abstracted away atm.
+    //       This might not be needed in this project.
+
     class RenderingContext {
        public:
         virtual void Init() = 0;

@@ -29,7 +29,7 @@ namespace EN {
         /**
          * NOT IMPLEMENTED
          *
-         * TODO: Single file shader program
+         * TODO: Single file shader program, with preproccessor separator
          */
         Shader(const char* file_path);
 
@@ -68,7 +68,7 @@ namespace EN {
          * @param[in] name The name of the uniform
          * @param[in] value Value passing in
          */
-        void SetUniform1f(const char* name, const f32& value);
+        void SetUniform1f(const char* name, const float& value);
 
         /**
          * Set float uniform with 2 value
@@ -81,7 +81,7 @@ namespace EN {
          * @param[in] v0 First value
          * @param[in] v1 Second value
          */
-        void SetUniform2f(const char* name, const f32& v0, const f32& v1);
+        void SetUniform2f(const char* name, const float& v0, const float& v1);
 
         /**
          * Set float uniform with 3 value
@@ -95,8 +95,8 @@ namespace EN {
          * @param[in] v1 Second value
          * @param[in] v2 Third value
          */
-        void SetUniform3f(const char* name, const f32& v0, const f32& v1,
-                          const f32& v2);
+        void SetUniform3f(const char* name, const float& v0, const float& v1,
+                          const float& v2);
 
         /**
          * Set float uniform with 4 value
@@ -111,8 +111,8 @@ namespace EN {
          * @param[in] v2 Third value
          * @param[in] v3 Fourth value
          */
-        void SetUniform4f(const char* name, const f32& v0, const f32& v1,
-                          const f32& v2, const f32& v3);
+        void SetUniform4f(const char* name, const float& v0, const float& v1,
+                          const float& v2, const float& v3);
 
         /**
          * Set the mat4 uniform
@@ -127,8 +127,9 @@ namespace EN {
          * @param[in] transpose Default = false, Specifies whether to transpose
          * the matrix
          */
-        void SetUniform4fv(const char* name, const f32* value,
-                           const u32& count = 1, const bool& transpose = false);
+        void SetUniform4fv(const char* name, const float* value,
+                           const uint32_t& count = 1,
+                           const bool& transpose = false);
 
        private:
         u32 m_ProgramID;  // Shader Program
@@ -139,7 +140,7 @@ namespace EN {
          * @discussion Compile the given shader program
          */
         u32 CreateShader(const char* vertex_source,
-                              const char* fragment_source);
+                         const char* fragment_source);
 
         /**
          * Compile the shader program
