@@ -26,5 +26,4 @@ namespace EN {
     typedef float f32;
     typedef double f64;
 
-
 }  // namespace EN

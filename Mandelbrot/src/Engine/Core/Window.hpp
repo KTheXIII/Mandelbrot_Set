@@ -9,7 +9,7 @@
 #include "GLFW/glfw3.h"
 
 namespace EN {
-    constexpr u32 DEFAULT_WIDTH = 960, DEFAULT_HEIGHT = 720;
+    constexpr u32 DEFAULT_WIDTH = 1280, DEFAULT_HEIGHT = 800;
 
     // Temporary fix for getting the GLSL version
     constexpr char SHADER_VERSION[] = "#version 410";

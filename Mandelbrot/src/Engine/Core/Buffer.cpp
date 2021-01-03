@@ -2,7 +2,7 @@
 
 namespace EN {
 
-    void BufferLayout::Push(u32 type, u32 count, bool normalized) {
+    void BufferLayout::Push(uint32_t type, uint32_t count, bool normalized) {
         u8 nm = normalized ? GL_TRUE : GL_FALSE;
         m_Elements.push_back({type, count, nm});
         m_Stride += count * BufferElement::GetSizeOfType(type);
@@ -10,11 +10,15 @@ namespace EN {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    VertexBuffer::VertexBuffer(const void* data, const u32& size) {
+    VertexBuffer::VertexBuffer(const void* data, const uint32_t& size) {
         glGenBuffers(1, &m_BufferID);
         Bind();
-        glBufferData(GL_ARRAY_BUFFER, size, data,
-                     GL_STATIC_DRAW);  // Set the VBO buffer data
+        glBufferData(
+            GL_ARRAY_BUFFER, size, data,
+            GL_STATIC_DRAW);  // Set the VBO buffer data
+                              // STAIC_DRAW is because we set i once and the
+                              // data is not changing We want to use other type
+                              // if we want to stream the data
     }
 
     VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &m_BufferID); }
@@ -57,7 +61,7 @@ namespace EN {
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    ElementBuffer::ElementBuffer(const void* data, const u32& count)
+    ElementBuffer::ElementBuffer(const void* data, const uint32_t& count)
         : m_Count(count) {
         glGenBuffers(1, &m_BufferID);
         Bind();

@@ -5,16 +5,16 @@ namespace EN {
         m_ProgramID = CreateShader(BASIC_VS.c_str(), BASIC_FS.c_str());
     }
 
-    Shader::Shader(const char* file_path) : m_ProgramID(0) {}
-
     Shader::Shader(const char* vertex_file_path, const char* fragment_file_path)
         : m_ProgramID(0) {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
 
         if (source.VS.compare("ERROR") == 0) source.VS = BASIC_VS;
+        else m_VPath = vertex_file_path;
 
         if (source.FS.compare("ERROR") == 0) source.FS = BASIC_FS;
+        else m_FPath = fragment_file_path;
 
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
@@ -51,6 +51,17 @@ namespace EN {
                                const uint32_t& count, const bool& transpose) {
         glUniformMatrix4fv(GetUniformLocation(name), count,
                            (transpose ? GL_TRUE : GL_FALSE), value);
+    }
+
+    void Shader::Reload() {
+        if(m_VPath.empty() || m_FPath.empty()) return;
+        ShaderSource source = {
+            LoadShaderFile(m_VPath),
+            LoadShaderFile(m_FPath)
+        };
+
+        glDeleteProgram(m_ProgramID);
+        m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
     u32 Shader::CreateShader(const char* vertex_source,
@@ -104,8 +115,8 @@ namespace EN {
         return id;
     };
 
-    std::string Shader::LoadShaderFile(const char* file_path) {
-        std::ifstream stream(file_path);
+    std::string Shader::LoadShaderFile(const std::string& file_path) {
+        std::ifstream stream(file_path.c_str());
         std::stringstream ss;
 
         if (stream.fail()) {

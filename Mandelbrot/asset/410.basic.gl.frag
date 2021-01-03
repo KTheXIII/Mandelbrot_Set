@@ -7,6 +7,7 @@ in vec4 io_color;
 in vec2 io_uv;
 
 uniform vec4 u_color;
+uinform vec2 u_resolution;
 uniform sampler2D u_texture;
 
 void main() {

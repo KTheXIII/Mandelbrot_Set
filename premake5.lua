@@ -6,7 +6,6 @@ workspace "Mandelbrot"
   configurations {
     "Debug",
     "Release",
-    "Dist"
   }
 
   flags {
@@ -73,9 +72,7 @@ project "Mandelbrot"
     "glad",
   }
 
-  -- postbuildcommands {
-  --    ("{COPY} %{prj.name}/asset/* %{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/")
-  -- }
+
 
   filter "system:macosx"
     system "macosx"
@@ -117,7 +114,4 @@ project "Mandelbrot"
     debugdir "%{prj.name}"
 
   filter "configurations:Release"
-    optimize "On"
-
-  filter "configurations:Dist"
     optimize "On"

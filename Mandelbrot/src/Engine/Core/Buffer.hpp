@@ -56,13 +56,13 @@ namespace EN {
          * @param[in] count Data type count, vec3 is 3 and vec4 is 4 etc.
          * @param[in] normalized normalized data, default = false
          */
-        void Push(u32 type, u32 count, bool normalized = false);
+        void Push(uint32_t type, uint32_t count, bool normalized = false);
 
         inline const std::vector<BufferElement> GetElements() const& {
             return m_Elements;
         }
 
-        inline u32 GetStride() const { return m_Stride; }
+        inline uint32_t GetStride() const { return m_Stride; }
 
        private:
         std::vector<BufferElement> m_Elements;
@@ -84,7 +84,7 @@ namespace EN {
          * @param[in] data Vertices data
          * @param[in] size Size of the data
          */
-        VertexBuffer(const void* data, const u32& size);
+        VertexBuffer(const void* data, const uint32_t& size);
 
         ~VertexBuffer();
 
@@ -154,7 +154,7 @@ namespace EN {
          * @param data Element data
          * @param count Data count
          */
-        ElementBuffer(const void* data, const u32& count);
+        ElementBuffer(const void* data, const uint32_t& count);
 
         ~ElementBuffer();
 

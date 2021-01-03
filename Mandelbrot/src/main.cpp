@@ -15,6 +15,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+// TODO: Create a renderer
+// TODO: Userinterface for generating image
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
@@ -27,9 +30,17 @@ void process_input(GLFWwindow* window) {
 int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
 
+    //GLFWimage images[1];
+    //images[0].pixels = stbi_load("asset/icon.gl.png", &images[0].width,
+    //                             &images[0].height, 0, 4);
+    //glfwSetWindowIcon(app.GetNativeWindow(), 1, images);
+    //stbi_image_free(images[0].pixels);
+
     // clang-format off
+
+    // Quad
     float vertices[] = {
-    //  positions: x,y,z        colors: r,g,b,a,           texture coordinates
+    //  positions: x,y,z        colors: r,g,b,a            texture coordinates
         -1.0f,  1.0f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
          1.0f,  1.0f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
          1.0f, -1.0f,  0.0f,    0.0f, 0.0f, 1.0f, 1.0f,    1.0f,  0.0f,
@@ -48,7 +59,7 @@ int main(int argc, char const* argv[]) {
     layout.Push(GL_FLOAT, 4);
     layout.Push(GL_FLOAT, 2);
 
-    EN::Shader shader("asset/410.basic.gl.vert", "asset/410.basic.gl.frag");
+    EN::Shader shader("asset/410.basic.gl.vert", "asset/410.star_field.gl.frag");
     EN::Texture texture("asset/basic.gl.png");
     texture.Bind();
 
@@ -74,11 +85,11 @@ int main(int argc, char const* argv[]) {
     glm::mat4 projection(1.f);  // projection
 
     // clang-format off
-    view = glm::lookAt(
-        glm::vec3(0.f, 0.f, -10.f), // Position
-        glm::vec3(0.f, 0.f, 0.f), // Target
-        glm::vec3(0.f, 1.f, 0.f)  // Up
-    );
+    //view = glm::lookAt(
+    //    glm::vec3(0.f, 0.f, 10.f), // Position
+    //    glm::vec3(0.f, 0.f, 0.f), // Target
+    //    glm::vec3(0.f, 1.f, 0.f)  // Up
+    //);
     // clang-format on
 
     // projection = glm::perspective(
@@ -112,48 +123,43 @@ int main(int argc, char const* argv[]) {
     bool check_box = false;
     float scale = .9f;
 
+    int32_t e_current = 0, e_last = 0;
+
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
 
-        double mx, my;
-        glfwGetCursorPos(app.GetNativeWindow(), &mx, &my);
+        e_last = e_current;
+        e_current = glfwGetKey(app.GetNativeWindow(), GLFW_KEY_R);
 
-        mx = (double)app.GetWidth() / 2 - mx;
-        my = (double)app.GetHeight() / 2 - my;
+        if (e_current == GLFW_PRESS && e_last == GLFW_RELEASE) {
+            shader.Reload();
+        }
+
+        double mouse_x, mouse_y;
+        glfwGetCursorPos(app.GetNativeWindow(), &mouse_x, &mouse_y);
+
+        mouse_x = (double)app.GetWidth() / 2 - mouse_x;
+        mouse_y = (double)app.GetHeight() / 2 - mouse_y;
 
         half_width = (float)app.GetWidth() / 2.f;
         half_height = (float)app.GetHeight() / 2.f;
-        projection = glm::ortho(-half_width, half_width, -half_height,
-                                half_height, 0.1f, 100.f);
+        // projection = glm::ortho(-half_width, half_width, -half_height,
+        //                        half_height, 0.1f, 100.f);
 
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3((float)mx, (float)my, 0.f));
-
-        // model = glm::scale(
-        //    model, glm::vec3(100.f * (sin((float)glfwGetTime()) + 1.5f)));
-        model = glm::scale(model, glm::vec3(100.f * scale));
-        model = glm::rotate(model, (float)glfwGetTime(),
-                            glm::vec3(0.0f, 0.0f, 1.0f));
+        // model = glm::mat4(1.0f);
+        // model = glm::scale(model, glm::vec3(250.f));
+        // model = glm::scale(model, glm::vec3((app.GetWidth() > app.GetHeight()
+        //                                        ? app.GetWidth()
+        //                                        : app.GetHeight()) /
+        //                                   2));
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in
-        // ImGui::ShowDemoWindow()! You can browse its code to learn more about
-        // Dear ImGui!).
-
-        // if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
-
-        // 2. Show a simple window that we create ourselves. We use a
-        // Begin/End pair to created a named window.
-
-        ImGui::Begin("Settings");  // Create a window called "Hello,
-                                   // world!" and append into it.
-
-        ImGui::SliderFloat("Scale", &scale, 0.f, 1.f);
+        ImGui::Begin("Settings");
         ImGui::Text("Frametime: %.3f ms/frame (%.1f FPS)",
                     1000.0f / ImGui::GetIO().Framerate,
                     ImGui::GetIO().Framerate);
@@ -164,9 +170,12 @@ int main(int argc, char const* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.Bind();
+        shader.SetUniform1f("u_time", glfwGetTime());
         shader.SetUniform4fv("u_model", glm::value_ptr(model));
         shader.SetUniform4fv("u_view", glm::value_ptr(view));
         shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
+        shader.SetUniform2f("u_resolution", app.GetWidth(), app.GetHeight());
+        shader.SetUniform2f("u_mouse", mouse_x, mouse_y);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer

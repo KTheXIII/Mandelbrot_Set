@@ -27,13 +27,6 @@ namespace EN {
         Shader();
 
         /**
-         * NOT IMPLEMENTED
-         *
-         * TODO: Single file shader program, with preproccessor separator
-         */
-        Shader(const char* file_path);
-
-        /**
          * Create shader form shader program
          *
          * @param vertex_file_path Vertex shader file path
@@ -131,11 +124,18 @@ namespace EN {
                            const uint32_t& count = 1,
                            const bool& transpose = false);
 
+        /**
+        * Reload and Recompile shader program
+        */
+        void Reload();
+
        private:
         u32 m_ProgramID;  // Shader Program
+        std::string m_VPath;  // Vertex Shader source path
+        std::string m_FPath;  // Fragment Shader source path
 
         /**
-         * Create shader
+         * Create shader calls the compiler shader
          *
          * @discussion Compile the given shader program
          */
@@ -159,7 +159,7 @@ namespace EN {
          *
          * @return File contents if it exist else it'll return `ERROR` text.
          */
-        std::string LoadShaderFile(const char* file_path);
+        std::string LoadShaderFile(const std::string& file_path);
 
         /**
          * Get Uniform location
