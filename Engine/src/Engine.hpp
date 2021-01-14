@@ -5,3 +5,4 @@
 #include "Core/Shader.hpp"
 #include "Core/Math.hpp"
 #include "Core/Texture.hpp"
+#include "Core/Application.hpp"

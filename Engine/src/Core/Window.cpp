@@ -7,6 +7,7 @@ namespace EN {
         m_Data.Width = width;
         m_Data.Height = height;
         m_Data.VSync = true;
+        m_Data.running = true;
 
         if (!glfwInit()) throw "GLFW not initialized";
 
@@ -34,6 +35,13 @@ namespace EN {
 
             data.Width = width;
             data.Height = height;
+        });
+
+        glfwSetWindowCloseCallback(m_NativeWindow, [](GLFWwindow* window) {
+            // Get the WindowData pointer from GLFW
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            data.running = false;
         });
 
         // Getting the shader version
@@ -73,5 +81,7 @@ namespace EN {
     uint32_t Window::GetWidth() const { return m_Data.Width; }
 
     uint32_t Window::GetHeight() const { return m_Data.Height; }
+
+    bool Window::ShouldClose() const { return m_Data.running; }
 
 }  // namespace EN

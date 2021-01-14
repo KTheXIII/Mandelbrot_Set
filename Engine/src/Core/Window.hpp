@@ -44,7 +44,7 @@ namespace EN {
          * @param[in] width Window width, defaults to DEFAULT_WIDTH
          * @param[in] height Window height, defaults to DEFAULT_HEIGHT
          */
-        Window(const char* title, u32 width = DEFAULT_WIDTH,
+        Window(const char* title = "Test", u32 width = DEFAULT_WIDTH,
                u32 height = DEFAULT_HEIGHT);
 
         ~Window();
@@ -105,6 +105,8 @@ namespace EN {
          */
         uint32_t GetHeight() const;
 
+        bool ShouldClose() const;
+
        private:
         GLFWwindow* m_NativeWindow;  // GLFW Window context
         RenderingContext* m_Context;
@@ -118,6 +120,7 @@ namespace EN {
             std::string Title;
             u32 Width, Height;
             bool VSync;
+            bool running;
         };
 
         WindowData m_Data;  // This is set in GLFW user pointer
