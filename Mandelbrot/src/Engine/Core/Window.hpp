@@ -106,6 +106,8 @@ namespace EN {
          */
         uint32_t GetHeight() const;
 
+        inline bool ShouldClose() const { return m_Data.Running; }
+
        private:
         GLFWwindow* m_NativeWindow;  // GLFW Window context
         RenderingContext* m_Context;
@@ -119,6 +121,7 @@ namespace EN {
             std::string Title;
             u32 Width, Height;
             bool VSync;
+            bool Running;
         };
 
         WindowData m_Data;  // This is set in GLFW user pointer

@@ -10,14 +10,22 @@ namespace EN {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
 
-        if (source.VS.compare("ERROR") == 0) source.VS = BASIC_VS;
-        else m_VPath = vertex_file_path;
+        if (source.VS.compare("ERROR") == 0)
+            source.VS = BASIC_VS;
+        else
+            m_VPath = vertex_file_path;
 
-        if (source.FS.compare("ERROR") == 0) source.FS = BASIC_FS;
-        else m_FPath = fragment_file_path;
+        if (source.FS.compare("ERROR") == 0)
+            source.FS = BASIC_FS;
+        else
+            m_FPath = fragment_file_path;
 
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
+
+    Shader::Shader(const std::string& vertex_file_path,
+                   const std::string& fragment_file_path)
+        : Shader(vertex_file_path.c_str(), fragment_file_path.c_str()) {}
 
     Shader::~Shader() { glDeleteProgram(m_ProgramID); }
 
@@ -31,9 +39,18 @@ namespace EN {
         glUniform1f(GetUniformLocation(name), value);
     }
 
+    void Shader::SetUnifrom1i(const char* name, const int& value) {
+        glUniform1i(GetUniformLocation(name), value);
+    }
+
     void Shader::SetUniform2f(const char* name, const float& v0,
                               const float& v1) {
         glUniform2f(GetUniformLocation(name), v0, v1);
+    }
+
+    void Shader::SetUniform2i(const char* name, const int32_t& v0,
+                              const int32_t& v1) {
+        glUniform2i(GetUniformLocation(name), v0, v1);
     }
 
     void Shader::SetUniform3f(const char* name, const float& v0,
@@ -54,11 +71,9 @@ namespace EN {
     }
 
     void Shader::Reload() {
-        if(m_VPath.empty() || m_FPath.empty()) return;
-        ShaderSource source = {
-            LoadShaderFile(m_VPath),
-            LoadShaderFile(m_FPath)
-        };
+        if (m_VPath.empty() || m_FPath.empty()) return;
+        ShaderSource source = {LoadShaderFile(m_VPath),
+                               LoadShaderFile(m_FPath)};
 
         glDeleteProgram(m_ProgramID);
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
@@ -97,6 +112,7 @@ namespace EN {
 
             // Allocate memory for message
             char* message = new char[length];
+
             glGetShaderInfoLog(id, length, &length, message);
 
             std::cout << "\nFailed to compile "

@@ -40,7 +40,6 @@ namespace EN {
     void ArrayBuffer::Unbind() const { glBindVertexArray(0); }
 
     void ArrayBuffer::AddBuffer(const VertexBuffer& vbuffer,
-
                                 const BufferLayout& layout) {
         Bind();
         vbuffer.Bind();

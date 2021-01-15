@@ -50,7 +50,7 @@ project "Mandelbrot"
     "%{prj.name}/vendor/stb/**.cpp",
     "%{prj.name}/vendor/glm/glm/**.hpp",
     "%{prj.name}/vendor/glm/glm/**.inl",
-    "%{prj.name}/asset/**.gl.*",
+    "%{prj.name}/asset/**",
 
     imgui_files
   }

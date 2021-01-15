@@ -34,6 +34,9 @@ namespace EN {
          */
         Shader(const char* vertex_file_path, const char* fragment_file_path);
 
+        Shader(const std::string& vertex_file_path,
+               const std::string& fragment_file_path);
+
         ~Shader();
 
         /**
@@ -63,6 +66,8 @@ namespace EN {
          */
         void SetUniform1f(const char* name, const float& value);
 
+        void SetUnifrom1i(const char* name, const int& value);
+
         /**
          * Set float uniform with 2 value
          *
@@ -75,6 +80,8 @@ namespace EN {
          * @param[in] v1 Second value
          */
         void SetUniform2f(const char* name, const float& v0, const float& v1);
+
+        void SetUniform2i(const char* name, const int32_t& v0, const int32_t& v1);
 
         /**
          * Set float uniform with 3 value
@@ -125,12 +132,12 @@ namespace EN {
                            const bool& transpose = false);
 
         /**
-        * Reload and Recompile shader program
-        */
+         * Reload and Recompile shader program
+         */
         void Reload();
 
        private:
-        u32 m_ProgramID;  // Shader Program
+        u32 m_ProgramID;      // Shader Program
         std::string m_VPath;  // Vertex Shader source path
         std::string m_FPath;  // Fragment Shader source path
 
@@ -144,6 +151,9 @@ namespace EN {
 
         /**
          * Compile the shader program
+         *
+         * @param[in] shader_type OpenGL shader type
+         * @param[in] source Shader source code
          *
          * @return Shader program
          */

@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+﻿#define _USE_MATH_DEFINES
 #include <cmath>
 #include <chrono>
 #include <iostream>
@@ -30,16 +30,16 @@ void process_input(GLFWwindow* window) {
 int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
 
-    //GLFWimage images[1];
-    //images[0].pixels = stbi_load("asset/icon.gl.png", &images[0].width,
+    // GLFWimage images[1];
+    // images[0].pixels = stbi_load("asset/icon.gl.png", &images[0].width,
     //                             &images[0].height, 0, 4);
-    //glfwSetWindowIcon(app.GetNativeWindow(), 1, images);
-    //stbi_image_free(images[0].pixels);
+    // glfwSetWindowIcon(app.GetNativeWindow(), 1, images);
+    // stbi_image_free(images[0].pixels);
 
     // clang-format off
 
     // Quad
-    float vertices[] = {
+     float vertices[] = {
     //  positions: x,y,z        colors: r,g,b,a            texture coordinates
         -1.0f,  1.0f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
          1.0f,  1.0f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
@@ -47,7 +47,7 @@ int main(int argc, char const* argv[]) {
         -1.0f, -1.0f,  0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    0.0f,  0.0f,
     };
 
-    uint32_t indices[] = {
+     uint32_t indices[] = {
         0, 1, 2,
         0, 2, 3,
     };
@@ -59,7 +59,10 @@ int main(int argc, char const* argv[]) {
     layout.Push(GL_FLOAT, 4);
     layout.Push(GL_FLOAT, 2);
 
-    EN::Shader shader("asset/410.basic.gl.vert", "asset/410.star_field.gl.frag");
+    std::string vertex_filename = "410.basic.gl.vert";
+    std::string frag_filename = "410.mandelbrot.gl.frag";
+
+    EN::Shader shader("asset/" + vertex_filename, "asset/" + frag_filename);
     EN::Texture texture("asset/basic.gl.png");
     texture.Bind();
 
@@ -85,11 +88,11 @@ int main(int argc, char const* argv[]) {
     glm::mat4 projection(1.f);  // projection
 
     // clang-format off
-    //view = glm::lookAt(
-    //    glm::vec3(0.f, 0.f, 10.f), // Position
-    //    glm::vec3(0.f, 0.f, 0.f), // Target
-    //    glm::vec3(0.f, 1.f, 0.f)  // Up
-    //);
+    // view = glm::lookAt(
+    //     glm::vec3(0.f, 0.f, 10.f), // Position
+    //     glm::vec3(0.f, 0.f, 0.f), // Target
+    //     glm::vec3(0.f, 1.f, 0.f)  // Up
+    // );
     // clang-format on
 
     // projection = glm::perspective(
@@ -123,36 +126,39 @@ int main(int argc, char const* argv[]) {
     bool check_box = false;
     float scale = .9f;
 
-    int32_t e_current = 0, e_last = 0;
+    int32_t r_current = 0, r_last = 0;
+
+    bool vsync = true;
+    app.SetVSync(vsync);
 
     while (!glfwWindowShouldClose(app.GetNativeWindow())) {
         // inputs
         process_input(app.GetNativeWindow());
 
-        e_last = e_current;
-        e_current = glfwGetKey(app.GetNativeWindow(), GLFW_KEY_R);
+        r_last = r_current;
+        r_current = glfwGetKey(app.GetNativeWindow(), GLFW_KEY_R);
 
-        if (e_current == GLFW_PRESS && e_last == GLFW_RELEASE) {
+        if (r_current == GLFW_PRESS && r_last == GLFW_RELEASE) {
+            std::cout << "Reloading shader...\n";
             shader.Reload();
         }
 
         double mouse_x, mouse_y;
         glfwGetCursorPos(app.GetNativeWindow(), &mouse_x, &mouse_y);
 
-        mouse_x = (double)app.GetWidth() / 2 - mouse_x;
-        mouse_y = (double)app.GetHeight() / 2 - mouse_y;
+        // std::cout << "Mouse x:" << mouse_x  << ", y: " << mouse_y << "\n";
+
+        // mouse_x = (double)app.GetWidth() / 2 - mouse_x;
+        // mouse_y = (double)app.GetHeight() / 2 - mouse_y;
 
         half_width = (float)app.GetWidth() / 2.f;
         half_height = (float)app.GetHeight() / 2.f;
         // projection = glm::ortho(-half_width, half_width, -half_height,
-        //                        half_height, 0.1f, 100.f);
+        //                         half_height, 0.1f, 100.f);
 
-        // model = glm::mat4(1.0f);
+        model = glm::mat4(1.0f);
         // model = glm::scale(model, glm::vec3(250.f));
-        // model = glm::scale(model, glm::vec3((app.GetWidth() > app.GetHeight()
-        //                                        ? app.GetWidth()
-        //                                        : app.GetHeight()) /
-        //                                   2));
+        // model = glm::scale(model, glm::vec3(app.GetWidth() / 2.f));
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
@@ -163,6 +169,8 @@ int main(int argc, char const* argv[]) {
         ImGui::Text("Frametime: %.3f ms/frame (%.1f FPS)",
                     1000.0f / ImGui::GetIO().Framerate,
                     ImGui::GetIO().Framerate);
+        ImGui::Text("Fragment Shader: %s", frag_filename.c_str());
+
         ImGui::End();
 
         // Render
@@ -170,12 +178,12 @@ int main(int argc, char const* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.Bind();
-        shader.SetUniform1f("u_time", glfwGetTime());
+        shader.SetUniform1f("u_time", (float)glfwGetTime());
         shader.SetUniform4fv("u_model", glm::value_ptr(model));
         shader.SetUniform4fv("u_view", glm::value_ptr(view));
         shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
         shader.SetUniform2f("u_resolution", app.GetWidth(), app.GetHeight());
-        shader.SetUniform2f("u_mouse", mouse_x, mouse_y);
+        shader.SetUniform2f("u_mouse", (float)mouse_x, (float)mouse_y);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer
