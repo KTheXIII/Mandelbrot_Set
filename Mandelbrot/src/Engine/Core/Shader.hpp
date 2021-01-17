@@ -81,7 +81,11 @@ namespace EN {
          */
         void SetUniform2f(const char* name, const float& v0, const float& v1);
 
-        void SetUniform2i(const char* name, const int32_t& v0, const int32_t& v1);
+        void SetUniform2i(const char* name, const int32_t& v0,
+                          const int32_t& v1);
+
+        void SetUniform2fv(const char* name, const float* vector,
+                           const uint32_t& count = 1);
 
         /**
          * Set float uniform with 3 value

@@ -22,13 +22,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-void process_input(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
 int main(int argc, char const* argv[]) {
     EN::Window app("Mandelbrot set");
+    bool vsync = true;
+    app.SetVSync(vsync);
 
     // GLFWimage images[1];
     // images[0].pixels = stbi_load("asset/icon.gl.png", &images[0].width,
@@ -82,22 +79,9 @@ int main(int argc, char const* argv[]) {
                                    framebuffer_size_callback);
 
     glm::mat4 model(1.f);  // Use this for transforms
-
     // Setup camera
     glm::mat4 view(1.f);        // camera/view
     glm::mat4 projection(1.f);  // projection
-
-    // clang-format off
-    // view = glm::lookAt(
-    //     glm::vec3(0.f, 0.f, 10.f), // Position
-    //     glm::vec3(0.f, 0.f, 0.f), // Target
-    //     glm::vec3(0.f, 1.f, 0.f)  // Up
-    // );
-    // clang-format on
-
-    // projection = glm::perspective(
-    //   ((float)M_PI) / 4.f, (float)app.GetWidth() / (float)app.GetHeight(),
-    //   0.1f, 1000.f);
 
     float half_width = (float)app.GetWidth() / 2.f;
     float half_height = (float)app.GetHeight() / 2.f;
@@ -121,19 +105,19 @@ int main(int argc, char const* argv[]) {
     ImGui_ImplGlfw_InitForOpenGL(app.GetNativeWindow(), true);
     ImGui_ImplOpenGL3_Init(EN::SHADER_VERSION);
 
-    // Our state
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    bool check_box = false;
-    float scale = .9f;
-
     int32_t r_current = 0, r_last = 0;
+    double mouse_x, mouse_y;
 
-    bool vsync = true;
-    app.SetVSync(vsync);
+    double offset_x = 0., offset_y = 0.;
+    double scale = 1.;
+    double speed = 1.;
 
-    while (!glfwWindowShouldClose(app.GetNativeWindow())) {
-        // inputs
-        process_input(app.GetNativeWindow());
+    double last_time = 0, current_time = 0;
+    double frametime = 0;
+
+    auto update = [&](GLFWwindow* window) {
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(window, true);
 
         r_last = r_current;
         r_current = glfwGetKey(app.GetNativeWindow(), GLFW_KEY_R);
@@ -143,23 +127,33 @@ int main(int argc, char const* argv[]) {
             shader.Reload();
         }
 
-        double mouse_x, mouse_y;
-        glfwGetCursorPos(app.GetNativeWindow(), &mouse_x, &mouse_y);
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            offset_y += speed * frametime * std::pow(2., scale) * .5;
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            offset_y -= speed * frametime * std::pow(2., scale) * .5;
+        }
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            offset_x += speed * frametime * std::pow(2., scale) * .5;
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+            offset_x -= speed * frametime * std::pow(2., scale) * .5;
+        }
 
-        // std::cout << "Mouse x:" << mouse_x  << ", y: " << mouse_y << "\n";
+        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+            scale -= speed * frametime * .5;
+        }
+        if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+            scale += speed * frametime * .5;
+        }
 
-        // mouse_x = (double)app.GetWidth() / 2 - mouse_x;
-        // mouse_y = (double)app.GetHeight() / 2 - mouse_y;
+        glfwGetCursorPos(window, &mouse_x, &mouse_y);
 
         half_width = (float)app.GetWidth() / 2.f;
         half_height = (float)app.GetHeight() / 2.f;
-        // projection = glm::ortho(-half_width, half_width, -half_height,
-        //                         half_height, 0.1f, 100.f);
+    };
 
-        model = glm::mat4(1.0f);
-        // model = glm::scale(model, glm::vec3(250.f));
-        // model = glm::scale(model, glm::vec3(app.GetWidth() / 2.f));
-
+    auto render = [&]() {
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -170,6 +164,8 @@ int main(int argc, char const* argv[]) {
                     1000.0f / ImGui::GetIO().Framerate,
                     ImGui::GetIO().Framerate);
         ImGui::Text("Fragment Shader: %s", frag_filename.c_str());
+        ImGui::Text("Location: %.4f, %.4f", offset_x, offset_y);
+        ImGui::Text("Scale: 2^%.2f", scale);
 
         ImGui::End();
 
@@ -178,12 +174,16 @@ int main(int argc, char const* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.Bind();
+
         shader.SetUniform1f("u_time", (float)glfwGetTime());
         shader.SetUniform4fv("u_model", glm::value_ptr(model));
         shader.SetUniform4fv("u_view", glm::value_ptr(view));
         shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
         shader.SetUniform2f("u_resolution", app.GetWidth(), app.GetHeight());
         shader.SetUniform2f("u_mouse", (float)mouse_x, (float)mouse_y);
+
+        shader.SetUniform1f("u_scale", scale);
+        shader.SetUniform2f("u_offset", offset_x, offset_y);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer
@@ -200,6 +200,15 @@ int main(int argc, char const* argv[]) {
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_context);
         }
+    };
+
+    while (!glfwWindowShouldClose(app.GetNativeWindow())) {
+        last_time = current_time;
+        current_time = glfwGetTime();
+        frametime = current_time - last_time;
+
+        update(app.GetNativeWindow());
+        render();
 
         app.OnUpdate();
     }

@@ -53,6 +53,11 @@ namespace EN {
         glUniform2i(GetUniformLocation(name), v0, v1);
     }
 
+    void Shader::SetUniform2fv(const char* name, const float* vector,
+                               const uint32_t& count) {
+        glUniform2fv(GetUniformLocation(name), count, vector);
+    }
+
     void Shader::SetUniform3f(const char* name, const float& v0,
                               const float& v1, const float& v2) {
         glUniform3f(GetUniformLocation(name), v0, v1, v2);

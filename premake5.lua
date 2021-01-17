@@ -72,8 +72,6 @@ project "Mandelbrot"
     "glad",
   }
 
-
-
   filter "system:macosx"
     system "macosx"
     systemversion "latest"
