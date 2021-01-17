@@ -30,6 +30,16 @@ Example: Makefile
 premake5 gmake2
 ```
 
+To the program you need to be inside Mandelbrot directory and run the executable from there. This is because the asset folder is in it.
+
+```
+cd Mandelbrot
+```
+
+```
+../bin/<executable_path>
+```
+
 ### Makefile
 
 Debug mode
@@ -60,3 +70,6 @@ real = a^2 - b^2 + x
 
 imaginary = 2abi + yi
 
+## Sample Image
+
+![Mandelbrot set image in color](https://i.imgur.com/HJZMNl7.png)
