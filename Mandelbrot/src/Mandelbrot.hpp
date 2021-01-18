@@ -1,32 +1,46 @@
 #pragma once
 
+#include <cmath>
+
 namespace MSET {
-    constexpr int default_iteration = 256;
-    constexpr float default_scale = 1.5f;
-    constexpr float default_radius = 2.0f;
-    constexpr float default_offset_x = -0.25f;
-    constexpr float default_offset_y = 0.0f;
+    template <typename T, typename = typename std::enable_if<
+                              std::is_floating_point<T>::value, T>::type>
+    int mandelbrot(T x, T y, int max, T scale = 1.0, T offset_x = 0.0,
+                   T offset_y = 0, T radius = 2.0) {
+        T r2 = radius * radius;
 
-    /**
-     * Mandelbrot set iterations
-     *
-     * @param x location
-     * @param y location
-     * @param max_iteration Number of iterations, default is 256
-     * @param offset_x Offset in X
-     * @param offset_y Offset in Y
-     * @param scale_x Scale in X direction
-     * @param scale_y Scale in Y direction
-     * @param radius Escape radius
-     *
-     * @return Number of iteration inside escape radius
-     */
-    int mandelbrot(const float& x, const float& y,
-                   const int& max_iteration = default_iteration,
-                   const float& offset_x = default_offset_x,
-                   const float& offset_y = default_offset_y,
-                   const float& scale_x = default_scale,
-                   const float& scale_y = default_scale,
-                   const float& radius = default_radius);
+        T zr = 0;
+        T zr_tmp = 0;
+        T zi = 0;
 
+        scale = std::pow(2.0, scale);
+        T cr = x * scale + offset_x;
+        T ci = y * scale + offset_y;
+
+        int iterations = 0;
+
+        for (int i = 0; i < max; i++) {
+            zr_tmp = zr * zr - zi * zi + cr;
+            zi = 2.0 * zr * zi + ci;
+            zr = zr_tmp;
+
+            if (zr * zr + zi * zi > r2) break;
+
+            iterations++;
+        }
+
+        return iterations;
+    }
+
+    template <typename T, typename = typename std::enable_if<
+                              std::is_arithmetic<T>::value, T>::type>
+    T clamp(T x, T min, T max) {
+        return x < max ? (x > min ? x : min) : max;
+    }
+
+    template <typename T, typename = typename std::enable_if<
+                              std::is_arithmetic<T>::value, T>::type>
+    T map(T x, T in_min, T in_max, T out_min, T out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
 }  // namespace MSET

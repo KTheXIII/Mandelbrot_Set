@@ -19,15 +19,15 @@ uniform vec2 u_offset;
 
 uniform sampler2D u_texture;
 
-float mandelbrot(vec2 uv, vec2 offset, float max_iter) {
+float mandelbrot(vec2 _z, vec2 _c, vec2 offset, float max_iter) {
     float r2 = 2. * 2.;
-    vec2 z = vec2(0);
-//    vec2 p_z = z;
-    vec2 c = uv + offset;
+    //    vec2 p_z = z;
+    vec2 z = _z;
+    vec2 c = _c;
 
     float iterations = 0;
     for (int i = 0; i < max_iter; i++) {
-//        p_z = z;
+        //        p_z = z;
         z = vec2(z.x * z.x - z.y * z.y, 2. * z.x * z.y) + c;
         if (dot(z, z) > r2) break;
         iterations++;
@@ -44,7 +44,12 @@ void main() {
 
     float scale = pow(2., u_scale);
     float max_iter = 256.;
-    float n = mandelbrot(uv * scale, u_offset, max_iter);
+
+    // Mandelbrot set
+    float n = mandelbrot(vec2(0), uv * scale + u_offset, u_offset, max_iter);
+
+    // Julia set
+    // float n = mandelbrot(uv * scale, u_offset, u_offset, max_iter);
 
     if (n < max_iter) {
         float c = sqrt(n / max_iter);
