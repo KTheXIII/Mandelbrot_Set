@@ -54,7 +54,7 @@ Use for building different builds
 make config=<mode>
 ```
 
-`<mode>`: **Release**, **Debug**, **Dist**
+`<mode>`: **Release**, **Debug**
 
 ## Math
 

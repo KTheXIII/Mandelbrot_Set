@@ -14,24 +14,31 @@ uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform vec4 u_color;
 
+uniform float u_iterations;
 uniform float u_scale;
 uniform vec2 u_offset;
 
 uniform sampler2D u_texture;
 
 float mandelbrot(vec2 _z, vec2 _c, vec2 offset, float max_iter) {
-    float r2 = 2. * 2.;
-    //    vec2 p_z = z;
+    float radius = 2.;
+    float r2 = radius * radius;
     vec2 z = _z;
     vec2 c = _c;
 
     float iterations = 0;
     for (int i = 0; i < max_iter; i++) {
-        //        p_z = z;
         z = vec2(z.x * z.x - z.y * z.y, 2. * z.x * z.y) + c;
+
         if (dot(z, z) > r2) break;
+
         iterations++;
     }
+
+    // float dist = length(z);
+    // float frac_iter = (dist - radius) / (r2 - radius);
+    // frac_iter = log2(log(dist) / log(radius));
+    // iterations -= frac_iter;
 
     return iterations;
 }
@@ -43,7 +50,7 @@ void main() {
     vec3 col = vec3(0);
 
     float scale = pow(2., u_scale);
-    float max_iter = 256.;
+    float max_iter = u_iterations != 0 ? u_iterations : 512;
 
     // Mandelbrot set
     float n = mandelbrot(vec2(0), uv * scale + u_offset, u_offset, max_iter);

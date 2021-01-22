@@ -35,21 +35,21 @@ namespace EN {
 
     uint32_t Shader::GetID() const { return m_ProgramID; }
 
-    void Shader::SetUniform1f(const char* name, const float& value) {
+    void Shader::SetUniform1(const char* name, const float& value) {
         glUniform1f(GetUniformLocation(name), value);
     }
 
-    void Shader::SetUnifrom1i(const char* name, const int& value) {
+    void Shader::SetUniform1(const char* name, const int& value) {
         glUniform1i(GetUniformLocation(name), value);
     }
 
-    void Shader::SetUniform2f(const char* name, const float& v0,
-                              const float& v1) {
+    void Shader::SetUniform2(const char* name, const float& v0,
+                             const float& v1) {
         glUniform2f(GetUniformLocation(name), v0, v1);
     }
 
-    void Shader::SetUniform2i(const char* name, const int32_t& v0,
-                              const int32_t& v1) {
+    void Shader::SetUniform2(const char* name, const int32_t& v0,
+                             const int32_t& v1) {
         glUniform2i(GetUniformLocation(name), v0, v1);
     }
 

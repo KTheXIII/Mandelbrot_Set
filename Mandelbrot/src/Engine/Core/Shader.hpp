@@ -55,34 +55,25 @@ namespace EN {
         uint32_t GetID() const;
 
         /**
-         * Set float uniform with 1 value
-         *
-         * @discussion
-         *
-         * The shader needs to be bind before we can set the uniform
-         *
-         * @param[in] name The name of the uniform
-         * @param[in] value Value passing in
+         * Set one uniform value
          */
-        void SetUniform1f(const char* name, const float& value);
-
-        void SetUnifrom1i(const char* name, const int& value);
+        void SetUniform1(const char* name, const float& value);
+        void SetUniform1(const char* name, const int32_t& value);
 
         /**
          * Set float uniform with 2 value
          *
          * @discussion
-         *
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
          * @param[in] v0 First value
          * @param[in] v1 Second value
          */
-        void SetUniform2f(const char* name, const float& v0, const float& v1);
+        void SetUniform2(const char* name, const float& v0, const float& v1);
 
-        void SetUniform2i(const char* name, const int32_t& v0,
-                          const int32_t& v1);
+        void SetUniform2(const char* name, const int32_t& v0,
+                         const int32_t& v1);
 
         void SetUniform2fv(const char* name, const float* vector,
                            const uint32_t& count = 1);
@@ -91,7 +82,6 @@ namespace EN {
          * Set float uniform with 3 value
          *
          * @discussion
-         *
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
@@ -106,7 +96,6 @@ namespace EN {
          * Set float uniform with 4 value
          *
          * @discussion
-         *
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
@@ -122,7 +111,6 @@ namespace EN {
          * Set the mat4 uniform
          *
          * @discussion
-         *
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform

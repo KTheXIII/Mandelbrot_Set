@@ -110,6 +110,7 @@ int main(int argc, char const* argv[]) {
 
     double offset_x = 0., offset_y = 0.;
     double scale = 1.;
+    float iterations = 512.;
     double speed = 1.;
 
     double last_time = 0, current_time = 0;
@@ -166,6 +167,7 @@ int main(int argc, char const* argv[]) {
         ImGui::Text("Fragment Shader: %s", frag_filename.c_str());
         ImGui::Text("Location: %.4f, %.4f", offset_x, offset_y);
         ImGui::Text("Scale: 2^%.2f", scale);
+        ImGui::SliderFloat("Iterations", &iterations, 256, 5120, "%.0f");
 
         ImGui::End();
 
@@ -175,15 +177,17 @@ int main(int argc, char const* argv[]) {
 
         shader.Bind();
 
-        shader.SetUniform1f("u_time", (float)glfwGetTime());
+        shader.SetUniform1("u_time", (float)glfwGetTime());
         shader.SetUniform4fv("u_model", glm::value_ptr(model));
         shader.SetUniform4fv("u_view", glm::value_ptr(view));
         shader.SetUniform4fv("u_projection", glm::value_ptr(projection));
-        shader.SetUniform2f("u_resolution", app.GetWidth(), app.GetHeight());
-        shader.SetUniform2f("u_mouse", (float)mouse_x, (float)mouse_y);
+        shader.SetUniform2("u_resolution", (float)app.GetWidth(),
+                           (float)app.GetHeight());
+        shader.SetUniform2("u_mouse", (float)mouse_x, (float)mouse_y);
 
-        shader.SetUniform1f("u_scale", scale);
-        shader.SetUniform2f("u_offset", offset_x, offset_y);
+        shader.SetUniform1("u_scale", (float)scale);
+        shader.SetUniform1("u_iterations", (float)iterations);
+        shader.SetUniform2("u_offset", (float)offset_x, (float)offset_y);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer

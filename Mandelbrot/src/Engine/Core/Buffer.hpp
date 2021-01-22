@@ -178,4 +178,18 @@ namespace EN {
         u32 m_Count;
     };
 
+    class Framebuffer {
+       public:
+           Framebuffer();
+
+           ~Framebuffer();
+
+           void Bind() const;
+
+           void Unbind() const;
+
+       private:
+           u32 m_BufferID; // Framebuffer Object ID
+    };
+
 }  // namespace EN

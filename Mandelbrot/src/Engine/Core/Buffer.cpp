@@ -2,13 +2,15 @@
 
 namespace EN {
 
+    // Buffer Layout
+
     void BufferLayout::Push(uint32_t type, uint32_t count, bool normalized) {
         u8 nm = normalized ? GL_TRUE : GL_FALSE;
         m_Elements.push_back({type, count, nm});
         m_Stride += count * BufferElement::GetSizeOfType(type);
     }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    // Vertex Buffer
 
     VertexBuffer::VertexBuffer(const void* data, const uint32_t& size) {
         glGenBuffers(1, &m_BufferID);
@@ -29,7 +31,7 @@ namespace EN {
 
     void VertexBuffer::Unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    // Array Buffer
 
     ArrayBuffer::ArrayBuffer() { glGenVertexArrays(1, &m_BufferID); }
 
@@ -58,7 +60,7 @@ namespace EN {
         }
     }
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    // Element/Index Buffer
 
     ElementBuffer::ElementBuffer(const void* data, const uint32_t& count)
         : m_Count(count) {
@@ -79,5 +81,15 @@ namespace EN {
     }
 
     uint32_t ElementBuffer::GetCount() const { return m_Count; }
+
+    // Framebuffer
+
+    Framebuffer::Framebuffer() {}
+
+    Framebuffer::~Framebuffer() {}
+
+    void Framebuffer::Bind() const {}
+
+    void Framebuffer::Unbind() const {}
 
 }  // namespace EN

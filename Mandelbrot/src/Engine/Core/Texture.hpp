@@ -21,9 +21,9 @@ namespace EN {
         /**
          * Create a texture
          *
-         * @param[in] path Image file path
+         * @param[in] filename Image file filename
          */
-        Texture(const char* path);
+        Texture(const char* filename);
 
         ~Texture();
 
@@ -33,7 +33,7 @@ namespace EN {
 
        private:
         u32 m_BufferID;
-        std::string m_FilePath;
+        std::string m_Filename;
         i32 m_Width, m_Height, m_Channels;
         u8* m_LocalBuffer;
     };
