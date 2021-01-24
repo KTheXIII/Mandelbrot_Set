@@ -2,6 +2,7 @@
 #include <cmath>
 #include <chrono>
 #include <iostream>
+#include <filesystem>
 
 #include "Engine.hpp"
 
@@ -34,6 +35,8 @@
 };
 // clang-format on
 
+namespace fs = std::filesystem;
+
 class Mandelbrot : public EN::Application {
    private:
     EN::BufferLayout layout;
@@ -60,6 +63,7 @@ class Mandelbrot : public EN::Application {
         std::string vertex_filename = "410.basic.gl.vert";
         std::string frag_filename = "410.basic.gl.frag";
         shader.LoadData("asset/" + vertex_filename, "asset/" + frag_filename);
+
         texture.LoadTexture("asset/basic.gl.png");
         texture.Bind();
 
@@ -76,6 +80,8 @@ class Mandelbrot : public EN::Application {
         model = glm::mat4(1.f);
         view = glm::mat4(1.f);
         projection = glm::mat4(1.f);
+
+        std::cout << "Current path is " << fs::current_path() << "\n";
     };
 
     ~Mandelbrot(){};
@@ -107,3 +113,4 @@ int main(int argc, char const* argv[]) {
 
     return 0;
 }
+

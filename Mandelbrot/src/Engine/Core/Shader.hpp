@@ -29,11 +29,17 @@ namespace EN {
         /**
          * Create shader form shader program
          *
-         * @param vertex_file_path Vertex shader file path
-         * @param fragment_file_path Fragment shader file path
+         * @param vertex_filename Vertex shader file path
+         * @param fragment_filename Fragment shader file path
          */
-        Shader(const char* vertex_file_path, const char* fragment_file_path);
+        Shader(const char* vertex_filename, const char* fragment_filename);
 
+        /**
+         * Create shader form shader program
+         *
+         * @param vertex_filename Vertex shader file path
+         * @param fragment_filename Fragment shader file path
+         */
         Shader(const std::string& vertex_file_path,
                const std::string& fragment_file_path);
 
@@ -129,7 +135,8 @@ namespace EN {
          */
         void Reload();
 
-        void LoadData(const char* vertex_file_path, const char* fragment_file_path);
+        void LoadData(const char* vertex_file_path,
+                      const char* fragment_file_path);
 
         void LoadData(const std::string& vertex_file_path,
                       const std::string& fragment_file_path);

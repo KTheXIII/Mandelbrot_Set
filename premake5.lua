@@ -113,3 +113,9 @@ project "Mandelbrot"
 
   filter "configurations:Release"
     optimize "On"
+
+    postbuildcommands {
+      "{echo} Copying assets",
+      "{mkdir} %{wks.location}/bin/"..outdir.."/%{prj.name}/asset",
+      "{COPY} %{wks.location}/%{prj.name}/asset/* %{wks.location}/bin/" ..outdir.."/%{prj.name}/asset"
+    }
