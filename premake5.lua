@@ -36,6 +36,10 @@ project "Mandelbrot"
 
   links {
   }
+
+  defines {
+    "_USE_MATH_DEFINES"
+  }
   
   filter "system:macosx"
     systemversion "latest"

@@ -1,6 +1,4 @@
-﻿#define _USE_MATH_DEFINES
-
-#include <iostream>
+﻿#include <iostream>
 #include <chrono>
 #include <vector>
 #include <string.h>
@@ -176,7 +174,6 @@ int main(int argc, char const* argv[]) {
 
             if (n < max_iterations) {
                 float c = std::sqrt((float)n / (float)max_iterations);
-                // c = clamp<float>(c, 0, 1);
 
                 int r = (int)((sin(.3f * 12.f * c - M_PI / 2.f) + 1.f) * 0.5f *
                               255.f);
