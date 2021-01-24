@@ -14,6 +14,7 @@
 constexpr int WIDTH = 2048;
 constexpr int HEIGHT = 2048;
 constexpr int MAX_ITERATIONS = 256;
+constexpr int CHANNELS = 3;
 
 template <typename T, typename = typename std::enable_if<
                           std::is_floating_point<T>::value, T>::type>
@@ -64,7 +65,6 @@ const std::string TITLE =
 // clang-format on
 
 int main(int argc, char const* argv[]) {
-    const int CHANNELS = 4;
     const int max_iterations = MAX_ITERATIONS;
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed;
@@ -75,16 +75,16 @@ int main(int argc, char const* argv[]) {
 
     std::cout << "Allocating " << WIDTH * HEIGHT * CHANNELS * sizeof(uint8_t)
               << " bytes of memory for image..." << std::endl;
-    start = std::chrono::high_resolution_clock::now();
-    uint8_t* pixels = new uint8_t[WIDTH * HEIGHT * CHANNELS];
-    std::cout << "Time took: " << elapsed.count() << "s\n\n";
-
-    std::cout << "Allocating " << WIDTH * HEIGHT * sizeof(int32_t)
+    std::cout << "Allocating " << WIDTH * HEIGHT * sizeof(int)
               << " bytes of memory for Mandelbrot...\n";
+
     start = std::chrono::high_resolution_clock::now();
+
+    uint8_t* pixels = new uint8_t[WIDTH * HEIGHT * CHANNELS];
     int* fractals = new int[WIDTH * HEIGHT];
+
     elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time took: " << elapsed.count() << "s\n\n";
+    std::cout << "Time took: " << elapsed.count() << " s\n\n";
 
     const uint32_t n_threads = std::thread::hardware_concurrency();
     std::cout << "Hardware thread count: " << n_threads << "\n";
@@ -105,8 +105,7 @@ int main(int argc, char const* argv[]) {
         }
 
         cout_lock.lock();
-        std::cout << "Thread ID: " << std::this_thread::get_id()
-                  << " is done\n";
+        std::cout << "Thread ID:" << std::this_thread::get_id() << " is done\n";
         cout_lock.unlock();
     };
 
@@ -189,12 +188,12 @@ int main(int argc, char const* argv[]) {
                 pixels[index++] = r;
                 pixels[index++] = g;
                 pixels[index++] = b;
-                pixels[index++] = 255;
+                // pixels[index++] = 255;
             } else {
                 pixels[index++] = 5;
                 pixels[index++] = 5;
                 pixels[index++] = 5;
-                pixels[index++] = 255;
+                // pixels[index++] = 255;
             }
         }
     }
