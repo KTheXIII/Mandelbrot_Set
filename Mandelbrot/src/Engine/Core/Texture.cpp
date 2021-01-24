@@ -1,6 +1,15 @@
 #include "Texture.hpp"
 
 namespace EN {
+    Texture::Texture()
+        : m_BufferID(0),
+          m_Filename(""),
+          m_LocalBuffer(nullptr),
+          m_Width(0),
+          m_Height(0),
+          m_Channels(0) {
+        glGenTextures(1, &m_BufferID);
+    }
 
     Texture::Texture(const char* filename)
         : m_BufferID(0),
@@ -9,12 +18,32 @@ namespace EN {
           m_Width(0),
           m_Height(0),
           m_Channels(0) {
-        stbi_set_flip_vertically_on_load(1);
-        m_LocalBuffer =
-            stbi_load(filename, &m_Width, &m_Height, &m_Channels, 4);
-
         glGenTextures(1, &m_BufferID);
         glBindTexture(GL_TEXTURE_2D, m_BufferID);
+
+        Load();
+    }
+
+    Texture::~Texture() { glDeleteTextures(1, &m_BufferID); }
+
+    void Texture::Bind(const uint32_t& slot) const {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_BufferID);
+    }
+
+    void Texture::Unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
+
+    void Texture::LoadTexture(const char* filename) {
+        m_Filename = filename;
+        glBindTexture(GL_TEXTURE_2D, m_BufferID);
+
+        Load();
+    }
+
+    void Texture::Load() {
+        stbi_set_flip_vertically_on_load(1);
+        m_LocalBuffer =
+            stbi_load(m_Filename.c_str(), &m_Width, &m_Height, &m_Channels, 4);
 
         // TEMPORARY
         // TODO: Abstract this away
@@ -36,14 +65,5 @@ namespace EN {
 
         Unbind();
     }
-
-    Texture::~Texture() { glDeleteTextures(1, &m_BufferID); }
-
-    void Texture::Bind(const uint32_t& slot) const {
-        glActiveTexture(GL_TEXTURE0 + slot);
-        glBindTexture(GL_TEXTURE_2D, m_BufferID);
-    }
-
-    void Texture::Unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 
 }  // namespace EN

@@ -33,7 +33,6 @@ namespace EN {
                                                      int width, int height) {
             // Get the WindowData pointer from GLFW
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
             data.Width = width;
             data.Height = height;
         });
@@ -41,13 +40,8 @@ namespace EN {
         glfwSetWindowCloseCallback(m_NativeWindow, [](GLFWwindow* window) {
             // Get the WindowData pointer from GLFW
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
             data.Running = false;
         });
-
-        // Getting the shader version
-        // std::string version = (char*)glGetString(GL_VERSION);
-        // std::cout << version << "\n";
     }
 
     Window::~Window() {
@@ -62,8 +56,6 @@ namespace EN {
         m_Context->SwapBuffers();
     }
 
-    GLFWwindow* Window::GetNativeWindow() { return m_NativeWindow; }
-
     void Window::SetVSync(bool enable) {
         glfwSwapInterval(enable ? 1 : 0);
         m_Data.VSync = enable;
@@ -71,16 +63,10 @@ namespace EN {
 
     bool Window::IsVSync() const { return m_Data.VSync; }
 
-    std::string Window::GetTitle() const { return m_Data.Title; }
-
     void Window::SetTitle(const std::string& title) {
         m_Data.Title = title;
 
         glfwSetWindowTitle(m_NativeWindow, m_Data.Title.c_str());
     }
-
-    uint32_t Window::GetWidth() const { return m_Data.Width; }
-
-    uint32_t Window::GetHeight() const { return m_Data.Height; }
 
 }  // namespace EN

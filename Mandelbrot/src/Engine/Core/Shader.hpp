@@ -58,7 +58,8 @@ namespace EN {
          * Set one uniform value
          */
         void SetUniform1(const char* name, const float& value);
-        void SetUniform1(const char* name, const int32_t& value);
+
+        void SetUniform1(const char* name, const int& value);
 
         /**
          * Set float uniform with 2 value
@@ -127,6 +128,11 @@ namespace EN {
          * Reload and Recompile shader program
          */
         void Reload();
+
+        void LoadData(const char* vertex_file_path, const char* fragment_file_path);
+
+        void LoadData(const std::string& vertex_file_path,
+                      const std::string& fragment_file_path);
 
        private:
         u32 m_ProgramID;      // Shader Program

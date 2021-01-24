@@ -38,7 +38,6 @@ namespace EN {
          * Create a Window object
          *
          * @discussion
-         *
          * This will be change later to use WindowProps for the data properties.
          *
          * @param[in] title The window title
@@ -62,7 +61,7 @@ namespace EN {
          *
          * @return GLFWwindow context
          */
-        GLFWwindow* GetNativeWindow();
+        inline GLFWwindow* GetNativeWindow() const { return m_NativeWindow; }
 
         /**
          * Set VSync
@@ -83,7 +82,7 @@ namespace EN {
          *
          * @return Window title
          */
-        std::string GetTitle() const;
+        inline std::string GetTitle() const { return m_Data.Title; }
 
         /**
          * Set the window title
@@ -97,20 +96,28 @@ namespace EN {
          *
          * @return Window width
          */
-        uint32_t GetWidth() const;
+        inline uint32_t GetWidth() const { return m_Data.Width; };
 
         /**
          * Get window height
          *
          * @return Window height
          */
-        uint32_t GetHeight() const;
+        uint32_t GetHeight() const { return m_Data.Height; };
 
-        inline bool ShouldClose() const { return m_Data.Running; }
+        /**
+         * Get if the Window should close
+         */
+        inline bool ShouldClose() const { return m_Data.Running; };
+
+        /**
+         * Stop the application
+         */
+        inline void Close() { m_Data.Running = false; };
 
        private:
-        GLFWwindow* m_NativeWindow;  // GLFW Window context
-        RenderingContext* m_Context;
+        GLFWwindow* m_NativeWindow;   // GLFW Window context
+        RenderingContext* m_Context;  // Rendering Context
 
         /**
          * Window Data container

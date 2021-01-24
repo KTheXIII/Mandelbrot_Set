@@ -7,20 +7,7 @@ namespace EN {
 
     Shader::Shader(const char* vertex_file_path, const char* fragment_file_path)
         : m_ProgramID(0) {
-        ShaderSource source = {LoadShaderFile(vertex_file_path),
-                               LoadShaderFile(fragment_file_path)};
-
-        if (source.VS.compare("ERROR") == 0)
-            source.VS = BASIC_VS;
-        else
-            m_VPath = vertex_file_path;
-
-        if (source.FS.compare("ERROR") == 0)
-            source.FS = BASIC_FS;
-        else
-            m_FPath = fragment_file_path;
-
-        m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
+        LoadData(vertex_file_path, fragment_file_path);
     }
 
     Shader::Shader(const std::string& vertex_file_path,
@@ -82,6 +69,29 @@ namespace EN {
 
         glDeleteProgram(m_ProgramID);
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
+    }
+
+    void Shader::LoadData(const char* vertex_file_path,
+                          const char* fragment_file_path) {
+        ShaderSource source = {LoadShaderFile(vertex_file_path),
+                               LoadShaderFile(fragment_file_path)};
+
+        if (source.VS.compare("ERROR") == 0)
+            source.VS = BASIC_VS;
+        else
+            m_VPath = vertex_file_path;
+
+        if (source.FS.compare("ERROR") == 0)
+            source.FS = BASIC_FS;
+        else
+            m_FPath = fragment_file_path;
+
+        m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
+    }
+
+    void Shader::LoadData(const std::string& vertex_file_path,
+                          const std::string& fragment_file_path) {
+        LoadData(vertex_file_path.c_str(), fragment_file_path.c_str());
     }
 
     u32 Shader::CreateShader(const char* vertex_source,

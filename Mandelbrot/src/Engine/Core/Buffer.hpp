@@ -73,11 +73,16 @@ namespace EN {
      * Vertex buffer
      *
      * @discussion
-     * The vertex buffer stores the vertex data. A vertex data can contain position,
-     * color, uv coordinate, etc.
+     * The vertex buffer stores the vertex data. A vertex data can contain
+     * position, color, uv coordinate, etc.
      */
     class VertexBuffer {
        public:
+        /**
+         * Create Vertex Buffer Object with no data
+         */
+        VertexBuffer();
+
         /**
          * Create Vertex Buffer Object
          *
@@ -97,6 +102,8 @@ namespace EN {
          * Unbind the Vertex Buffer Object
          */
         void Unbind() const;
+
+        void LoadData(const void* data, const uint32_t& size);
 
        private:
         u32 m_BufferID;  // Vertex Buffer Object
@@ -149,6 +156,11 @@ namespace EN {
     class ElementBuffer {
        public:
         /**
+         * Create Element Buffer Object with no data
+         */
+        ElementBuffer();
+
+        /**
          * Create Element Buffer Object
          *
          * @param data Element data
@@ -173,6 +185,8 @@ namespace EN {
          */
         uint32_t GetCount() const;
 
+        void LoadData(const void* data, const uint32_t& count);
+
        private:
         u32 m_BufferID;  // Element Array Buffer Object
         u32 m_Count;
@@ -180,16 +194,16 @@ namespace EN {
 
     class Framebuffer {
        public:
-           Framebuffer();
+        Framebuffer();
 
-           ~Framebuffer();
+        ~Framebuffer();
 
-           void Bind() const;
+        void Bind() const;
 
-           void Unbind() const;
+        void Unbind() const;
 
        private:
-           u32 m_BufferID; // Framebuffer Object ID
+        u32 m_BufferID;  // Framebuffer Object ID
     };
 
 }  // namespace EN

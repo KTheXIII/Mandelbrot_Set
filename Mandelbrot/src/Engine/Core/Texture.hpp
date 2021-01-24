@@ -19,6 +19,11 @@ namespace EN {
     class Texture {
        public:
         /**
+         * Creates empty Texture Buffer Object with no data
+         */
+        Texture();
+
+        /**
          * Create a texture
          *
          * @param[in] filename Image file filename
@@ -31,11 +36,15 @@ namespace EN {
 
         void Unbind() const;
 
+        void LoadTexture(const char* filename);
+
        private:
         u32 m_BufferID;
         std::string m_Filename;
         i32 m_Width, m_Height, m_Channels;
         u8* m_LocalBuffer;
+
+        void Load();
     };
 
 }  // namespace EN
