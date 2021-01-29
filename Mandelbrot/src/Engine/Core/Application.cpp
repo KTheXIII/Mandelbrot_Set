@@ -1,17 +1,14 @@
 #include "Application.hpp"
 
 namespace EN {
-    Application* Application::s_Instance = nullptr;
-
     Application::Application() {
-        s_Instance = this;
-        m_Window = std::unique_ptr<Window>(new Window("Application"));
+        m_Window = std::make_unique<Window>();
     }
 
     Application::~Application() {}
 
     void Application::Run() {
-        while(m_Window->ShouldClose()) {
+        while (m_Window->ShouldClose()) {
             Update();
             Render();
 

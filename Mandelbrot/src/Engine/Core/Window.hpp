@@ -9,31 +9,22 @@
 #include "GLFW/glfw3.h"
 
 namespace EN {
-    constexpr u32 DEFAULT_WIDTH = 1280, DEFAULT_HEIGHT = 800;
+    constexpr char DEFAULT_TITLE[] = "Application";
+    constexpr u32 DEFAULT_WIDTH = 1280, DEFAULT_HEIGHT = 720;
 
     // Temporary fix for getting the GLSL version
     constexpr char SHADER_VERSION[] = "#version 410";
-
-    /**
-     * Window Properties
-     *
-     * Will be used later for creating window
-     */
-    struct WindowProps {
-        std::string title;
-        u32 width, height;
-
-        WindowProps(const char* title = "Default",
-                    const uint32_t& width = DEFAULT_WIDTH,
-                    const uint32_t& height = DEFAULT_HEIGHT)
-            : title(title), width(width), height(height) {}
-    };
 
     /**
      * Create a Window
      */
     class Window {
        public:
+        /**
+         * Create window with default name and size
+         */
+        Window();
+
         /**
          * Create a Window object
          *
@@ -61,7 +52,7 @@ namespace EN {
          *
          * @return GLFWwindow context
          */
-        inline GLFWwindow* GetNativeWindow() const { return m_NativeWindow; }
+        inline GLFWwindow* GetNativeWindow() const { return m_GLFWWindow; }
 
         /**
          * Set VSync
@@ -75,7 +66,7 @@ namespace EN {
          *
          * @return VSync status
          */
-        bool IsVSync() const;
+        inline bool IsVSync() const { return m_Data.VSync; }
 
         /**
          * Get window title
@@ -87,9 +78,12 @@ namespace EN {
         /**
          * Set the window title
          *
-         * @param[in] title String
+         * @param[in] title Text for the window
          */
-        void SetTitle(const std::string& title);
+        inline void SetTitle(const std::string& title) {
+            m_Data.Title = title;
+            glfwSetWindowTitle(m_GLFWWindow, m_Data.Title.c_str());
+        }
 
         /**
          * Get window width
@@ -103,7 +97,7 @@ namespace EN {
          *
          * @return Window height
          */
-        uint32_t GetHeight() const { return m_Data.Height; };
+        inline uint32_t GetHeight() const { return m_Data.Height; };
 
         /**
          * Get if the Window should close
@@ -115,8 +109,22 @@ namespace EN {
          */
         inline void Close() { m_Data.Running = false; };
 
+        /**
+         * Set the window size minimum and maximum
+         *
+         * @param[in] min_width Minimum width
+         * @param[in] min_height Minimum height
+         * @param[in] max_width Maximum width, defaults to no limit
+         * @param[in] max_height Maximum height, defaults to no limit
+         */
+        void SetSizeLimit(const int& min_width, const int& min_height,
+                          const int& max_width = -1,
+                          const int& max_height = -1);
+
+        void SetSize(const int& width, const int& height);
+
        private:
-        GLFWwindow* m_NativeWindow;   // GLFW Window context
+        GLFWwindow* m_GLFWWindow;     // GLFW Window context
         RenderingContext* m_Context;  // Rendering Context
 
         /**

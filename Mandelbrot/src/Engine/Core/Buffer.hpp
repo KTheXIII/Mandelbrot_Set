@@ -166,7 +166,7 @@ namespace EN {
          * @param data Element data
          * @param count Data count
          */
-        ElementBuffer(const void* data, const uint32_t& count);
+        ElementBuffer(const uint32_t* data, const uint32_t& count);
 
         ~ElementBuffer();
 
@@ -185,12 +185,20 @@ namespace EN {
          */
         uint32_t GetCount() const;
 
-        void LoadData(const void* data, const uint32_t& count);
+        /**
+         * Load Index/Element data
+         *
+         * @param[in] data Indices data pointer
+         * @param[in] count Data size
+         */
+        void LoadData(const uint32_t* data, const uint32_t& count);
 
        private:
         u32 m_BufferID;  // Element Array Buffer Object
-        u32 m_Count;
+        u32 m_Count;     // Data size
     };
+
+    // TODO: Framebuffer, for rendering at different resolution
 
     class Framebuffer {
        public:

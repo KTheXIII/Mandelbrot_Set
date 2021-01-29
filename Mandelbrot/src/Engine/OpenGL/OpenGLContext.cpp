@@ -26,8 +26,8 @@ namespace EN {
         std::cout << "    Vendor:   " << glGetString(GL_VENDOR) << "\n";
         std::cout << "    Renderer: " << glGetString(GL_RENDERER) << "\n";
         std::cout << "    Version:  " << glGetString(GL_VERSION) << "\n";
-        std::cout << "    Shader:   " << glGetString(GL_SHADING_LANGUAGE_VERSION)
-                  << "\n";
+        std::cout << "    Shader:   "
+                  << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n";
     }
 
     void OpenGLContext::SwapBuffers() { glfwSwapBuffers(m_WindowHandle); }

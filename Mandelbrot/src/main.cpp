@@ -1,5 +1,4 @@
-﻿#define _USE_MATH_DEFINES
-#include <cmath>
+﻿#include <cmath>
 #include <chrono>
 #include <iostream>
 #include <filesystem>
@@ -37,7 +36,7 @@
 
 namespace fs = std::filesystem;
 
-class Mandelbrot : public EN::Application {
+class App : public EN::Application {
    private:
     EN::BufferLayout layout;
 
@@ -52,8 +51,9 @@ class Mandelbrot : public EN::Application {
     glm::mat4 projection;
 
    public:
-    Mandelbrot() {
-        GetWindow().SetTitle("Mandelbrot set");
+    App() {
+        auto& window = GetWindow();
+        window.SetTitle("Mandelbrot set");
 
         // Configure the vertex data layout
         layout.Push(GL_FLOAT, 3);
@@ -67,7 +67,7 @@ class Mandelbrot : public EN::Application {
         texture.LoadTexture("asset/basic.gl.png");
         texture.Bind();
 
-        vb.LoadData(vertices, sizeof(vertices));
+        vb.LoadData((const void*)vertices, sizeof(vertices));
         eb.LoadData(indices, 6);
         eb.Bind();
 
@@ -80,14 +80,12 @@ class Mandelbrot : public EN::Application {
         model = glm::mat4(1.f);
         view = glm::mat4(1.f);
         projection = glm::mat4(1.f);
-
-        std::cout << "Current path is " << fs::current_path() << "\n";
     };
 
-    ~Mandelbrot(){};
+    ~App(){};
 
     void Update() override {
-        GLFWwindow* window = GetWindow().GetNativeWindow();
+        auto* window = GetWindow().GetNativeWindow();
 
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             GetWindow().Close();
@@ -108,9 +106,8 @@ class Mandelbrot : public EN::Application {
 };
 
 int main(int argc, char const* argv[]) {
-    auto app = std::make_unique<Mandelbrot>();
+    auto app = std::make_unique<App>();
     app->Run();
 
     return 0;
 }
-

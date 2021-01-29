@@ -36,7 +36,8 @@ project "Mandelbrot"
   cppdialect "C++17"
 
   defines {
-    "IMGUI_IMPL_OPENGL_LOADER_GLAD"
+    "IMGUI_IMPL_OPENGL_LOADER_GLAD",
+    "_USE_MATH_DEFINES"
   }
 
   targetdir("bin/" ..outdir.. "/%{prj.name}")
@@ -111,8 +112,19 @@ project "Mandelbrot"
     symbols "On"
     debugdir "%{prj.name}"
 
+    defines {
+        "ENGINE_DEBUG"
+    }
+
   filter "configurations:Release"
     optimize "On"
+
+    work_dir = "%{wks.location}/bin/"..outdir.."/%{prj.name}"
+    debugdir "%{work_dir}"
+
+    defines {
+      "ENGINE_RELEASE"
+    }
 
     postbuildcommands {
       "{echo} Copying assets",

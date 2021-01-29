@@ -32,8 +32,8 @@ namespace EN {
         glBufferData(
             GL_ARRAY_BUFFER, size, data,
             GL_STATIC_DRAW);  // Set the VBO buffer data
-                              // STAIC_DRAW is because we set i once and the
-                              // data is not changing We want to use other type
+                              // STAIC_DRAW is because we set it once and the
+                              // data is not changing. We want to use other type
                               // if we want to stream the data
     }
 
@@ -68,9 +68,11 @@ namespace EN {
 
     // Element/Index Buffer
 
-    ElementBuffer::ElementBuffer() { glGenBuffers(1, &m_BufferID); }
+    ElementBuffer::ElementBuffer() : m_Count(0) {
+        glGenBuffers(1, &m_BufferID);
+    }
 
-    ElementBuffer::ElementBuffer(const void* data, const uint32_t& count)
+    ElementBuffer::ElementBuffer(const uint32_t* data, const uint32_t& count)
         : m_Count(count) {
         glGenBuffers(1, &m_BufferID);
         LoadData(data, count);
@@ -88,16 +90,16 @@ namespace EN {
 
     uint32_t ElementBuffer::GetCount() const { return m_Count; }
 
-    void ElementBuffer::LoadData(const void* data, const uint32_t& count) {
+    void ElementBuffer::LoadData(const uint32_t* data, const uint32_t& count) {
         m_Count = count;
         Bind();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(u32), data,
-                     GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(u32),
+                     (const void*)data, GL_STATIC_DRAW);
     }
 
     // Framebuffer
 
-    Framebuffer::Framebuffer() {}
+    Framebuffer::Framebuffer() : m_BufferID(0) {}
 
     Framebuffer::~Framebuffer() {}
 

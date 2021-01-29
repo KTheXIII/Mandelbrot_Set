@@ -9,6 +9,10 @@ NamespaceIndentation: All
 AllowAllConstructorInitializersOnNextLine: true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
-DerivePointerAlignment: false
+DerivePointerAlignment: true
 PointerAlignment: Left
 SpaceBeforeInheritanceColon: true
+AllowShortIfStatementsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: Yes
+AlignConsecutiveMacros: true
+AlignEscapedNewlines: Right
