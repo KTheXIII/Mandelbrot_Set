@@ -6,11 +6,14 @@
 #include "Content.hpp"
 
 namespace EN {
+
     class Application {
        public:
         Application();
 
         virtual ~Application();
+
+        virtual void Init() = 0;
 
         void Run();
 
@@ -20,7 +23,16 @@ namespace EN {
 
         inline Window& GetWindow() { return *m_Window; }
 
+        inline void SetArgs(int argc, char const* argv[]) {
+            fs::path exec_path = argv[0];  // Get the launced path
+            m_Content.SetPath(exec_path);
+        }
+
+       protected:
+        Content m_Content;
+
        private:
         std::unique_ptr<Window> m_Window;
     };
+
 }  // namespace EN

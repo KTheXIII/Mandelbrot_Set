@@ -1,5 +1,9 @@
 #include "Texture.hpp"
 
+#include "glad/glad.h"
+
+#include "stb/stb_image.h"
+
 namespace EN {
     Texture::Texture()
         : m_BufferID(0),
@@ -38,6 +42,10 @@ namespace EN {
         glBindTexture(GL_TEXTURE_2D, m_BufferID);
 
         Load();
+    }
+
+    void Texture::LoadTexture(std::string const& filename) {
+        LoadTexture(filename.c_str());
     }
 
     void Texture::Load() {

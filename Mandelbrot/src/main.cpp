@@ -55,16 +55,26 @@ class App : public EN::Application {
         auto& window = GetWindow();
         window.SetTitle("Mandelbrot set");
 
+        model = glm::mat4(1.f);
+        view = glm::mat4(1.f);
+        projection = glm::mat4(1.f);
+    };
+
+    ~App(){};
+
+    void Init() override {
         // Configure the vertex data layout
         layout.Push(GL_FLOAT, 3);
         layout.Push(GL_FLOAT, 4);
         layout.Push(GL_FLOAT, 2);
 
+        // TODO: Fix it so path is only get set when in release
         std::string vertex_filename = "410.basic.gl.vert";
         std::string frag_filename = "410.basic.gl.frag";
-        shader.LoadData("asset/" + vertex_filename, "asset/" + frag_filename);
+        shader.LoadData(m_Content.GetPath() + "/asset/" + vertex_filename,
+                        m_Content.GetPath() + "/asset/" + frag_filename);
 
-        texture.LoadTexture("asset/basic.gl.png");
+        texture.LoadTexture(m_Content.GetPath() + "/asset/basic.gl.png");
         texture.Bind();
 
         vb.LoadData((const void*)vertices, sizeof(vertices));
@@ -76,13 +86,7 @@ class App : public EN::Application {
         ab.Unbind();
         vb.Unbind();
         eb.Unbind();
-
-        model = glm::mat4(1.f);
-        view = glm::mat4(1.f);
-        projection = glm::mat4(1.f);
-    };
-
-    ~App(){};
+    }
 
     void Update() override {
         auto* window = GetWindow().GetNativeWindow();
@@ -107,6 +111,8 @@ class App : public EN::Application {
 
 int main(int argc, char const* argv[]) {
     auto app = std::make_unique<App>();
+    app->SetArgs(argc, argv);
+    app->Init();
     app->Run();
 
     return 0;

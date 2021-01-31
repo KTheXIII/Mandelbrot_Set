@@ -28,4 +28,5 @@ namespace EN {
     typedef float f32;
     typedef double f64;
 
+    namespace fs = std::filesystem;
 }  // namespace EN

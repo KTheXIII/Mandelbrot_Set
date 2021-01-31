@@ -1,7 +1,7 @@
 -- ImGui files
 imgui_files = {
   "%{wks.location}/Mandelbrot/vendor/imgui/imconfig.h",
-  "%{wks.location}/Mandelbrot/vendor/imgui/imgui_demo.cpp",
+  -- "%{wks.location}/Mandelbrot/vendor/imgui/imgui_demo.cpp",
   "%{wks.location}/Mandelbrot/vendor/imgui/imgui_draw.cpp",
   "%{wks.location}/Mandelbrot/vendor/imgui/imgui_internal.h",
   "%{wks.location}/Mandelbrot/vendor/imgui/imgui_tables.cpp",

@@ -2,11 +2,6 @@
 
 #include "Core.hpp"
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-
-#include "stb/stb_image.h"
-
 namespace EN {
 
     // TODO: Texture filter, have the ability to select different filter.
@@ -37,6 +32,8 @@ namespace EN {
         void Unbind() const;
 
         void LoadTexture(const char* filename);
+
+        void LoadTexture(std::string const& filename);
 
        private:
         u32 m_BufferID;

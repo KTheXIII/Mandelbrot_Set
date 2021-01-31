@@ -6,7 +6,6 @@
 #include "OpenGL/OpenGLContext.hpp"
 
 #include "glad/glad.h"
-#include "GLFW/glfw3.h"
 
 namespace EN {
     constexpr char DEFAULT_TITLE[] = "Application";

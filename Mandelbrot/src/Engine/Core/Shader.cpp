@@ -1,5 +1,7 @@
 #include "Shader.hpp"
 
+#include "glad/glad.h"
+
 namespace EN {
     Shader::Shader() : m_ProgramID(0) {
         m_ProgramID = CreateShader(BASIC_VS.c_str(), BASIC_FS.c_str());

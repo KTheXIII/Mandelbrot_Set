@@ -1,8 +1,6 @@
 #pragma once
-#include "Core.hpp"
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include "Core.hpp"
 
 namespace EN {
 
