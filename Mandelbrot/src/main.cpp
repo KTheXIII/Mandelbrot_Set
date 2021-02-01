@@ -20,7 +20,7 @@
 
 // clang-format off
 // Quad
- float vertices[] = {
+float vertices[] = {
 //  positions: x,y,z        colors: r,g,b,a            texture coordinates
     -1.0f,  1.0f,  0.0f,    1.0f, 0.0f, 0.0f, 1.0f,    0.0f,  1.0f,
      1.0f,  1.0f,  0.0f,    0.0f, 1.0f, 0.0f, 1.0f,    1.0f,  1.0f,
@@ -28,7 +28,7 @@
     -1.0f, -1.0f,  0.0f,    1.0f, 0.0f, 1.0f, 1.0f,    0.0f,  0.0f,
 };
 
- uint32_t indices[] = {
+uint32_t indices[] = {
     0, 1, 2,
     0, 2, 3,
 };
@@ -71,10 +71,9 @@ class App : public EN::Application {
         // TODO: Fix it so path is only get set when in release
         std::string vertex_filename = "410.basic.gl.vert";
         std::string frag_filename = "410.basic.gl.frag";
-        shader.LoadData(m_Content.GetPath() + "/asset/" + vertex_filename,
-                        m_Content.GetPath() + "/asset/" + frag_filename);
+        shader.LoadData(m_Content.GetAssetPath(vertex_filename), m_Content.GetAssetPath(frag_filename));
 
-        texture.LoadTexture(m_Content.GetPath() + "/asset/basic.gl.png");
+        texture.LoadTexture(m_Content.GetAssetPath("basic.gl.png"));
         texture.Bind();
 
         vb.LoadData((const void*)vertices, sizeof(vertices));
