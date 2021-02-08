@@ -25,16 +25,40 @@ namespace EN {
         }
 
         /**
+         * Starts the application
+         */
+        void Start();
+
+        /**
+         * Starts the application with arguments passing through
+         */
+        void Start(int argc, char const* argv[]);
+
+        /**
          * Call before Run to initialize the program
          */
         virtual void Init() = 0;
 
-        void Run();
+        /**
+         * Starts the main loop
+         */
+        inline void Run();
 
+        /**
+         * Calls every frame
+         */
         virtual void Update() = 0;
 
+        /**
+         * Calls every frame
+         */
         virtual void Render() = 0;
 
+        /**
+         * Get the Window object
+         *
+         * @return Application's window instance
+         */
         inline Window& GetWindow() { return *m_Window; }
 
        protected:

@@ -11,6 +11,5 @@ uniform vec2 u_resolution;
 uniform sampler2D u_texture;
 
 void main() {
-    color = io_color;
-    // color = texture(u_texture, io_uv);
+    color = texture(u_texture, io_uv);
 }

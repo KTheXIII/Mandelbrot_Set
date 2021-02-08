@@ -1,11 +1,11 @@
 #version 410 core
 #extension GL_ARB_separate_shader_objects : enable
 
-#define PI 3.14159265359
+#define PI     3.14159265359
 #define TWO_PI 6.28318530718
 
 #define MAX_STEPS 100
-#define MAX_DIST 100.
+#define MAX_DIST  100.
 #define SURF_DIST 0.001
 
 layout(location = 0) out vec4 o_color;

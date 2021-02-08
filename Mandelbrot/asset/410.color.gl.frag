@@ -1,7 +1,7 @@
 #version 410 core
 #extension GL_ARB_separate_shader_objects : enable
 
-#define PI 3.14159265359
+#define PI     3.14159265359
 #define TWO_PI 6.28318530718
 
 layout(location = 0) out vec4 out_color;
@@ -24,6 +24,6 @@ void main() {
 
     float f = length(uv);
 
-    color = (sin((rgb_comp * freq * f - PI / 2.)+ (u_time * 4)) + 1.) * 0.5;
+    color = (sin((rgb_comp * freq * f - PI / 2.) + (u_time * 4)) + 1.) * 0.5;
     out_color = vec4(color, 1.f);
 }

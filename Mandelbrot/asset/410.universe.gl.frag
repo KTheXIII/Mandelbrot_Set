@@ -1,7 +1,14 @@
+/**
+ * Dots and lines connecting to each other.
+ *
+ * The Art of Code: The Universe Within
+ * Part 1: https://youtu.be/3CycKKJiwis
+ * Part 2: https://youtu.be/KGJUl8Teipk
+ */
 #version 410 core
 #extension GL_ARB_separate_shader_objects : enable
 
-#define PI 3.14159265359
+#define PI     3.14159265359
 #define TWO_PI 6.28318530718
 
 layout(location = 0) out vec4 o_color;

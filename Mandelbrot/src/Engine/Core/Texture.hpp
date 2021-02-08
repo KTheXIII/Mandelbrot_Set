@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.hpp"
+#include "Image.hpp"
 
 namespace EN {
 
@@ -33,7 +34,9 @@ namespace EN {
 
         void LoadTexture(const char* filename);
 
-        void LoadTexture(std::string const& filename);
+        void LoadTexture(const std::string& filename);
+
+        void Load(const Image& image);
 
        private:
         u32 m_BufferID;

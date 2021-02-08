@@ -1,8 +1,15 @@
+/**
+ * Moving through the massive space in shaders.
+ *
+ * The Art of Code: Making a starfield
+ * Part 1: https://youtu.be/rvDo9LvfoVE
+ * Part 2: https://youtu.be/dhuigO4A7RY
+ */
 #version 410 core
 #extension GL_ARB_separate_shader_objects : enable
 
-#define PI 3.14159265359
-#define TWO_PI 6.28318530718
+#define PI         3.14159265359
+#define TWO_PI     6.28318530718
 #define NUM_LAYERS 8.
 
 layout(location = 0) out vec4 o_color;
