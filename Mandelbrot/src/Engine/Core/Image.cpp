@@ -42,12 +42,13 @@ namespace EN {
         m_Buffer = new u8[m_Size];
     }
 
-    void Image::LoadImage(std::string const& filename) {
-        m_IsFlip = true;
+    void Image::LoadImage(std::string const& filename,
+                          bool const& flip) {
+        m_IsFlip = flip;
         m_IsLoaded = true;
         stbi_set_flip_vertically_on_load(m_IsFlip);
         m_Buffer =
-            stbi_load(filename.c_str(), &m_Width, &m_Height, &m_Channels, 4);
+            stbi_load(filename.c_str(), &m_Width, &m_Height, &m_Channels, 3);
     }
 
     void Image::SetPixel(int32_t const& i, uint32_t const& color) {

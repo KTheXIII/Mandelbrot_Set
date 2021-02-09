@@ -4,6 +4,7 @@
 #include "Image.hpp"
 
 namespace EN {
+    constexpr i32 MAX_TEXTURE_SLOT = 16;
 
     // TODO: Texture filter, have the ability to select different filter.
 
@@ -16,35 +17,43 @@ namespace EN {
        public:
         /**
          * Creates empty Texture Buffer Object with no data
-         */
-        Texture();
-
-        /**
-         * Create a texture
          *
-         * @param[in] filename Image file filename
+         * @param[in] size The amount of texture slots to be created
          */
-        Texture(const char* filename);
+        Texture(int32_t const& size = 1);
 
         ~Texture();
 
-        void Bind(const uint32_t& slot = 0) const;
+        /**
+         * Recreate the texture with new max slot value
+         *
+         * @param[in] size The amount of texture slot to be created
+         */
+        void Rereate(int32_t const& size = 1);
 
+        /**
+         * Bind the texture object
+         *
+         * @param[in] slot The slot be bind to
+         * @param[in] index The texture buffer object index
+         */
+        void Bind(uint32_t const& slot = 0, uint32_t const& index = 0) const;
+
+        /**
+         * Unbind the texture object
+         */
         void Unbind() const;
 
-        void LoadTexture(const char* filename);
-
-        void LoadTexture(const std::string& filename);
-
-        void Load(const Image& image);
+        /**
+         * Load in the image data onto the texture
+         *
+         * @param[in] image The reference to the image object
+         */
+        void Load(Image const& image);
 
        private:
-        u32 m_BufferID;
-        std::string m_Filename;
-        i32 m_Width, m_Height, m_Channels;
-        u8* m_LocalBuffer;
-
-        void Load();
+        u32* m_BufferIDs;  // Texture Buffer Object IDs
+        i32 m_MaxSlot;     // Texture buffer max slots
     };
 
 }  // namespace EN

@@ -5,55 +5,36 @@
 #include "stb/stb_image.h"
 
 namespace EN {
-    Texture::Texture()
-        : m_BufferID(0),
-          m_Filename(""),
-          m_LocalBuffer(nullptr),
-          m_Width(0),
-          m_Height(0),
-          m_Channels(0) {
-        glGenTextures(1, &m_BufferID);
+    Texture::Texture(int32_t const& slot_size) {
+        m_MaxSlot = slot_size % MAX_TEXTURE_SLOT;
+        m_BufferIDs = new u32[m_MaxSlot];
+        glGenTextures(m_MaxSlot, m_BufferIDs);
     }
 
-    Texture::Texture(const char* filename)
-        : m_BufferID(0),
-          m_Filename(filename),
-          m_LocalBuffer(nullptr),
-          m_Width(0),
-          m_Height(0),
-          m_Channels(0) {
-        glGenTextures(1, &m_BufferID);
-        glBindTexture(GL_TEXTURE_2D, m_BufferID);
-
-        Load();
+    Texture::~Texture() {
+        glDeleteTextures(m_MaxSlot, m_BufferIDs);
+        delete[] m_BufferIDs;
     }
 
-    Texture::~Texture() { glDeleteTextures(1, &m_BufferID); }
+    void Texture::Rereate(int32_t const& size) {
+        // Clean up the default buffers
+        glDeleteTextures(m_MaxSlot, m_BufferIDs);
+        delete[] m_BufferIDs;
 
-    void Texture::Bind(const uint32_t& slot) const {
+        // Create new buffers
+        m_MaxSlot = size % MAX_TEXTURE_SLOT;
+        m_BufferIDs = new u32[m_MaxSlot];
+        glGenTextures(m_MaxSlot, m_BufferIDs);
+    }
+
+    void Texture::Bind(uint32_t const& slot, uint32_t const& index) const {
         glActiveTexture(GL_TEXTURE0 + slot);
-        glBindTexture(GL_TEXTURE_2D, m_BufferID);
+        glBindTexture(GL_TEXTURE_2D, m_BufferIDs[index]);
     }
 
     void Texture::Unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 
-    void Texture::LoadTexture(const char* filename) {
-        m_Filename = filename;
-        glBindTexture(GL_TEXTURE_2D, m_BufferID);
-
-        Load();
-    }
-
-    void Texture::LoadTexture(std::string const& filename) {
-        LoadTexture(filename.c_str());
-    }
-
-    void Texture::Load(const Image& image) {
-        Bind();
-        m_Width = image.GetWidth();
-        m_Height = image.GetHeight();
-        m_Channels = image.GetChannels();
-
+    void Texture::Load(Image const& image) {
         // TEMPORARY
         // TODO: Abstract this away
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -61,36 +42,11 @@ namespace EN {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA,
-                     GL_UNSIGNED_BYTE, image.GetBuffer());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, image.GetWidth(),
+                     image.GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE,
+                     image.GetBuffer());
 
         glGenerateMipmap(GL_TEXTURE_2D);
-    }
-
-    void Texture::Load() {
-        stbi_set_flip_vertically_on_load(1);
-        m_LocalBuffer =
-            stbi_load(m_Filename.c_str(), &m_Width, &m_Height, &m_Channels, 4);
-
-        // TEMPORARY
-        // TODO: Abstract this away
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        if (m_LocalBuffer) {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0,
-                         GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer);
-
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            stbi_image_free(m_LocalBuffer);
-        } else {
-            std::cout << "Failed to load texture\n";
-        }
-
-        Unbind();
     }
 
 }  // namespace EN

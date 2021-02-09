@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.hpp"
+#include "Core/Core.hpp"
 
 namespace EN {
 
@@ -20,7 +20,7 @@ namespace EN {
     }
 
     /**
-     * Map the values
+     * Map the values linearly
      *
      * @param[in] x The value that should be map
      * @param[in] in_min The min value of the input value
@@ -28,7 +28,7 @@ namespace EN {
      * @param[in] out_min The min value of the desired output value
      * @param[in] out_max The max value of the dersired output value
      *
-     * @return Mapped value
+     * @return Linearly mapped value
      */
     template <typename T, typename = typename std::enable_if<
                               std::is_arithmetic<T>::value, T>::type>

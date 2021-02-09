@@ -60,6 +60,8 @@ namespace EN {
     Window::~Window() {
         glfwDestroyWindow(m_GLFWWindow);
         glfwTerminate();
+
+        delete m_Context;
     }
 
     void Window::OnUpdate() {

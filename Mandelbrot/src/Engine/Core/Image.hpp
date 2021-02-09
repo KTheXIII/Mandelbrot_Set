@@ -40,8 +40,9 @@ namespace EN {
          * Load an image from file
          *
          * @param[in] filename The name of file.
+         * @param[in] flip Should the image be flipped vertically.
          */
-        void LoadImage(std::string const& filename);
+        void LoadImage(std::string const& filename, bool const& flip = true);
 
         /**
          * Get the image width in pixels

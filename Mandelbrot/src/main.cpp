@@ -41,7 +41,8 @@ class App : public EN::Application {
     EN::BufferLayout layout;
 
     EN::Shader shader;
-    EN::Texture texture;
+    EN::Texture texture{2};
+
     EN::ArrayBuffer ab;
     EN::VertexBuffer vb;
     EN::ElementBuffer eb;
@@ -53,6 +54,7 @@ class App : public EN::Application {
     int32_t c_rkey, p_rkey;
 
     EN::Image image;
+    EN::Image image1;
 
    public:
     App() {
@@ -82,14 +84,19 @@ class App : public EN::Application {
                         m_Content.GetAssetPath(frag_filename));
 
         // texture.LoadTexture(m_Content.GetAssetPath("basic.gl.png"));
-        image.Create(16, 16, 4);
-        // image.LoadImage(m_Content.GetAssetPath("basic.gl.png"));
+        // image.Create(16, 16, 4);
+        image.LoadImage(m_Content.GetAssetPath("basic.gl.png"));
+        image1.LoadImage(m_Content.GetAssetPath("basic_color.gl.png"));
 
-        for (int i = 0; i < image.GetHeight(); i++) {
-            for (int j = 0; j < image.GetWidth(); j++) {
-                image.SetPixel(j, i, 0x03dbfc);
-            }
-        }
+        shader.Bind();
+
+        texture.Bind(0);
+        texture.Load(image);
+        shader.SetUniform1("u_texture0", 0);
+
+        texture.Bind(1, 1);
+        texture.Load(image1);
+        shader.SetUniform1("u_texture1", 1);
 
         vb.LoadData((const void*)vertices, sizeof(vertices));
         eb.LoadData(indices, 6);
@@ -126,8 +133,13 @@ class App : public EN::Application {
         shader.SetUniform2("u_resolution", (float)GetWindow().GetWidth(),
                            (float)GetWindow().GetHeight());
 
-        texture.Load(image);
         texture.Bind();
+        texture.Load(image);
+        shader.SetUniform1("u_texture0", 0);
+
+        texture.Bind(1, 1);
+        texture.Load(image1);
+        shader.SetUniform1("u_texture1", 1);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer
