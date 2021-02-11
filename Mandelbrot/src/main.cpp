@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 #include <filesystem>
+#include <thread>
 
 #include "Engine.hpp"
 
@@ -14,6 +15,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+#include "Mandelbrot.hpp"
 
 // TODO: Create a renderer
 // TODO: Userinterface for generating image
@@ -77,19 +80,15 @@ class App : public EN::Application {
         layout.Push(GL_FLOAT, 4);
         layout.Push(GL_FLOAT, 2);
 
-        // TODO: Fix it so path is only get set when in release
         std::string vertex_filename = "410.basic.gl.vert";
         std::string frag_filename = "410.texture.gl.frag";
-        shader.LoadData(m_Content.GetAssetPath(vertex_filename),
-                        m_Content.GetAssetPath(frag_filename));
+        shader.Load(m_Content.GetAssetPath(vertex_filename),
+                    m_Content.GetAssetPath(frag_filename));
 
-        // texture.LoadTexture(m_Content.GetAssetPath("basic.gl.png"));
-        // image.Create(16, 16, 4);
         image.LoadImage(m_Content.GetAssetPath("basic.gl.png"));
         image1.LoadImage(m_Content.GetAssetPath("basic_color.gl.png"));
 
         shader.Bind();
-
         texture.Bind(0);
         texture.Load(image);
         shader.SetUniform1("u_texture0", 0);
@@ -109,7 +108,7 @@ class App : public EN::Application {
         eb.Unbind();
     }
 
-    void Update() override final {
+    void Update(EN::Time const& time) override final {
         auto* window = GetWindow().GetNativeWindow();
 
         p_rkey = c_rkey;
@@ -133,7 +132,7 @@ class App : public EN::Application {
         shader.SetUniform2("u_resolution", (float)GetWindow().GetWidth(),
                            (float)GetWindow().GetHeight());
 
-        texture.Bind();
+        texture.Bind(0);
         texture.Load(image);
         shader.SetUniform1("u_texture0", 0);
 

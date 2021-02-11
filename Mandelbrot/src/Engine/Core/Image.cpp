@@ -25,10 +25,10 @@ namespace EN {
     }
 
     Image::~Image() {
-        if (!m_IsLoaded)
-            delete[] m_Buffer;
+        if (m_IsLoaded)
+            delete m_Buffer;  // Delete data created from stbi_load
         else
-            delete m_Buffer;
+            delete[] m_Buffer;  // Delete new array
     }
 
     void Image::Create(int32_t const& width, int32_t const& height,
@@ -42,8 +42,7 @@ namespace EN {
         m_Buffer = new u8[m_Size];
     }
 
-    void Image::LoadImage(std::string const& filename,
-                          bool const& flip) {
+    void Image::LoadImage(std::string const& filename, bool const& flip) {
         m_IsFlip = flip;
         m_IsLoaded = true;
         stbi_set_flip_vertically_on_load(m_IsFlip);

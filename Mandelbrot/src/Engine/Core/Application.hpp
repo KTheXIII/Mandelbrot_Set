@@ -4,6 +4,7 @@
 
 #include "Window.hpp"
 #include "Content.hpp"
+#include "Time.hpp"
 
 namespace EN {
 
@@ -47,7 +48,7 @@ namespace EN {
         /**
          * Calls every frame
          */
-        virtual void Update() = 0;
+        virtual void Update(Time const& time) = 0;
 
         /**
          * Calls every frame
@@ -65,6 +66,7 @@ namespace EN {
         Content m_Content;
 
        private:
+        Time m_Time;
         std::unique_ptr<Window> m_Window;
     };
 

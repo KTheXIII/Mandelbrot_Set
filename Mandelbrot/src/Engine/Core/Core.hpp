@@ -5,6 +5,7 @@
 #include <sstream>
 #include <memory>
 #include <filesystem>
+#include <chrono>
 
 #include <string>
 #include <vector>
@@ -12,6 +13,7 @@
 
 #include <stdint.h>
 
+// clang-format off
 namespace EN {
     // Type defines for internal use only
     // Any external return needs to use the original typedef from stdint.h

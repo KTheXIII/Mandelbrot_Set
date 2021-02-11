@@ -9,7 +9,7 @@ namespace EN {
 
     Shader::Shader(const char* vertex_file_path, const char* fragment_file_path)
         : m_ProgramID(0) {
-        LoadData(vertex_file_path, fragment_file_path);
+        Load(vertex_file_path, fragment_file_path);
     }
 
     Shader::Shader(const std::string& vertex_file_path,
@@ -73,7 +73,7 @@ namespace EN {
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
-    void Shader::LoadData(const char* vertex_file_path,
+    void Shader::Load(const char* vertex_file_path,
                           const char* fragment_file_path) {
         ShaderSource source = {LoadShaderFile(vertex_file_path),
                                LoadShaderFile(fragment_file_path)};
@@ -91,9 +91,9 @@ namespace EN {
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
-    void Shader::LoadData(const std::string& vertex_file_path,
+    void Shader::Load(const std::string& vertex_file_path,
                           const std::string& fragment_file_path) {
-        LoadData(vertex_file_path.c_str(), fragment_file_path.c_str());
+        Load(vertex_file_path.c_str(), fragment_file_path.c_str());
     }
 
     u32 Shader::CreateShader(const char* vertex_source,

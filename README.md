@@ -1,6 +1,6 @@
 # Mandelbrot set in C++
 
-Basic image generation using [stb](https://github.com/nothings/stb) image loader/writer.
+Mandelbrot set in C++ with CPU compute and GPU compute. You can switch between the mode and see which one is faster and which one have more precision.
 
 You need to use `--recursive` flag when cloning this repo.
 
@@ -18,7 +18,19 @@ git submodule update --init --recursive
 
 ## Requirements
 
+For generating projects you need premake. Premake can generate the project for make, Xcode, Visual Studio, etc.
+
   - [premake5](https://github.com/premake/premake-core)
+
+**Windows**
+
+For compiling on Windows I recommend you to use 
+
+  - [Visual Studio](https://visualstudio.microsoft.com/)
+
+**macOS**
+
+On macOS you'll need to install Xcode which will get you the C++ compiler.
 
 ## How to run
 
@@ -30,14 +42,34 @@ Example: Makefile
 premake5 gmake2
 ```
 
-To the program you need to be inside Mandelbrot directory and run the executable from there. This is because the asset folder is in it.
+To run the program in debug mode you'll need to be inside the directory where `src` directory lives.
+
+```shell
+Mandelbrot_set
+├── bin
+├── Mandelbrot  ← cd into this directory
+│   ├── asset
+│   ├── src
+│   └── vendor
+├── obj
+├── .clang-format
+├── .gitignore
+├── .gitmodules
+├── LICENSE
+├── premake5.lua
+└── README.md
+```
+
+^ The directory structure should look something like this when you've compiled the program.
 
 ```
 cd Mandelbrot
 ```
 
+The binary you can execute is in the `bin`, in some folder, depending on the mode and platform. The binary should have the name `Mandelbrot`
+
 ```
-../bin/<executable_path>
+../bin/Debug-*/Mandelbrot/Mandelbrot
 ```
 
 ### Makefile
@@ -54,7 +86,9 @@ Use for building different builds
 make config=<mode>
 ```
 
-`<mode>`: **Release**, **Debug**
+`<mode>`: **release**, **debug**
+
+The release mode will copy over the asset to the output binary so you don't have to worry about where you launch the program from. This only applies of course if the asset folder lives in the same directory as the binary.
 
 ## Math
 

@@ -6,5 +6,6 @@
 #include "Core/Image.hpp"
 #include "Core/Texture.hpp"
 #include "Core/Application.hpp"
+#include "Core/Time.hpp"
 
 #include "Utilities/Math.hpp"

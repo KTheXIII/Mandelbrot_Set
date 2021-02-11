@@ -17,7 +17,9 @@ namespace EN {
 
     void Application::Run() {
         while (m_Window->ShouldClose()) {
-            Update();
+            m_Time.Update();
+            Update(m_Time);
+
             Render();
 
             m_Window->OnUpdate();

@@ -133,10 +133,10 @@ namespace EN {
          */
         void Reload();
 
-        void LoadData(const char* vertex_file_path,
+        void Load(const char* vertex_file_path,
                       const char* fragment_file_path);
 
-        void LoadData(const std::string& vertex_file_path,
+        void Load(const std::string& vertex_file_path,
                       const std::string& fragment_file_path);
 
        private:

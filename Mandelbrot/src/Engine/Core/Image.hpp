@@ -149,12 +149,12 @@ namespace EN {
          * @return Ranges between 0 to 255(100%), always return 255 if the image
          * is only 3 channels
          */
-        inline uint8_t GetPixelAlpha(int const& i) {
+        inline uint8_t GetPixelAlpha(int const& i) const {
             if (i > -1 && i < m_Size - m_Channels && m_Channels > 3)
-                return m_Buffer[(i * m_Channels) +
+                return m_Buffer[i * m_Channels +
                                 3];  // Offset to the alpha channel
 
-            return 255;
+            return 255U;
         }
 
         /**

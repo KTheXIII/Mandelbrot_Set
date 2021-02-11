@@ -37,7 +37,7 @@ project "Mandelbrot"
 
   defines {
     "IMGUI_IMPL_OPENGL_LOADER_GLAD",
-    "_USE_MATH_DEFINES"
+    "_USE_MATH_DEFINES",
   }
 
   targetdir("bin/" ..outdir.. "/%{prj.name}")
@@ -103,6 +103,10 @@ project "Mandelbrot"
   filter "system:Windows"
     system "Windows"
     systemversion "latest"
+
+    defines {
+      "_UNICODE",
+    }
 
     links {
       "OpenGL32.lib",
