@@ -2,9 +2,9 @@
 
 #include "Core.hpp"
 
-namespace EN {
-    using time_point = std::chrono::steady_clock::time_point;
+#include "GLFW/glfw3.h"
 
+namespace EN {
     /**
      * Time keeps track of the time since the application started and the delta
      * time between frames.
@@ -19,7 +19,7 @@ namespace EN {
          */
         inline void Update() {
             m_Previous = m_Current;
-            m_Current = std::chrono::high_resolution_clock::now();
+            m_Current = glfwGetTime();
             m_Elapsed = m_Current - m_Previous;
         }
 
@@ -28,12 +28,12 @@ namespace EN {
          *
          * @return Delta time in seconds
          */
-        inline double Elapsed() const { return m_Elapsed.count(); }
+        inline double Elapsed() const { return m_Elapsed; }
 
        private:
-        time_point m_Previous;
-        time_point m_Current;
-        std::chrono::duration<double> m_Elapsed;
+        double m_Current;
+        double m_Previous;
+        double m_Elapsed;
     };
 
 }  // namespace EN
