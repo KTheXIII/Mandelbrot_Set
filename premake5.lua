@@ -12,10 +12,7 @@ workspace "Mandelbrot"
     "MultiProcessorCompile"
   }
 
-  configuration "**.gl.*"
-   buildaction "Copy"
-
-outdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outdir = "%{cfg.buildcfg}/%{cfg.system}-%{cfg.architecture}"
 indirs = {}
 indirs["GLFW"] = "%{wks.location}/Mandelbrot/vendor/GLFW/include/"
 indirs["glad"] = "%{wks.location}/Mandelbrot/vendor/glad/include"

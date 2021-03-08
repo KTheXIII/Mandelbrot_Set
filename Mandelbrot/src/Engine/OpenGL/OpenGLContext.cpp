@@ -30,6 +30,8 @@ namespace EN {
                   << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n";
     }
 
-    void OpenGLContext::SwapBuffers() { glfwSwapBuffers(m_WindowHandle); }
+    void OpenGLContext::SwapBuffers() {
+        glfwSwapBuffers(m_WindowHandle);
+    }
 
 }  // namespace EN

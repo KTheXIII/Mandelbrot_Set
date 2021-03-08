@@ -23,3 +23,5 @@ AllowShortIfStatementsOnASingleLine: WithoutElse
 AlwaysBreakTemplateDeclarations: Yes
 AlignConsecutiveMacros: true
 AlignEscapedNewlines: Right
+AlignConsecutiveMacros: true
+AlignEscapedNewlines: Right

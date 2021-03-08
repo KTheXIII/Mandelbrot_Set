@@ -17,8 +17,8 @@ namespace EN {
         /**
          * Create an image with dimension of width and height.
          *
-         * @param[in] width The image width in pixels
-         * @param[in] height The image height in pixels
+         * @param[in] width    The image width in pixels
+         * @param[in] height   The image height in pixels
          * @param[in] channels The image color channels (optional), default is 3
          */
         Image(int32_t const& width, int32_t const& height,
@@ -29,8 +29,8 @@ namespace EN {
         /**
          * Create an image with width, height and undefined color data
          *
-         * @param[in] width The width of the image in pixels
-         * @param[in] height The height of the image in pixels
+         * @param[in] width    The width of the image in pixels
+         * @param[in] height   The height of the image in pixels
          * @param[in] channels The image color channels, (OPTIONAL)
          */
         void Create(int32_t const& width, int32_t const& height,
@@ -40,7 +40,7 @@ namespace EN {
          * Load an image from file
          *
          * @param[in] filename The name of file.
-         * @param[in] flip Should the image be flipped vertically.
+         * @param[in] flip     Should the image be flipped vertically.
          */
         void LoadImage(std::string const& filename, bool const& flip = true);
 
@@ -77,7 +77,7 @@ namespace EN {
         /**
          * Set pixel color using index location with 32-bit hex color
          *
-         * @param[in] i Pixel location index
+         * @param[in] i     Pixel location index
          * @param[in] color Hex color 32-bit
          */
         void SetPixel(int32_t const& i, uint32_t const& color);
@@ -85,8 +85,8 @@ namespace EN {
         /**
          * Set pixel color using x,y location with 32-bit hex color
          *
-         * @param[in] x Pixel x location from the left
-         * @param[in] y Pixel y location from the right
+         * @param[in] x     Pixel x location from the left
+         * @param[in] y     Pixel y location from the right
          * @param[in] color Hex color 32-bit
          */
         void SetPixel(int32_t const& x, int32_t const& y,

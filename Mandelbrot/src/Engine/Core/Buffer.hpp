@@ -51,8 +51,8 @@ namespace EN {
         /**
          * Config the buffer layout.
          *
-         * @param[in] type Type of data
-         * @param[in] count Data type count, vec3 is 3 and vec4 is 4 etc.
+         * @param[in] type       Type of data
+         * @param[in] count      Data type count, vec3 is 3 and vec4 is 4 etc.
          * @param[in] normalized normalized data, default = false
          */
         void Push(uint32_t type, uint32_t count, bool normalized = false);
@@ -137,7 +137,7 @@ namespace EN {
          * This will configure the buffer using vertex buffer and buffer layout
          *
          * @param[in] vbuffer Vertex Buffer
-         * @param[in] layout Vertex Layout
+         * @param[in] layout  Vertex Layout
          */
         void AddBuffer(const VertexBuffer& vbuffer, const BufferLayout& layout);
 
@@ -162,7 +162,7 @@ namespace EN {
         /**
          * Create Element Buffer Object
          *
-         * @param data Element data
+         * @param data  Element data
          * @param count Data count
          */
         ElementBuffer(const uint32_t* data, const uint32_t& count);
@@ -187,7 +187,7 @@ namespace EN {
         /**
          * Load Index/Element data
          *
-         * @param[in] data Indices data pointer
+         * @param[in] data  Indices data pointer
          * @param[in] count Data size
          */
         void LoadData(const uint32_t* data, const uint32_t& count);

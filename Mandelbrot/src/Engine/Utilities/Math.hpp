@@ -7,7 +7,7 @@ namespace EN {
     /**
      * Clamp the input value between min and max
      *
-     * @param[in] x Input value
+     * @param[in] x   Input value
      * @param[in] min The minimum value
      * @param[in] max The maximum value
      *
@@ -22,9 +22,9 @@ namespace EN {
     /**
      * Map the values linearly
      *
-     * @param[in] x The value that should be map
-     * @param[in] in_min The min value of the input value
-     * @param[in] in_max The max value of the input value
+     * @param[in] x       The value that should be map
+     * @param[in] in_min  The min value of the input value
+     * @param[in] in_max  The max value of the input value
      * @param[in] out_min The min value of the desired output value
      * @param[in] out_max The max value of the dersired output value
      *

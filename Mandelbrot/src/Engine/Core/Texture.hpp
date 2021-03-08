@@ -17,27 +17,17 @@ namespace EN {
        public:
         /**
          * Creates empty Texture Buffer Object with no data
-         *
-         * @param[in] size The amount of texture slots to be created
          */
-        Texture(int32_t const& size = 1);
+        Texture();
 
         ~Texture();
-
-        /**
-         * Recreate the texture with new max slot value
-         *
-         * @param[in] size The amount of texture slot to be created
-         */
-        void Rereate(int32_t const& size = 1);
 
         /**
          * Bind the texture object
          *
          * @param[in] slot The slot be bind to
-         * @param[in] index The texture buffer object index
          */
-        void Bind(uint32_t const& slot = 0, uint32_t const& index = 0) const;
+        void Bind(uint32_t const& slot = 0) const;
 
         /**
          * Unbind the texture object
@@ -52,8 +42,7 @@ namespace EN {
         void Load(Image const& image);
 
        private:
-        u32* m_BufferIDs;  // Texture Buffer Object IDs
-        i32 m_MaxSlot;     // Texture buffer max slots
+        u32 m_BufferID;  // Texture Buffer Object IDs
     };
 
 }  // namespace EN

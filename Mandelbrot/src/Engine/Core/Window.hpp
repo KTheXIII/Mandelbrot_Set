@@ -30,8 +30,8 @@ namespace EN {
          * @discussion
          * This will be change later to use WindowProps for the data properties.
          *
-         * @param[in] title The window title
-         * @param[in] width Window width, defaults to DEFAULT_WIDTH
+         * @param[in] title  The window title
+         * @param[in] width  Window width, defaults to DEFAULT_WIDTH
          * @param[in] height Window height, defaults to DEFAULT_HEIGHT
          */
         Window(const char* title, const uint32_t& width = DEFAULT_WIDTH,
@@ -77,7 +77,7 @@ namespace EN {
         /**
          * Set the window title
          *
-         * @param[in] title Text for the window
+         * @param[in] title Text for the window.
          */
         inline void SetTitle(const std::string& title) {
             m_Data.Title = title;
@@ -85,16 +85,16 @@ namespace EN {
         }
 
         /**
-         * Get window width
+         * Get window width.
          *
-         * @return Window width
+         * @return Window width in pixels.
          */
         inline uint32_t GetWidth() const { return m_Data.Width; };
 
         /**
          * Get window height
          *
-         * @return Window height
+         * @return Window height in pixels.
          */
         inline uint32_t GetHeight() const { return m_Data.Height; };
 
@@ -111,9 +111,9 @@ namespace EN {
         /**
          * Set the window size minimum and maximum
          *
-         * @param[in] min_width Minimum width
+         * @param[in] min_width  Minimum width
          * @param[in] min_height Minimum height
-         * @param[in] max_width Maximum width, defaults to no limit
+         * @param[in] max_width  Maximum width, defaults to no limit
          * @param[in] max_height Maximum height, defaults to no limit
          */
         void SetSizeLimit(const int& min_width, const int& min_height,

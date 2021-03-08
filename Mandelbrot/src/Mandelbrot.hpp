@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cmath>
-
 namespace MSET {
+
     template <typename T, typename = typename std::enable_if<
                               std::is_floating_point<T>::value, T>::type>
     int mandelbrot(T x, T y, int max, T scale = 1.0, T offset_x = 0.0,
@@ -31,4 +30,5 @@ namespace MSET {
 
         return iterations;
     }
+
 }  // namespace MSET

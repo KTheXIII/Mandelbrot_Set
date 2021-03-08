@@ -44,7 +44,7 @@ class App : public EN::Application {
     EN::BufferLayout layout;
 
     EN::Shader shader;
-    EN::Texture texture{2};
+    EN::Texture texture;
 
     EN::ArrayBuffer ab;
     EN::VertexBuffer vb;
@@ -58,6 +58,8 @@ class App : public EN::Application {
 
     EN::Image image;
     EN::Image image1;
+
+    EN::Camera camera;
 
    public:
     App() {
@@ -80,8 +82,8 @@ class App : public EN::Application {
         layout.Push(GL_FLOAT, 4);
         layout.Push(GL_FLOAT, 2);
 
-        std::string vertex_filename = "410.basic.gl.vert";
-        std::string frag_filename = "410.texture.gl.frag";
+        std::string vertex_filename = "410.camera.gl.vert";
+        std::string frag_filename = "410.fireworks.gl.frag";
         shader.Load(m_Content.GetAssetPath(vertex_filename),
                     m_Content.GetAssetPath(frag_filename));
 
@@ -92,10 +94,6 @@ class App : public EN::Application {
         texture.Bind(0);
         texture.Load(image);
         shader.SetUniform1("u_texture0", 0);
-
-        texture.Bind(1, 1);
-        texture.Load(image1);
-        shader.SetUniform1("u_texture1", 1);
 
         vb.LoadData((const void*)vertices, sizeof(vertices));
         eb.LoadData(indices, 6);
@@ -132,13 +130,13 @@ class App : public EN::Application {
         shader.SetUniform2("u_resolution", (float)GetWindow().GetWidth(),
                            (float)GetWindow().GetHeight());
 
+        shader.SetUniform4fv("u_model", glm::value_ptr(model));
+        shader.SetUniform4fv("u_view", camera.GetView());
+        shader.SetUniform4fv("u_projection", camera.GetProjection());
+
         texture.Bind(0);
         texture.Load(image);
         shader.SetUniform1("u_texture0", 0);
-
-        texture.Bind(1, 1);
-        texture.Load(image1);
-        shader.SetUniform1("u_texture1", 1);
 
         ab.Bind();  // Bind Array Buffer
         eb.Bind();  // Bind Element/Index Buffer

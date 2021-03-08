@@ -2,8 +2,8 @@ project "glad"
   kind "StaticLib"
   language "C"
 
-  targetdir ("%{wks.location}/bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
-  objdir ("%{wks.location}/obj/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+  targetdir ("%{wks.location}/bin/%{cfg.buildcfg}/%{cfg.system}-%{cfg.architecture}/%{prj.name}")
+  objdir ("%{wks.location}/obj/%{cfg.buildcfg}/%{cfg.system}-%{cfg.architecture}/%{prj.name}")
 
   files {
     "include/glad/glad.h",

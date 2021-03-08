@@ -5,31 +5,13 @@
 #include "stb/stb_image.h"
 
 namespace EN {
-    Texture::Texture(int32_t const& slot_size) {
-        m_MaxSlot = slot_size % MAX_TEXTURE_SLOT;
-        m_BufferIDs = new u32[m_MaxSlot];
-        glGenTextures(m_MaxSlot, m_BufferIDs);
-    }
+    Texture::Texture() : m_BufferID(0) { glGenTextures(1, &m_BufferID); }
 
-    Texture::~Texture() {
-        glDeleteTextures(m_MaxSlot, m_BufferIDs);
-        delete[] m_BufferIDs;
-    }
+    Texture::~Texture() { glDeleteTextures(1, &m_BufferID); }
 
-    void Texture::Rereate(int32_t const& size) {
-        // Clean up the default buffers
-        glDeleteTextures(m_MaxSlot, m_BufferIDs);
-        delete[] m_BufferIDs;
-
-        // Create new buffers
-        m_MaxSlot = size % MAX_TEXTURE_SLOT;
-        m_BufferIDs = new u32[m_MaxSlot];
-        glGenTextures(m_MaxSlot, m_BufferIDs);
-    }
-
-    void Texture::Bind(uint32_t const& slot, uint32_t const& index) const {
+    void Texture::Bind(uint32_t const& slot) const {
         glActiveTexture(GL_TEXTURE0 + slot);
-        glBindTexture(GL_TEXTURE_2D, m_BufferIDs[index]);
+        glBindTexture(GL_TEXTURE_2D, m_BufferID);
     }
 
     void Texture::Unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }

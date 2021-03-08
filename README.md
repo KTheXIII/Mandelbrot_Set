@@ -34,9 +34,13 @@ On macOS you'll need to install Xcode which will get you the C++ compiler.
 
 ## How to run
 
-Create project file using Premake.
+Create project file using Premake. If you want to know which build automation premake supports you can run this command and it'll show you which one are supported under `ACTIONS`
 
-Example: Makefile
+```
+premake5 --help
+```
+
+Example: Generating Makefile for make.
 
 ```
 premake5 gmake2

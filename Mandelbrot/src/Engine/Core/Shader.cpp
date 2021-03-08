@@ -22,13 +22,11 @@ namespace EN {
 
     void Shader::Unbind() const { glUseProgram(0); }
 
-    uint32_t Shader::GetID() const { return m_ProgramID; }
-
     void Shader::SetUniform1(const char* name, const float& value) {
         glUniform1f(GetUniformLocation(name), value);
     }
 
-    void Shader::SetUniform1(const char* name, const int& value) {
+    void Shader::SetUniform1(const char* name, const int32_t& value) {
         glUniform1i(GetUniformLocation(name), value);
     }
 
@@ -73,27 +71,27 @@ namespace EN {
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
-    void Shader::Load(const char* vertex_file_path,
-                          const char* fragment_file_path) {
-        ShaderSource source = {LoadShaderFile(vertex_file_path),
-                               LoadShaderFile(fragment_file_path)};
+    void Shader::Load(const char* vertex_filename,
+                      const char* fragment_filename) {
+        ShaderSource source = {LoadShaderFile(vertex_filename),
+                               LoadShaderFile(fragment_filename)};
 
         if (source.VS.compare("ERROR") == 0)
             source.VS = BASIC_VS;
         else
-            m_VPath = vertex_file_path;
+            m_VPath = vertex_filename;
 
         if (source.FS.compare("ERROR") == 0)
             source.FS = BASIC_FS;
         else
-            m_FPath = fragment_file_path;
+            m_FPath = fragment_filename;
 
         m_ProgramID = CreateShader(source.VS.c_str(), source.FS.c_str());
     }
 
-    void Shader::Load(const std::string& vertex_file_path,
-                          const std::string& fragment_file_path) {
-        Load(vertex_file_path.c_str(), fragment_file_path.c_str());
+    void Shader::Load(const std::string& vertex_filename,
+                      const std::string& fragment_filename) {
+        Load(vertex_filename.c_str(), fragment_filename.c_str());
     }
 
     u32 Shader::CreateShader(const char* vertex_source,

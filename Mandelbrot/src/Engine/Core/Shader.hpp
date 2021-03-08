@@ -27,7 +27,7 @@ namespace EN {
         /**
          * Create shader form shader program
          *
-         * @param vertex_filename Vertex shader file path
+         * @param vertex_filename   Vertex shader file path
          * @param fragment_filename Fragment shader file path
          */
         Shader(const char* vertex_filename, const char* fragment_filename);
@@ -35,7 +35,7 @@ namespace EN {
         /**
          * Create shader form shader program
          *
-         * @param vertex_filename Vertex shader file path
+         * @param vertex_filename   Vertex shader file path
          * @param fragment_filename Fragment shader file path
          */
         Shader(const std::string& vertex_file_path,
@@ -55,25 +55,39 @@ namespace EN {
 
         /**
          * Get shader program ID
+         *
+         * @return Program ID
          */
-        uint32_t GetID() const;
+        inline uint32_t GetID() const { return m_ProgramID; }
 
         /**
-         * Set one uniform value
+         * Set uniform 1 value (float)
+         *
+         * @param[in] name  Name of the uniform
+         * @param[in] value Uniform value
          */
         void SetUniform1(const char* name, const float& value);
 
-        void SetUniform1(const char* name, const int& value);
+        /**
+         * Set uniform 1 value (int)
+         *
+         * @discussion
+         * The shader needs to be bind before we can set the uniform
+         *
+         * @param[in] name  Name of the uniform
+         * @param[in] value Uniform value
+         */
+        void SetUniform1(const char* name, const int32_t& value);
 
         /**
-         * Set float uniform with 2 value
+         * Set float uniform with 2 value (float)
          *
          * @discussion
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
-         * @param[in] v0 First value
-         * @param[in] v1 Second value
+         * @param[in] v0   First value
+         * @param[in] v1   Second value
          */
         void SetUniform2(const char* name, const float& v0, const float& v1);
 
@@ -90,9 +104,9 @@ namespace EN {
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
-         * @param[in] v0 First value
-         * @param[in] v1 Second value
-         * @param[in] v2 Third value
+         * @param[in] v0   First value
+         * @param[in] v1   Second value
+         * @param[in] v2   Third value
          */
         void SetUniform3f(const char* name, const float& v0, const float& v1,
                           const float& v2);
@@ -104,10 +118,10 @@ namespace EN {
          * The shader needs to be bind before we can set the uniform
          *
          * @param[in] name The name of the uniform
-         * @param[in] v0 First value
-         * @param[in] v1 Second value
-         * @param[in] v2 Third value
-         * @param[in] v3 Fourth value
+         * @param[in] v0   First value
+         * @param[in] v1   Second value
+         * @param[in] v2   Third value
+         * @param[in] v3   Fourth value
          */
         void SetUniform4f(const char* name, const float& v0, const float& v1,
                           const float& v2, const float& v3);
@@ -118,9 +132,9 @@ namespace EN {
          * @discussion
          * The shader needs to be bind before we can set the uniform
          *
-         * @param[in] name The name of the uniform
-         * @param[in] value The value pointer
-         * @param[in] count Default = 1, useful if the uniform is an array
+         * @param[in] name      The name of the uniform
+         * @param[in] value     The value pointer
+         * @param[in] count     Default = 1, useful if the uniform is an array
          * @param[in] transpose Default = false, Specifies whether to transpose
          * the matrix
          */
@@ -133,11 +147,16 @@ namespace EN {
          */
         void Reload();
 
-        void Load(const char* vertex_file_path,
-                      const char* fragment_file_path);
+        void Load(const char* vertex_filename, const char* fragment_filename);
 
-        void Load(const std::string& vertex_file_path,
-                      const std::string& fragment_file_path);
+        /**
+         * Load shader program files and compile
+         *
+         * @param[in] vertex_filename   File path to vertex shader
+         * @param[in] fragment_filename File path to fragment shader
+         */
+        void Load(const std::string& vertex_filename,
+                  const std::string& fragment_filename);
 
        private:
         u32 m_ProgramID;      // Shader Program
@@ -156,7 +175,7 @@ namespace EN {
          * Compile the shader program
          *
          * @param[in] shader_type OpenGL shader type
-         * @param[in] source Shader source code
+         * @param[in] source      Shader source code
          *
          * @return Shader program
          */

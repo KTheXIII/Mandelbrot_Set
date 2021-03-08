@@ -18,10 +18,6 @@ uniform sampler2D u_texture6;
 uniform sampler2D u_texture7;
 
 void main() {
-//    color = mix(texture(u_texture0, io_uv), texture(u_texture1, io_uv), 0.9);
     vec4 col = texture(u_texture0, io_uv);
-    if(io_uv.x < 0.5)
-        col = texture(u_texture1, io_uv);
-
     color = col;
 }
